@@ -168,8 +168,87 @@ const Room = ({roomName, token, handleLogout}) => {
           ...prevParticipants,
           room.localParticipant
         ])
-      })
+      const gameState = await db
+      .collection('rooms')
+      .doc(roomName)
+      .get()
+
+      let prevPlayers = gameState.data().players
+      prevPlayers.push(room.localParticipant.identity)
+      db
+        .collection('rooms')
+        .doc(roomName)
+        .update({players: prevPlayers})
+
+      room.on('participantConnected', participantConnected)
+      room.on('participantDisconnected', participantDisconnected)
+      room.participants.forEach(participantConnected)
+
+      db
+        .collection('rooms')
+        .doc(roomName)
+        .onSnapshot(async snapshot => {
+          //console.log("made it into onSnapshot")
+          let gameState = snapshot.data()
+
+          console.log('what is our gameStarted111', gameState)
+
+          setGameStarted(gameState.gameStarted)
+
+          setCheckSeer(gameState.checkSeer)
+          setCheckMedic(gameState.checkMedic)
+          setCheckWerewolf(gameState.checkWerewolf)
+
+          let newParticipants = gameState.players.filter(
+            player => !gameState.dead.includes(player)
+          )
+          console.log('FILTERED FOR DEAD PPL', newParticipants)
+
+          setParticipants(prevParticipants =>
+            prevParticipants.filter(p => newParticipants.includes(p.identity))
+          )
+
+          //console.log("gameState is", gameState)
+
+          if (!gameState.gameStarted) return
+
+          if (gameState.Night) {
+            //console.log("pre initial handleNightDay")
+
+            handleNightToDay(
+              gameState,
+              roomName,
+              room.localParticipant.identity
+            )
+          } else {
+            //console.log("are we making it into here")
+            handleDayToNight(gameState, roomName)
+          }
+        })
     })
+
+    return () => {
+      setStateRoom(currentRoom => {
+        if (
+          currentRoom &&
+          currentRoom.localParticipant.state === 'connected'
+        ) {
+          currentRoom.localParticipant.tracks.forEach(function(
+            trackPublication
+          ) {
+            trackPublication.track.stop()
+          })
+          currentRoom.disconnect()
+
+          return null
+        } else {
+          return currentRoom
+        }
+      })
+    }
+  },
+  [roomName, token]
+)
 
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
