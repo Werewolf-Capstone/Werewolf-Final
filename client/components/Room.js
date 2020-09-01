@@ -17,6 +17,33 @@ const Room = ({roomName, token, handleLogout}) => {
   const [werewolfChoice, setWerewolfChoice] = useState(false)
   const [didSeerHit, setDidSeerHit] = useState(false)
 
+  const testingReset = () => {
+    const newGame = {
+      Night: true,
+      checkMajority: false,
+      checkMedic: false,
+      checkSeer: false,
+      checkWerewolf: false,
+      dead: [],
+      gameStarted: false,
+      majorityReached: false,
+      medic: '',
+      medicChoice: '',
+      players: [],
+      seer: '',
+      seerChoice: '',
+      villagers: [],
+      votesVillagers: [],
+      votesWerewolves: [],
+      werewolves: [],
+      werewolvesChoice: ''
+    }
+    db
+      .collection('rooms')
+      .doc(roomName)
+      .update(newGame)
+  }
+
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
     if (game.majorityReached) {
