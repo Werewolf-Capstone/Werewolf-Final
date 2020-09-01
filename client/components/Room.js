@@ -130,6 +130,20 @@ const Room = ({roomName, token, handleLogout}) => {
       .update({votesVillagers: votesVillagers})
   }
 
+  async function handleWerewolfVoteButton(participantIdentity) {
+    let votesWerewolves = await db.collection('rooms').doc(roomName).get()
+
+    console.log('Are we getting the correct', participantIdentity)
+
+    votesWerewolves = votesWerewolves.data().votesWerewolves
+    votesWerewolves.push(participantIdentity)
+
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({votesWerewolves: votesWerewolves})
+  }
+
   /**
    * Checks for a majority vote on all players killing one person; once found, updates the villagers' choice which will be used to announce the player has been killed when day turns to night.
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document once the game starts
