@@ -254,6 +254,32 @@ const Room = ({roomName, token, handleLogout}) => {
       }
     }
   }
+
+  /**
+   * Checks if the medic voted, and (if so) subsequently updates the 'checkMedic' boolean in the 'rooms' database
+   */
+  async function handleMedic(roomName) {
+    const player = await db
+      .collection('rooms')
+      .doc(roomName)
+      .get()
+
+    const medicChoice = player.data().medicChoice
+
+    if (medicChoice === '') return
+    else {
+      //console.log('setting checkMedic to true');
+      db
+        .collection('rooms')
+        .doc(roomName)
+        .update({checkMedic: true})
+
+      // also have to update local state
+
+      await handleCheckMedic(true)
+    }
+  }
+
   async function handleMajority(game, roomName) {
     //end goal to update villageGers
 
