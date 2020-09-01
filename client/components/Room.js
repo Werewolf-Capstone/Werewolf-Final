@@ -44,6 +44,49 @@ const Room = ({roomName, token, handleLogout}) => {
       .update(newGame)
   }
 
+  const handleStartGame = () => {
+    setGameStarted(true)
+    //console.log("starting game")
+    db
+      .collection('rooms')
+      .doc(roomName)
+      .update({gameStarted: true})
+  }
+
+  const handleNight = someValue => {
+    // some logic
+    setNight(someValue)
+  }
+  const handleLocalRole = someValue => {
+    // some logic
+    console.log('are we making it into handleLocalRole')
+    setLocalRole(someValue)
+  }
+  const handleCheckMedic = someValue => {
+    // some logic
+    setCheckMedic(someValue)
+  }
+  const handleGameStarted = someValue => {
+    // some logic
+    setGameStarted(someValue)
+  }
+  const handleCheckWerewolf = someValue => {
+    // some logic
+    setCheckWerewolf(someValue)
+  }
+  const handleCheckSeer = someValue => {
+    // some logic
+    setCheckSeer(someValue)
+  }
+  const handleWerewolfChoice = someValue => {
+    // some logic
+    setWerewolfChoice(someValue)
+  }
+  const handleDidSeerHit = someValue => {
+    // some logic
+    setDidSeerHit(someValue)
+  }
+
   useEffect(
     () => {
       const participantConnected = async participant => {
