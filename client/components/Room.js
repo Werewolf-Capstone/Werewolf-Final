@@ -44,6 +44,96 @@ const Room = ({roomName, token, handleLogout}) => {
       .update(newGame)
   }
 
+  const handleStartGame = () => {
+    setGameStarted(true)
+    //console.log("starting game")
+    db
+      .collection('rooms')
+      .doc(roomName)
+      .update({gameStarted: true})
+  }
+
+  const handleNight = someValue => {
+    // some logic
+    setNight(someValue)
+  }
+  const handleLocalRole = someValue => {
+    // some logic
+    console.log('are we making it into handleLocalRole')
+    setLocalRole(someValue)
+  }
+  const handleCheckMedic = someValue => {
+    // some logic
+    setCheckMedic(someValue)
+  }
+  const handleGameStarted = someValue => {
+    // some logic
+    setGameStarted(someValue)
+  }
+  const handleCheckWerewolf = someValue => {
+    // some logic
+    setCheckWerewolf(someValue)
+  }
+  const handleCheckSeer = someValue => {
+    // some logic
+    setCheckSeer(someValue)
+  }
+  const handleWerewolfChoice = someValue => {
+    // some logic
+    setWerewolfChoice(someValue)
+  }
+  const handleDidSeerHit = someValue => {
+    // some logic
+    setDidSeerHit(someValue)
+  }
+
+  // GAME LOGIC FUNCTIONS
+
+  function handleNightToDay(game, roomName, localUserId) {
+    //console.log("handleNightToDay starting", game, roomName, localUserId)
+    if (game.villagers.length === 0) {
+      assignRolesAndStartGame(game, roomName, localUserId)
+    }
+    handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in our DB
+    // this.handleSeer();
+    // this.handleMedic();
+    if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
+      if (game.werewolvesChoice === game.medicChoice) {
+        game.werewolvesChoice = ''
+        handleWerewolfChoice('')
+      } else {
+        game.villagers = game.villagers.filter(villager => {
+          return villager !== game.werewolvesChoice
+        })
+        if (game.werewolvesChoice !== '') {
+          game.dead.push(game.werewolvesChoice)
+          game.players = game.players.filter(
+            player => player != game.werewolvesChoice
+          )
+        }
+      }
+    } else {
+      //outer IF
+      return
+    }
+    game.Night = false
+    game.medicChoice = ''
+    game.votesWerewolves = ''
+    game.checkWerewolf = false
+    game.checkMedic = false
+    game.checkSeer = false
+    game.votesWerewolves = []
+    game.villagersChoice = ''
+    //updating game state in DB
+
+    db
+      .collection('rooms')
+      .doc(roomName)
+      .update(game)
+
+    handleNight(false)
+  }
+
   useEffect(
     () => {
       const participantConnected = async participant => {
@@ -164,6 +254,32 @@ const Room = ({roomName, token, handleLogout}) => {
       }
     }
   }
+
+  /**
+   * Checks if the medic voted, and (if so) subsequently updates the 'checkMedic' boolean in the 'rooms' database
+   */
+  async function handleMedic(roomName) {
+    const player = await db
+      .collection('rooms')
+      .doc(roomName)
+      .get()
+
+    const medicChoice = player.data().medicChoice
+
+    if (medicChoice === '') return
+    else {
+      //console.log('setting checkMedic to true');
+      db
+        .collection('rooms')
+        .doc(roomName)
+        .update({checkMedic: true})
+
+      // also have to update local state
+
+      await handleCheckMedic(true)
+    }
+  }
+
   async function handleMajority(game, roomName) {
     //end goal to update villageGers
 
