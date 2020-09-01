@@ -87,6 +87,53 @@ const Room = ({roomName, token, handleLogout}) => {
     setDidSeerHit(someValue)
   }
 
+  // GAME LOGIC FUNCTIONS
+
+  function handleNightToDay(game, roomName, localUserId) {
+    //console.log("handleNightToDay starting", game, roomName, localUserId)
+    if (game.villagers.length === 0) {
+      assignRolesAndStartGame(game, roomName, localUserId)
+    }
+    handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in our DB
+    // this.handleSeer();
+    // this.handleMedic();
+    if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
+      if (game.werewolvesChoice === game.medicChoice) {
+        game.werewolvesChoice = ''
+        handleWerewolfChoice('')
+      } else {
+        game.villagers = game.villagers.filter(villager => {
+          return villager !== game.werewolvesChoice
+        })
+        if (game.werewolvesChoice !== '') {
+          game.dead.push(game.werewolvesChoice)
+          game.players = game.players.filter(
+            player => player != game.werewolvesChoice
+          )
+        }
+      }
+    } else {
+      //outer IF
+      return
+    }
+    game.Night = false
+    game.medicChoice = ''
+    game.votesWerewolves = ''
+    game.checkWerewolf = false
+    game.checkMedic = false
+    game.checkSeer = false
+    game.votesWerewolves = []
+    game.villagersChoice = ''
+    //updating game state in DB
+
+    db
+      .collection('rooms')
+      .doc(roomName)
+      .update(game)
+
+    handleNight(false)
+  }
+
   useEffect(
     () => {
       const participantConnected = async participant => {
