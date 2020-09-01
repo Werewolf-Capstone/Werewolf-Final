@@ -120,6 +120,50 @@ const Room = ({roomName, token, handleLogout}) => {
    * Checks for a majority vote on all players killing one person; once found, updates the villagers' choice which will be used to announce the player has been killed when day turns to night.
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document once the game starts
    */
+  async function handleWerewolfVote(roomObj, roomName) {
+    // const roomObj = await db
+    //   .collection('room')
+    //   .doc(roomName)
+    //   .get();
+
+    // let players = roomObj.data().players;
+    // ^^^ do we need this code above with 'players' ?
+
+    const totalPlayers = roomObj.werewolves.length
+
+    let votesWerewolves = await db
+      .collection('rooms')
+      .doc(roomName)
+      .get()
+    votesWerewolves = votesWerewolves.data().votesWerewolves
+
+    //console.log('what are my villagers', votesWerewolves);
+
+    let votingObject = {}
+
+    for (let player of votesWerewolves) {
+      // need to add rooms and users tables to state
+      if (Object.keys(votingObject).includes(player)) {
+        votingObject[player] += 1
+      } else {
+        votingObject[player] = 1
+      }
+    }
+    //console.log('voting object is', votingObject);
+    for (let player of Object.keys(votingObject)) {
+      if (votingObject[player] > Math.floor(totalPlayers / 2)) {
+        // db.collection('rooms').doc(this.state.gameId).villagersChoice.update(player) // find real way to do this
+        db
+          .collection('rooms')
+          .doc(roomName)
+          .update({werewolvesChoice: player, checkWerewolf: true})
+        // also have to update local state
+
+        handleCheckWerewolf(true)
+        handleWerewolfChoice(player)
+      }
+    }
+  }
   async function handleMajority(game, roomName) {
     //end goal to update villageGers
 
