@@ -159,6 +159,14 @@ const Room = ({roomName, token, handleLogout}) => {
       .doc(roomName)
       .update({checkSeer: true, seerChoice: participantIdentity})
   }
+  async function handleMedicSaveButton(participantIdentity) {
+    handleCheckMedic(true)
+
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({checkMedic: true, medicChoice: participantIdentity})
+  }
 
   /**
    * Checks for a majority vote on all players killing one person; once found, updates the villagers' choice which will be used to announce the player has been killed when day turns to night.
