@@ -94,6 +94,57 @@ const Room = ({roomName, token, handleLogout}) => {
       }
     }
   }
+
+  /**
+   * Randomly assigns roles to users, updates the roles in firestore, and subsequently updates the 'gameStarted' boolean in the 'rooms' database
+   * @param {*} game - game object gotten from the snapshot of the 'rooms' database once the game starts
+   */
+  async function assignRolesAndStartGame(game, roomName, localUserId) {
+    console.log('In assignRolesAndStartGame', game, roomName, localUserId)
+    let gameState = await db
+      .collection('rooms')
+      .doc(roomName)
+      .get()
+
+    console.log('what is gameState in assignRoles', gameState)
+
+    let players = gameState.data().players
+
+    //randomize later
+    //console.log('what is users in assign roles', users);
+
+    let werewolves = []
+    let villagers = []
+
+    // shuffle users array
+    // for (let i = users.length - 1; i > 0; i--) {
+    //   let j = Math.floor(Math.random() * (i + 1));
+    //   [users[i], users[j]] = [users[j], users[i]];
+    // }
+
+    players.forEach((playerName, i) => {
+      //console.log('what does my user look like', doc.id);
+
+      if (i < 2) {
+        //console.log('werewolves are ', werewolves);
+        werewolves.push(playerName)
+      } else if (i === 2) {
+        db
+          .collection('rooms')
+          .doc(roomName)
+          .update({seer: playerName})
+        villagers.push(playerName)
+      } else if (i === 3) {
+        db
+          .collection('rooms')
+          .doc(roomName)
+          .update({medic: playerName})
+        villagers.push(playerName)
+      } else {
+        villagers.push(playerName)
+      }
+    })
+  }
 }
 
 export default Room
