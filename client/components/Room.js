@@ -113,6 +113,61 @@ const Room = ({roomName, token, handleLogout}) => {
 
     handleNight(true)
   }
+
+  /**
+   * Handler function which updates a villager's vote based on the user they are choosing to kill
+   * @param {*} userPeerId - the user's PeerJS ID (that is, the user a villager is trying to kill)
+   */
+  async function handleVillagerVoteButton(participantIdentity) {
+    let votesVillagers = await db.collection('rooms').doc(roomName).get()
+
+    votesVillagers = votesVillagers.data().votesVillagers
+    votesVillagers.push(participantIdentity)
+
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({votesVillagers: votesVillagers})
+  }
+
+  async function handleWerewolfVoteButton(participantIdentity) {
+    let votesWerewolves = await db.collection('rooms').doc(roomName).get()
+
+    console.log('Are we getting the correct', participantIdentity)
+
+    votesWerewolves = votesWerewolves.data().votesWerewolves
+    votesWerewolves.push(participantIdentity)
+
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({votesWerewolves: votesWerewolves})
+  }
+
+  async function handleSeerCheckButton(participantIdentity) {
+    const roomObj = await db.collection('rooms').doc(roomName).get()
+
+    let werewolves = roomObj.data().werewolves
+
+    if (werewolves.includes(participantIdentity)) {
+      handleDidSeerHit(participantIdentity)
+    }
+    handleCheckSeer(true)
+
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({checkSeer: true, seerChoice: participantIdentity})
+  }
+  async function handleMedicSaveButton(participantIdentity) {
+    handleCheckMedic(true)
+
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({checkMedic: true, medicChoice: participantIdentity})
+  }
+
   /**
    * Checks for a majority vote on all players killing one person; once found, updates the villagers' choice which will be used to announce the player has been killed when day turns to night.
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document once the game starts
