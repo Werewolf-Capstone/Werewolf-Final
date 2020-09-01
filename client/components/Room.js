@@ -44,6 +44,43 @@ const Room = ({roomName, token, handleLogout}) => {
       .update(newGame)
   }
 
+  useEffect(
+    () => {
+      const participantConnected = async participant => {
+        setParticipants(prevParticipants => [...prevParticipants, participant])
+      }
+
+      const participantDisconnected = participant => {
+        console.log('player identity BEFOR ', participants)
+        setParticipants(prevParticipants =>
+          prevParticipants.filter(p => p !== participant)
+        )
+        let playerIdentitys = participants.map(
+          participant => participant.identity
+        )
+        setTimeout(function() {
+          alert('Hello')
+        }, 0)
+
+        console.log('player identity AFTER ', playerIdentitys)
+
+        db
+          .collection('rooms')
+          .doc(roomName)
+          .update({players: playerIdentitys})
+      }
+
+      Video.connect(token, {
+        name: roomName
+      }).then(async room => {
+        setStateRoom(room)
+        setParticipants(prevParticipants => [
+          ...prevParticipants,
+          room.localParticipant
+        ])
+      })
+    })
+
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
     if (game.majorityReached) {
