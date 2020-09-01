@@ -144,6 +144,22 @@ const Room = ({roomName, token, handleLogout}) => {
       .update({votesWerewolves: votesWerewolves})
   }
 
+  async function handleSeerCheckButton(participantIdentity) {
+    const roomObj = await db.collection('rooms').doc(roomName).get()
+
+    let werewolves = roomObj.data().werewolves
+
+    if (werewolves.includes(participantIdentity)) {
+      handleDidSeerHit(participantIdentity)
+    }
+    handleCheckSeer(true)
+
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({checkSeer: true, seerChoice: participantIdentity})
+  }
+
   /**
    * Checks for a majority vote on all players killing one person; once found, updates the villagers' choice which will be used to announce the player has been killed when day turns to night.
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document once the game starts
