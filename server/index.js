@@ -50,8 +50,8 @@ const createApp = () => {
   app.use(compression())
 
   // auth and api routes
-  app.use('/auth', require('./auth'))
-  app.use('/api', require('./api'))
+  // app.use('/auth', require('./auth'))
+  // app.use('/api', require('./api'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
