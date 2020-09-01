@@ -381,6 +381,52 @@ const Room = ({roomName, token, handleLogout}) => {
       />
     )
   })
+
+  return (
+    <div className="room">
+      <h2>Room: {roomName}</h2>
+      <button onClick={handleLogout}>Log out</button>
+      <div className="local-participant">
+        {stateRoom ? (
+          <Participant
+            key={stateRoom.localParticipant.sid}
+            participant={stateRoom.localParticipant}
+            handleVillagerVoteButton={handleVillagerVoteButton}
+            handleSeerCheckButton={handleSeerCheckButton}
+            handleMedicSaveButton={handleMedicSaveButton}
+            handleWerewolfVoteButton={handleWerewolfVoteButton}
+            night={night}
+            localRole={localRole}
+            checkWerewolf={checkWerewolf}
+            checkSeer={checkSeer}
+            checkMedic={checkMedic}
+            werewolfChoice={werewolfChoice}
+            didSeerHit={didSeerHit}
+            gameStarted={gameStarted}
+          />
+        ) : (
+          ''
+        )}
+      </div>
+      <button
+        onClick={() => {
+          handleStartGame()
+        }}
+      >
+        Start Game
+      </button>
+      <button
+        onClick={() => {
+          testingReset()
+        }}
+      >
+        {' '}
+        Reset game
+      </button>
+      <h3>Remote Participants</h3>
+      <div className="remote-participants">{remoteParticipants}</div>
+    </div>
+  )
 }
 
 export default Room
