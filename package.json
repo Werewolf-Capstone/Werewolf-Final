@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "werewolf",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "A digital implementation of the social deception game, Werewolf.",
   "engines": {
     "node": "~12.11.1"
   },
