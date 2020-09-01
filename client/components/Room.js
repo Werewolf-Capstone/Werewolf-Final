@@ -247,4 +247,27 @@ const Room = ({roomName, token, handleLogout}) => {
     }
 }
 
+
+const remoteParticipants = participants.map((participant, idx) => {
+  if (idx === 0) return
+  return (
+    <Participant
+      key={participant.sid}
+      participant={participant}
+      handleVillagerVoteButton={handleVillagerVoteButton}
+      handleSeerCheckButton={handleSeerCheckButton}
+      handleMedicSaveButton={handleMedicSaveButton}
+      handleWerewolfVoteButton={handleWerewolfVoteButton}
+      night={night}
+      localRole={localRole}
+      checkWerewolf={checkWerewolf}
+      checkSeer={checkSeer}
+      checkMedic={checkMedic}
+      werewolfChoice={werewolfChoice}
+      didSeerHit={didSeerHit}
+      gameStarted={gameStarted}
+    />
+  )
+})
+
 export default Room
