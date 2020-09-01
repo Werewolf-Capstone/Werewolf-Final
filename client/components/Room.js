@@ -145,6 +145,42 @@ const Room = ({roomName, token, handleLogout}) => {
       }
     })
   }
+  await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({werewolves: werewolves})
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({villagers: villagers})
+
+    db
+      .collection('rooms')
+      .doc(roomName)
+      .update({gameStarted: true})
+
+    //search for localUsersRole
+    villagers = gameState.data().villagers
+    werewolves = gameState.data().werewolves
+    let seer = gameState.data().seer
+    let medic = gameState.data().medic
+
+    if (villagers.includes(localUserId)) {
+      console.log('setting role as villager')
+      handleLocalRole('villager')
+    }
+    if (werewolves.includes(localUserId)) {
+      console.log('setting role as werewolf')
+      handleLocalRole('werewolf')
+    }
+    if (seer === localUserId) {
+      console.log('setting role as seer')
+      handleLocalRole('seer')
+    }
+    if (medic === localUserId) {
+      console.log('setting role as medic')
+      handleLocalRole('medic')
+    }
 }
 
 export default Room
