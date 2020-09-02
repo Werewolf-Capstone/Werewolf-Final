@@ -4,19 +4,23 @@
     <!-- Our js bundle will be in 'bundle.js' -->
     <!-- The 'defer' attribute will ensure that it is run only after the DOM finishes loading -->
     <script src="/bundle.js" defer></script>
+    <script defer>
+      let audio = document.getElementById('homepageaudio')
+      audio.volume = 0.1
+    </script>
+  </head>
+  <body>
+    <!-- We will render our React app into a div with an id of 'app' -->
+    <!-- We can grab it off the DOM by saing document.getElementById('app'); -->
     <iframe
       src="./background.mp3"
       allow="autoplay"
       style="display: none"
       id="iframeAudio"
     ></iframe>
-    <audio loop="true" autoplay="true">
+    <audio id="homepageaudio" loop="true" autoplay="true">
       <source src="./background.mp3" type="audio/mpeg" />
     </audio>
-  </head>
-  <body>
-    <!-- We will render our React app into a div with an id of 'app' -->
-    <!-- We can grab it off the DOM by saing document.getElementById('app'); -->
     <div id="root"></div>
   </body>
 </html>
