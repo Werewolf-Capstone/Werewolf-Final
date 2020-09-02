@@ -11,6 +11,7 @@ const Room = ({roomName, token, handleLogout}) => {
   // potentially needed game logic state
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
+  const [localColor, setLocalColor] = useState('')
   const [gameStarted, setGameStarted] = useState(false)
   const [checkWerewolf, setCheckWerewolf] = useState(false)
   const [checkSeer, setCheckSeer] = useState(false)
@@ -345,7 +346,6 @@ const Room = ({roomName, token, handleLogout}) => {
     let gameState = await db.collection('rooms').doc(roomName).get()
 
     console.log('what is gameState in assignRoles', gameState)
-    //Assign colors to people in this function as well?
 
     let players = gameState.data().players
 
@@ -360,10 +360,21 @@ const Room = ({roomName, token, handleLogout}) => {
     //   let j = Math.floor(Math.random() * (i + 1));
     //   [users[i], users[j]] = [users[j], users[i]];
     // }
-
+    let colors = [
+      'red',
+      'orange',
+      'pink',
+      'purple',
+      'green',
+      'brown',
+      'blue',
+      'yellow',
+    ]
+    let colorPlayer = []
     players.forEach((playerName, i) => {
       //console.log('what does my user look like', doc.id);
 
+      colorPlayer.push(playerName)
       if (i < 2) {
         //console.log('werewolves are ', werewolves);
         werewolves.push(playerName)
@@ -376,7 +387,12 @@ const Room = ({roomName, token, handleLogout}) => {
       } else {
         villagers.push(playerName)
       }
-    })
+    }) // end of forEach loop
+    function checkPlayer(player) {
+      return player == colorP
+    }
+    let localIndex = colorPlayer.findIndex((val) => val === localUserId)
+    setLocalColor(colors[localIndex])
 
     await db.collection('rooms').doc(roomName).update({werewolves: werewolves})
     await db.collection('rooms').doc(roomName).update({villagers: villagers})
@@ -554,6 +570,7 @@ const Room = ({roomName, token, handleLogout}) => {
         werewolfChoice={werewolfChoice}
         didSeerHit={didSeerHit}
         gameStarted={gameStarted}
+        localColor={localColor}
       />
     )
   })
@@ -573,6 +590,7 @@ const Room = ({roomName, token, handleLogout}) => {
             handleWerewolfVoteButton={handleWerewolfVoteButton}
             night={night}
             localRole={localRole}
+            localColor={localColor}
             checkWerewolf={checkWerewolf}
             checkSeer={checkSeer}
             checkMedic={checkMedic}
