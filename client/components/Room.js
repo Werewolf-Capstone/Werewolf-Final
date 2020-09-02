@@ -593,6 +593,7 @@ const Room = ({roomName, token, handleLogout}) => {
               display: 'flex',
               justifyContent: 'center',
               backgroundColor: 'grey',
+              width: '75%',
             }}
           >
             <Participant

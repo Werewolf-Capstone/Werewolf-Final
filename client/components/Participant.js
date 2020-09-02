@@ -179,7 +179,7 @@ const Participant = ({
   }
   if (shouldWePlay) {
     return (
-      <div className="individualPlayer">
+      <div className="individualPlayer" style={{width: '15rem'}}>
         {i}
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
