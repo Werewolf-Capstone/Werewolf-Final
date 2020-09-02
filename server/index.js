@@ -25,7 +25,6 @@ module.exports = app
  * keys as environment variables, so that they can still be read by the
  * Node process on process.env
  */
-if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id))
@@ -65,7 +64,7 @@ const createApp = () => {
     res.set('Content-Type', 'application/json')
     res.send(
       JSON.stringify({
-        token: token.toJwt()
+        token: token.toJwt(),
       })
     )
   }
