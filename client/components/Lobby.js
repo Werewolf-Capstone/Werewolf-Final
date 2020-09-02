@@ -9,32 +9,54 @@ const Lobby = ({
   handleSubmit,
 }) => {
   return (
-    <Container>
-      <form onSubmit={handleSubmit}>
+    <Container
+      id="landing-page-container"
+      display="flex"
+      maxWidth="sm"
+      flexdirection="column"
+      justifycontent="center"
+    >
+      <Box
+        display="flex"
+        width="100%"
+        justifycontent="center"
+        alignItems="center"
+      >
         <h2>Enter a room</h2>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
+      </Box>
+
+      <form onSubmit={handleSubmit}>
+        <Box>
+          <label htmlFor="name"></label>
+          <TextField
             type="text"
             id="field"
+            variant="filled"
+            color="secondary"
+            placeholder="Username"
             value={username}
             onChange={handleUsernameChange}
             required
           />
-        </div>
+        </Box>
 
-        <div>
-          <label htmlFor="room">Room name:</label>
-          <input
+        <Box>
+          <label htmlFor="room"></label>
+          <TextField
             type="text"
             id="room"
+            variant="filled"
+            color="secondary"
+            placeholder="Room Name"
             value={roomName}
             onChange={handleRoomNameChange}
             required
           />
-        </div>
+        </Box>
 
-        <button type="submit">Submit</button>
+        <Button type="submit" variant="outlined" color="secondary">
+          Submit
+        </Button>
       </form>
     </Container>
   )
