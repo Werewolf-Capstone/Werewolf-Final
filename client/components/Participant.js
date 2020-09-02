@@ -17,14 +17,28 @@ const Participant = ({
   localRole,
   werewolfChoice,
   didSeerHit,
-  gameStarted
+  gameStarted,
+  votesVill,
+  localColor,
+  votesWere,
 }) => {
   let i
   let shouldWePlay = true
+  let pngMapObj = {
+    red: '/villagerIconRed.png',
+    orange: '/villagerIconOrange.png',
+    pink: '/villagerIconPink.png',
+    purple: '/villagerIconPurple.png',
+    green: '../public/villagerIconGreen.png',
+    brown: '../public/villagerIconBrown.png',
+    blue: '../public/villagerIconBlue.png',
+    yellow: '../public/villagerIconYellow.png',
+  }
   console.log('what is checkWW', checkWerewolf)
   console.log('what is checkSeer', checkSeer)
   console.log('what is checkMedic', checkMedic)
   console.log('what is localRole', localRole)
+  console.log('what is votesVill', votesVill)
 
   // return (
   //   <div className="participant">
@@ -86,6 +100,18 @@ const Participant = ({
         <button onClick={() => handleWerewolfVoteButton(participant.identity)}>
           Kill
         </button>
+        <div id={participant.identity}>
+          {votesWere.map((playerId) => {
+            if (playerId === participant.identity) {
+              return (
+                <img
+                  style={{width: '40px', height: '40px'}}
+                  src={pngMapObj[localColor]}
+                ></img>
+              )
+            }
+          })}
+        </div>
       </div>
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
@@ -99,7 +125,7 @@ const Participant = ({
         </h3>
         <h3>{participant.identity}</h3>
 
-        <button onClick={e => handleSeerCheckButton(participant.identity)}>
+        <button onClick={(e) => handleSeerCheckButton(participant.identity)}>
           Check Role
         </button>
       </div>
@@ -121,7 +147,7 @@ const Participant = ({
         </h3>
         <h3>{participant.identity}</h3>
 
-        <button onClick={e => handleMedicSaveButton(participant.identity)}>
+        <button onClick={(e) => handleMedicSaveButton(participant.identity)}>
           Save Person
         </button>
       </div>
@@ -158,6 +184,13 @@ const Participant = ({
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <VideoAudio participant={participant} />
+        <div id={participant.identity}>
+          {votesVill.map((playerId) => {
+            if (playerId === participant.identity) {
+              return <img src={pngMapObj[localColor]}></img>
+            }
+          })}
+        </div>
       </div>
     )
   } else {
