@@ -21,6 +21,16 @@ const Participant = ({
 }) => {
   let i
   let shouldWePlay = true
+  let pngMapObj = {
+    red: '../public/villagerIconRed.png',
+    orange: '../public/villagerIconOrange.png',
+    pink: '../public/villagerIconPink.png',
+    purple: '../public/villagerIconPurple.png',
+    green: '../public/villagerIconGreen.png',
+    brown: '../public/villagerIconBrown.png',
+    blue: '../public/villagerIconBlue.png',
+    yellow: '../public/villagerIconYellow.png',
+  }
   console.log('what is checkWW', checkWerewolf)
   console.log('what is checkSeer', checkSeer)
   console.log('what is checkMedic', checkMedic)
@@ -159,9 +169,9 @@ const Participant = ({
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <VideoAudio participant={participant} />
         <div id={participant.identity}>
-          {playerVotes.map((playerId) => {
+          {votesVill.map((playerId) => {
             if (playerId === participant.identity) {
-              return <img src={pngMapArray[playerId]}></img>
+              return <img src={pngMapObj[localColor]}></img>
             }
           })}
         </div>
