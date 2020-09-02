@@ -53,10 +53,10 @@ const Participant = ({
     //console.log.log("DURING THE DAY NO OTHER CHECKS")
     i = (
       <div>
-        <h3>DURING THE DAY NO OTHER CHECKS , role= {localRole}</h3>
-        <h2>{werewolfChoice} was killed during the night </h2>
+        <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div>
+        <div>{werewolfChoice} was killed during the night </div>
         <div className="participant">
-          <h3>{participant.identity}</h3>
+          <div>{participant.identity}</div>
 
           <button
             onClick={() => handleVillagerVoteButton(participant.identity)}
@@ -70,13 +70,13 @@ const Participant = ({
     //console.log.log("DURING THE DAY AND WE ARE THE SEER")
     i = (
       <div>
-        <h3>DURING THE DAY AND WE ARE THE SEER</h3>
-        <h2>
+        <div>DURING THE DAY AND WE ARE THE SEER</div>
+        <div>
           {werewolfChoice} was killed during the night , role= {localRole}
-        </h2>
-        <h2>{didSeerHit} is a werewolf</h2>
+        </div>
+        <div>{didSeerHit} is a werewolf</div>
         <div className="participant">
-          <h3>{participant.identity}</h3>
+          <div>{participant.identity}</div>
 
           <button
             onClick={() => handleVillagerVoteButton(participant.identity)}
@@ -91,11 +91,11 @@ const Participant = ({
     shouldWePlay = true
     i = (
       <div className="participant">
-        <h3>
+        <div>
           DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A
           WEREWOLF , role= {localRole}
-        </h3>
-        <h3>{participant.identity}</h3>
+        </div>
+        <div>{participant.identity}</div>
 
         <button onClick={() => handleWerewolfVoteButton(participant.identity)}>
           Kill
@@ -119,11 +119,11 @@ const Participant = ({
     shouldWePlay = true
     i = (
       <div className="participant">
-        <h3>
+        <div>
           DURIONG THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE
           ARE THE SEER , role= {localRole}
-        </h3>
-        <h3>{participant.identity}</h3>
+        </div>
+        <div>{participant.identity}</div>
 
         <button onClick={(e) => handleSeerCheckButton(participant.identity)}>
           Check Role
@@ -141,11 +141,11 @@ const Participant = ({
     shouldWePlay = true
     i = (
       <div className="participant">
-        <h3>
+        <div>
           DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEER IS DONE AND MEDIC IS
           NOT DONE AND WE ARE THE MEDIC , role= {localRole}
-        </h3>
-        <h3>{participant.identity}</h3>
+        </div>
+        <div>{participant.identity}</div>
 
         <button onClick={(e) => handleMedicSaveButton(participant.identity)}>
           Save Person
@@ -168,12 +168,12 @@ const Participant = ({
     shouldWePlay = false
     i = (
       <div className="participant">
-        <h3>
+        <div>
           222DURING THE NIGHT BUT WE ARE A VANILLA VILLAGER, OR DONE WITH OUR
           TASK, role= {localRole}
-        </h3>
-        <h3>{participant.identity}</h3>
-        <h3>You are not allowed to see this person during the night</h3>
+        </div>
+        <div>{participant.identity}</div>
+        <div>You are not allowed to see this person during the night</div>
       </div>
     )
   }
