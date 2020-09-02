@@ -1,10 +1,14 @@
 const path = require('path')
+const config = require('./config')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
-
+const session = require('express-session')
 const passport = require('passport')
 
+const db = require('./db')
+
+const {videoToken} = require('./tokens')
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
@@ -12,9 +16,6 @@ module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
-// if (process.env.NODE_ENV === 'test') {
-//   after('close the session store', () => sessionStore.stopExpiringSessions())
-// }
 
 /**
  * In your development environment, you can keep all of your
@@ -24,19 +25,18 @@ module.exports = app
  * keys as environment variables, so that they can still be read by the
  * Node process on process.env
  */
-if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
-// passport.serializeUser((user, done) => done(null, user.id))
+passport.serializeUser((user, done) => done(null, user.id))
 
-// passport.deserializeUser(async (id, done) => {
-//   try {
-//     // const user = await db.models.user.findByPk(id)
-//     done(null, user)
-//   } catch (err) {
-//     done(err)
-//   }
-// })
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await db.models.user.findByPk(id)
+    done(null, user)
+  } catch (err) {
+    done(err)
+  }
+})
 
 const createApp = () => {
   // logging middleware
@@ -49,12 +49,25 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
 
+  // session middleware with passport
+
+  app.use(passport.initialize())
+  app.use(passport.session())
+
   // auth and api routes
-  // app.use('/auth', require('./auth'))
-  // app.use('/api', require('./api'))
+  app.use('/auth', require('./auth'))
+  app.use('/api', require('./api'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
+  const sendTokenResponse = (token, res) => {
+    res.set('Content-Type', 'application/json')
+    res.send(
+      JSON.stringify({
+        token: token.toJwt(),
+      })
+    )
+  }
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -65,6 +78,28 @@ const createApp = () => {
     } else {
       next()
     }
+  })
+
+  app.get('/api/greeting', (req, res) => {
+    const name = req.query.name || 'World'
+    res.setHeader('Content-Type', 'application/json')
+    res.send(JSON.stringify({greeting: `Hello ${name}!`}))
+  })
+
+  app.get('/video/token', (req, res) => {
+    const identity = req.query.identity
+    const room = req.query.room
+
+    console.log('what is config', config)
+    const token = videoToken(identity, room, config)
+    sendTokenResponse(token, res)
+  })
+  app.post('/video/token', (req, res) => {
+    const identity = req.body.identity
+    const room = req.body.room
+    console.log('what is config', config)
+    const token = videoToken(identity, room, config)
+    sendTokenResponse(token, res)
   })
 
   // sends index.html

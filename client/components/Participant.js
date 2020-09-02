@@ -17,7 +17,7 @@ const Participant = ({
   localRole,
   werewolfChoice,
   didSeerHit,
-  gameStarted,
+  gameStarted
 }) => {
   let i
   let shouldWePlay = true
@@ -99,7 +99,7 @@ const Participant = ({
         </h3>
         <h3>{participant.identity}</h3>
 
-        <button onClick={(e) => handleSeerCheckButton(participant.identity)}>
+        <button onClick={e => handleSeerCheckButton(participant.identity)}>
           Check Role
         </button>
       </div>
@@ -121,7 +121,7 @@ const Participant = ({
         </h3>
         <h3>{participant.identity}</h3>
 
-        <button onClick={(e) => handleMedicSaveButton(participant.identity)}>
+        <button onClick={e => handleMedicSaveButton(participant.identity)}>
           Save Person
         </button>
       </div>
