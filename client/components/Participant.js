@@ -29,10 +29,10 @@ const Participant = ({
     orange: '/villagerIconOrange.png',
     pink: '/villagerIconPink.png',
     purple: '/villagerIconPurple.png',
-    green: '../public/villagerIconGreen.png',
-    brown: '../public/villagerIconBrown.png',
-    blue: '../public/villagerIconBlue.png',
-    yellow: '../public/villagerIconYellow.png',
+    green: '/villagerIconGreen.png',
+    brown: '/villagerIconBrown.png',
+    blue: '/villagerIconBlue.png',
+    yellow: '/villagerIconYellow.png',
   }
   console.log('what is checkWW', checkWerewolf)
   console.log('what is checkSeer', checkSeer)
@@ -205,13 +205,21 @@ const Participant = ({
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div className="playerIcon">
-          <img src={pngMapObj[localColor]}></img>
+          <img
+            style={{width: '40px', height: '40px'}}
+            src={pngMapObj[localColor]}
+          ></img>
         </div>
         <VideoAudio participant={participant} localColor={localColor} />
         <div id={participant.identity}>
           {votesVill.map((playerId) => {
             if (playerId === participant.identity) {
-              return <img src={pngMapObj[localColor]}></img>
+              return (
+                <img
+                  style={{width: '40px', height: '40px'}}
+                  src={pngMapObj[localColor]}
+                ></img>
+              )
             }
           })}
         </div>
@@ -219,12 +227,19 @@ const Participant = ({
     )
   } else {
     return (
-      <div>
+      <div className="individualPlayer" style={{width: '15rem'}}>
         {i}
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div>You are not allowed to see video at this time</div>
-        <img src="../public/sleeping.png"></img>
+        <img
+          style={{
+            height: '10rem',
+            borderStyle: 'solid',
+            borderRadius: '25%',
+          }}
+          src="/sleeping.png"
+        ></img>
       </div>
     )
   }
