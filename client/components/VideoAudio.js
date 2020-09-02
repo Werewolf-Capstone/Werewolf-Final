@@ -76,7 +76,7 @@ const VideoAudio = ({participant, shouldWePlay}) => {
   return (
     <div>
       <video
-        style={{height: '15rem', borderStyle: 'solid', borderRadius: '25%'}}
+        style={{height: '10rem', borderStyle: 'solid', borderRadius: '25%'}}
         ref={videoRef}
         autoPlay={shouldWePlay}
         muted={true}

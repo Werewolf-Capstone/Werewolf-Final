@@ -583,11 +583,18 @@ const Room = ({roomName, token, handleLogout}) => {
 
   return (
     <div className="room">
-      <h2>Room: {roomName}</h2>
+      <h4>Room: {roomName}</h4>
       <button onClick={handleLogout}>Log out</button>
       <div className="local-participant">
         {stateRoom ? (
-          <div className="videoContainer" style={{display: 'flex'}}>
+          <div
+            className="videoContainer"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              backgroundColor: 'grey',
+            }}
+          >
             <Participant
               key={stateRoom.localParticipant.sid}
               participant={stateRoom.localParticipant}
