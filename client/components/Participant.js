@@ -17,7 +17,7 @@ const Participant = ({
   localRole,
   werewolfChoice,
   didSeerHit,
-  gameStarted
+  gameStarted,
 }) => {
   let i
   let shouldWePlay = true
@@ -99,7 +99,7 @@ const Participant = ({
         </h3>
         <h3>{participant.identity}</h3>
 
-        <button onClick={e => handleSeerCheckButton(participant.identity)}>
+        <button onClick={(e) => handleSeerCheckButton(participant.identity)}>
           Check Role
         </button>
       </div>
@@ -121,7 +121,7 @@ const Participant = ({
         </h3>
         <h3>{participant.identity}</h3>
 
-        <button onClick={e => handleMedicSaveButton(participant.identity)}>
+        <button onClick={(e) => handleMedicSaveButton(participant.identity)}>
           Save Person
         </button>
       </div>
@@ -158,6 +158,13 @@ const Participant = ({
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <VideoAudio participant={participant} />
+        <div id={participant.identity}>
+          {playerVotes.map((playerId) => {
+            if (playerId === participant.identity) {
+              return <img src={pngMapArray[playerId]}></img>
+            }
+          })}
+        </div>
       </div>
     )
   } else {
@@ -167,6 +174,7 @@ const Participant = ({
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div>You are not allowed to see video at this time</div>
+        <VotingBox></VotingBox>
       </div>
     )
   }
