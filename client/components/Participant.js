@@ -58,11 +58,14 @@ const Participant = ({
         <div className="participant">
           <div>{participant.identity}</div>
 
-          <button
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
             onClick={() => handleVillagerVoteButton(participant.identity)}
           >
             Kill
-          </button>
+          </Button>
         </div>
       </div>
     )
@@ -78,11 +81,14 @@ const Participant = ({
         <div className="participant">
           <div>{participant.identity}</div>
 
-          <button
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
             onClick={() => handleVillagerVoteButton(participant.identity)}
           >
             Kill
-          </button>
+          </Button>
         </div>
       </div>
     )
@@ -97,9 +103,14 @@ const Participant = ({
         </div>
         <div>{participant.identity}</div>
 
-        <button onClick={() => handleWerewolfVoteButton(participant.identity)}>
+        <Button
+          size="small"
+          variant="contained"
+          color="secondary"
+          onClick={() => handleWerewolfVoteButton(participant.identity)}
+        >
           Kill
-        </button>
+        </Button>
         <div id={participant.identity}>
           {votesWere.map((playerId) => {
             if (playerId === participant.identity) {
@@ -125,9 +136,14 @@ const Participant = ({
         </div>
         <div>{participant.identity}</div>
 
-        <button onClick={(e) => handleSeerCheckButton(participant.identity)}>
+        <Button
+          size="small"
+          variant="contained"
+          color="default"
+          onClick={(e) => handleSeerCheckButton(participant.identity)}
+        >
           Check Role
-        </button>
+        </Button>
       </div>
     )
   } else if (
@@ -147,9 +163,14 @@ const Participant = ({
         </div>
         <div>{participant.identity}</div>
 
-        <button onClick={(e) => handleMedicSaveButton(participant.identity)}>
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={(e) => handleMedicSaveButton(participant.identity)}
+        >
           Save Person
-        </button>
+        </Button>
       </div>
     )
   } else if (!gameStarted) {
