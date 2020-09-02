@@ -587,25 +587,28 @@ const Room = ({roomName, token, handleLogout}) => {
       <button onClick={handleLogout}>Log out</button>
       <div className="local-participant">
         {stateRoom ? (
-          <Participant
-            key={stateRoom.localParticipant.sid}
-            participant={stateRoom.localParticipant}
-            handleVillagerVoteButton={handleVillagerVoteButton}
-            handleSeerCheckButton={handleSeerCheckButton}
-            handleMedicSaveButton={handleMedicSaveButton}
-            handleWerewolfVoteButton={handleWerewolfVoteButton}
-            night={night}
-            localRole={localRole}
-            localColor={localColor}
-            checkWerewolf={checkWerewolf}
-            checkSeer={checkSeer}
-            checkMedic={checkMedic}
-            werewolfChoice={werewolfChoice}
-            didSeerHit={didSeerHit}
-            gameStarted={gameStarted}
-            votesVill={votesVill}
-            votesWere={votesWere}
-          />
+          <div className="videoContainer" style={{display: 'flex'}}>
+            <Participant
+              key={stateRoom.localParticipant.sid}
+              participant={stateRoom.localParticipant}
+              handleVillagerVoteButton={handleVillagerVoteButton}
+              handleSeerCheckButton={handleSeerCheckButton}
+              handleMedicSaveButton={handleMedicSaveButton}
+              handleWerewolfVoteButton={handleWerewolfVoteButton}
+              night={night}
+              localRole={localRole}
+              localColor={localColor}
+              checkWerewolf={checkWerewolf}
+              checkSeer={checkSeer}
+              checkMedic={checkMedic}
+              werewolfChoice={werewolfChoice}
+              didSeerHit={didSeerHit}
+              gameStarted={gameStarted}
+              votesVill={votesVill}
+              votesWere={votesWere}
+            />
+            {remoteParticipants}
+          </div>
         ) : (
           ''
         )}
@@ -625,8 +628,6 @@ const Room = ({roomName, token, handleLogout}) => {
         {' '}
         Reset game
       </button>
-      <h3>Remote Participants</h3>
-      <div className="remote-participants">{remoteParticipants}</div>
     </div>
   )
 }

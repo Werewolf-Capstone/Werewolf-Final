@@ -179,11 +179,11 @@ const Participant = ({
   }
   if (shouldWePlay) {
     return (
-      <div>
+      <div className="individualPlayer">
         {i}
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
-        <VideoAudio participant={participant} />
+        <VideoAudio participant={participant} localColor={localColor} />
         <div id={participant.identity}>
           {votesVill.map((playerId) => {
             if (playerId === participant.identity) {
