@@ -1,31 +1,69 @@
 html {
-  /* background-image: url(https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/474910/1f98a31d957af52b03b4972fb8d46d0722de52da.jpg); */
-  background-color: red;
-  /* background-size: 100%; */
+  /* background: url(https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/474910/1f98a31d957af52b03b4972fb8d46d0722de52da.jpg);
+  background-size: 100%; */
 }
 
 body {
-  font-family: sans-serif;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  text-decoration: none;
+#join-game-textfield.label {
+  color: #f50057;
 }
 
-label {
-  display: block;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
+#werewolf-title {
+  font-family: werewolf_moonregular;
+  font-size: 50px;
+  color: #f50057;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
+#werewolf-title::first-letter {
+  font-size: 200%;
+}
+
+#join-game-textfield {
+  color: white;
+}
+
+.input {
+  background-color: grey;
 }
 
 h1 {
-  color: red;
+  color: #f50057;
+  font-family: werewolf_moonregular;
+  text-align: center;
+}
+
+/* #button {
+  font-family: werewolf_moonregular;
+  color: #f50057;
+} */
+
+.ptext {
+  color: #f50057;
+}
+
+a {
+  color: #f50057;
+}
+
+.dialog {
+  background-color: #a1ada1;
+  color: white;
+  font-weight: bold;
+}
+
+.font {
+  font-family: werewolf_moonregular;
 }
