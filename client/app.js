@@ -1,6 +1,6 @@
 import React from 'react'
 
-import VideoChat from './VideoChat'
+import VideoChat from './components/VideoChat'
 
 import '@babel/polyfill'
 
