@@ -204,6 +204,9 @@ const Participant = ({
         {i}
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
+        <div className="playerIcon">
+          <img src={pngMapObj[localColor]}></img>
+        </div>
         <VideoAudio participant={participant} localColor={localColor} />
         <div id={participant.identity}>
           {votesVill.map((playerId) => {
@@ -221,6 +224,7 @@ const Participant = ({
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div>You are not allowed to see video at this time</div>
+        <img src="../public/sleeping.png"></img>
       </div>
     )
   }
