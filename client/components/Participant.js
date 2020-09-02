@@ -206,7 +206,7 @@ const Participant = ({
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div className="playerIcon">
           <img
-            style={{width: '40px', height: '40px'}}
+            style={{width: '40px', height: '40px', position: 'absolute'}}
             src={pngMapObj[localColor]}
           ></img>
         </div>
