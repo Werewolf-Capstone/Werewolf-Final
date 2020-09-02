@@ -19,6 +19,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [werewolfChoice, setWerewolfChoice] = useState(false)
   const [didSeerHit, setDidSeerHit] = useState(false)
   const [votesVill, setVotesVill] = useState([])
+  const [votesWere, setVotesWere] = useState([])
 
   //console.log("WHAT IS night", night)
   const testingReset = () => {
@@ -506,7 +507,8 @@ const Room = ({roomName, token, handleLogout}) => {
           setCheckSeer(gameState.checkSeer)
           setCheckMedic(gameState.checkMedic)
           setCheckWerewolf(gameState.checkWerewolf)
-          setVotesVill(gameState.votesVill)
+          setVotesVill(gameState.votesVillagers)
+          setVotesWere(gameState.votesWerewolves)
 
           let newParticipants = gameState.players.filter(
             (player) => !gameState.dead.includes(player)
@@ -574,6 +576,7 @@ const Room = ({roomName, token, handleLogout}) => {
         gameStarted={gameStarted}
         localColor={localColor}
         votesVill={votesVill}
+        votesWere={votesWere}
       />
     )
   })
@@ -601,6 +604,7 @@ const Room = ({roomName, token, handleLogout}) => {
             didSeerHit={didSeerHit}
             gameStarted={gameStarted}
             votesVill={votesVill}
+            votesWere={votesWere}
           />
         ) : (
           ''
