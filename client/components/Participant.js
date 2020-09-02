@@ -34,11 +34,11 @@ const Participant = ({
     blue: '../public/villagerIconBlue.png',
     yellow: '../public/villagerIconYellow.png',
   }
-  console.log('what is checkWW', checkWerewolf)
-  console.log('what is checkSeer', checkSeer)
-  console.log('what is checkMedic', checkMedic)
-  console.log('what is localRole', localRole)
-  console.log('what is votesVill', votesVill)
+  //console.log('what is checkWW', checkWerewolf)
+  //console.log('what is checkSeer', checkSeer)
+  //console.log('what is checkMedic', checkMedic)
+  //console.log('what is localRole', localRole)
+  //console.log('what is votesVill', votesVill)
 
   // return (
   //   <div className="participant">
@@ -48,9 +48,9 @@ const Participant = ({
   //   </div>
   // );
   if (!participant) return
-  //console.log.log("what is participant11111111", participant)
+  ////console.log.log("what is participant11111111", participant)
   if (!night) {
-    //console.log.log("DURING THE DAY NO OTHER CHECKS")
+    ////console.log.log("DURING THE DAY NO OTHER CHECKS")
     i = (
       <div>
         <h3>DURING THE DAY NO OTHER CHECKS , role= {localRole}</h3>
@@ -67,7 +67,7 @@ const Participant = ({
       </div>
     )
   } else if (!night && localRole === 'seer') {
-    //console.log.log("DURING THE DAY AND WE ARE THE SEER")
+    ////console.log.log("DURING THE DAY AND WE ARE THE SEER")
     i = (
       <div>
         <h3>DURING THE DAY AND WE ARE THE SEER</h3>
@@ -87,7 +87,7 @@ const Participant = ({
       </div>
     )
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
-    //console.log.log("DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A WEREWOLF")
+    ////console.log.log("DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A WEREWOLF")
     shouldWePlay = true
     i = (
       <div className="participant">
@@ -115,7 +115,7 @@ const Participant = ({
       </div>
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
-    //console.log.log("DURIONG THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE THE SEER")
+    ////console.log.log("DURIONG THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE THE SEER")
     shouldWePlay = true
     i = (
       <div className="participant">
@@ -137,7 +137,7 @@ const Participant = ({
     !checkMedic &&
     localRole === 'medic'
   ) {
-    //console.log.log("DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEE IS DONE AND MEDIC IS NOT DONE AND WE ARE THE MEDIC")
+    ////console.log.log("DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEE IS DONE AND MEDIC IS NOT DONE AND WE ARE THE MEDIC")
     shouldWePlay = true
     i = (
       <div className="participant">
@@ -153,7 +153,7 @@ const Participant = ({
       </div>
     )
   } else if (!gameStarted) {
-    console.log('SEER IS STILL NOT SEEING GAME STARTED')
+    //console.log('SEER IS STILL NOT SEEING GAME STARTED')
     shouldWePlay = true
     i = (
       <div className="participant">
@@ -163,7 +163,7 @@ const Participant = ({
       </div>
     )
   } else {
-    //console.log.log("DURING THE NIGHT BUT WE ARE A VANILLA VILLAGER")
+    ////console.log.log("DURING THE NIGHT BUT WE ARE A VANILLA VILLAGER")
 
     shouldWePlay = false
     i = (
