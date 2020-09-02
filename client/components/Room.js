@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import Video from 'twilio-video'
 import Participant from './Participant'
 import {db} from './firebase'
+import {Button} from '@material-ui/core'
 
 const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
@@ -584,7 +585,14 @@ const Room = ({roomName, token, handleLogout}) => {
   return (
     <div className="room">
       <h4>Room: {roomName}</h4>
-      <button onClick={handleLogout}>Log out</button>
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
+        onClick={handleLogout}
+      >
+        Log out
+      </Button>
       <div className="local-participant">
         {stateRoom ? (
           <div
@@ -624,21 +632,27 @@ const Room = ({roomName, token, handleLogout}) => {
           ''
         )}
       </div>
-      <button
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
         onClick={() => {
           handleStartGame()
         }}
       >
         Start Game
-      </button>
-      <button
+      </Button>
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
         onClick={() => {
           testingReset()
         }}
       >
         {' '}
         Reset game
-      </button>
+      </Button>
     </div>
   )
 }
