@@ -16,17 +16,12 @@ const Lobby = ({
       flexdirection="column"
       justifycontent="center"
     >
-      <Box
-        display="flex"
-        width="100%"
-        justifycontent="center"
-        alignItems="center"
-      >
+      <Box display="flex" justifycontent="center" alignItems="center">
         <h2>Enter a room</h2>
       </Box>
 
       <form onSubmit={handleSubmit}>
-        <Box>
+        <Box marginTop="2%">
           <label htmlFor="name"></label>
           <TextField
             type="text"
@@ -40,7 +35,7 @@ const Lobby = ({
           />
         </Box>
 
-        <Box>
+        <Box marginTop="2%">
           <label htmlFor="room"></label>
           <TextField
             type="text"
@@ -54,9 +49,11 @@ const Lobby = ({
           />
         </Box>
 
-        <Button type="submit" variant="outlined" color="secondary">
-          Submit
-        </Button>
+        <Box display="flex" justifycontent="center" marginTop="2%" width="100%">
+          <Button type="submit" variant="outlined" color="secondary">
+            Submit
+          </Button>
+        </Box>
       </form>
     </Container>
   )
