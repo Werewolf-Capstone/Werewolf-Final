@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-//import '../public/script.css'
+import '../public/script.css'
 import App from './app'
 import '@babel/polyfill'
 
