@@ -73,7 +73,6 @@ const VideoAudio = ({participant, shouldWePlay}) => {
       <video
         style={{
           height: '10rem',
-          width: '10rem',
           borderStyle: 'solid',
           borderRadius: '25%',
         }}

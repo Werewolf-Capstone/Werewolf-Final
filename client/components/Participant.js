@@ -157,9 +157,9 @@ const Participant = ({
     shouldWePlay = true
     i = (
       <div className="participant">
-        <h3>GAME NOT STARTED, role= {localRole}</h3>
-        <h3>{participant.identity}</h3>
-        <h3>You are not allowed to see this person during the night</h3>
+        <div>GAME NOT STARTED, role= {localRole}</div>
+        <div>{participant.identity}</div>
+        <div>You are not allowed to see this person during the night</div>
       </div>
     )
   } else {
