@@ -3,29 +3,29 @@ import Lobby from './Lobby'
 import Room from './Room'
 import {db} from './firebase'
 
-const roomObj = {
-  Night: true,
-  checkMajority: false,
-  checkMedic: false,
-  checkSeer: false,
-  checkWerewolf: false,
-  dead: [],
-  gameStarted: false,
-  medic: '',
-  medicChoice: '',
-  players: [],
-  seer: '',
-  seerChoice: '',
-  villagers: [],
-  villagersChoice: '',
-  votesVillagers: [],
-  votesWerewolves: [],
-  votesWerewolvesColors: [],
-  werewolvesChoice: '',
-  werewolves: [],
-}
-
 const VideoChat = () => {
+  const roomObj = {
+    Night: true,
+    checkMajority: false,
+    checkMedic: false,
+    checkSeer: false,
+    checkWerewolf: false,
+    dead: [],
+    gameStarted: false,
+    medic: '',
+    medicChoice: '',
+    players: [],
+    seer: '',
+    seerChoice: '',
+    villagers: [],
+    villagersChoice: '',
+    votesVillagers: [],
+    votesWerewolves: [],
+    votesWerewolvesColors: [],
+    werewolvesChoice: '',
+    werewolves: [],
+  }
+
   const [username, setUsername] = useState('')
   const [roomName, setRoomName] = useState('')
   const [token, setToken] = useState(null)
