@@ -1,8 +1,9 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable complexity */
 import React, {useState, useEffect, useRef} from 'react'
-
 import VideoAudio from './VideoAudio'
+import {Button} from '@material-ui/core'
+import {db} from './firebase'
 
 const Participant = ({
   participant,
@@ -21,24 +22,28 @@ const Participant = ({
   votesVill,
   localColor,
   votesWere,
+  votesWereColors,
+  imageSrc,
 }) => {
   let i
   let shouldWePlay = true
+
   let pngMapObj = {
     red: '/villagerIconRed.png',
     orange: '/villagerIconOrange.png',
     pink: '/villagerIconPink.png',
     purple: '/villagerIconPurple.png',
-    green: '../public/villagerIconGreen.png',
-    brown: '../public/villagerIconBrown.png',
-    blue: '../public/villagerIconBlue.png',
-    yellow: '../public/villagerIconYellow.png',
+    green: '/villagerIconGreen.png',
+    brown: '/villagerIconBrown.png',
+    blue: '/villagerIconBlue.png',
+    yellow: '/villagerIconYellow.png',
   }
-  console.log('what is checkWW', checkWerewolf)
-  console.log('what is checkSeer', checkSeer)
-  console.log('what is checkMedic', checkMedic)
-  console.log('what is localRole', localRole)
-  console.log('what is votesVill', votesVill)
+
+  //console.log('what is checkWW', checkWerewolf)
+  //console.log('what is checkSeer', checkSeer)
+  //console.log('what is checkMedic', checkMedic)
+  //console.log('what is localRole', localRole)
+  //console.log('what is votesVill', votesVill)
 
   // return (
   //   <div className="participant">
@@ -47,66 +52,80 @@ const Participant = ({
   //     <audio ref={audioRef} autoPlay={true} muted={true} />
   //   </div>
   // );
+
   if (!participant) return
-  //console.log.log("what is participant11111111", participant)
+
   if (!night) {
-    //console.log.log("DURING THE DAY NO OTHER CHECKS")
     i = (
       <div>
-        <h3>DURING THE DAY NO OTHER CHECKS , role= {localRole}</h3>
-        <h2>{werewolfChoice} was killed during the night </h2>
+        <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div>
+        <div style={{color: 'red'}}>
+          {werewolfChoice} was killed during the night{' '}
+        </div>
         <div className="participant">
-          <h3>{participant.identity}</h3>
+          <div>{participant.identity}</div>
 
-          <button
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
             onClick={() => handleVillagerVoteButton(participant.identity)}
           >
             Kill
-          </button>
+          </Button>
         </div>
       </div>
     )
   } else if (!night && localRole === 'seer') {
-    //console.log.log("DURING THE DAY AND WE ARE THE SEER")
+    ////console.log.log("DURING THE DAY AND WE ARE THE SEER")
     i = (
       <div>
-        <h3>DURING THE DAY AND WE ARE THE SEER</h3>
-        <h2>
+        <div>DURING THE DAY AND WE ARE THE SEER</div>
+        <div style={{color: 'red'}}>
           {werewolfChoice} was killed during the night , role= {localRole}
-        </h2>
-        <h2>{didSeerHit} is a werewolf</h2>
+        </div>
+        <div style={{color: 'red'}}>{didSeerHit} is a werewolf</div>
         <div className="participant">
-          <h3>{participant.identity}</h3>
+          <div>{participant.identity}</div>
 
-          <button
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
             onClick={() => handleVillagerVoteButton(participant.identity)}
           >
             Kill
-          </button>
+          </Button>
         </div>
       </div>
     )
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
-    //console.log.log("DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A WEREWOLF")
     shouldWePlay = true
     i = (
       <div className="participant">
-        <h3>
+        <div>
           DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A
           WEREWOLF , role= {localRole}
-        </h3>
-        <h3>{participant.identity}</h3>
+        </div>
+        <div>{participant.identity}</div>
 
-        <button onClick={() => handleWerewolfVoteButton(participant.identity)}>
+        <Button
+          size="small"
+          variant="contained"
+          color="secondary"
+          onClick={() =>
+            handleWerewolfVoteButton(participant.identity, localColor)
+          }
+        >
           Kill
-        </button>
+        </Button>
         <div id={participant.identity}>
-          {votesWere.map((playerId) => {
+          {votesWere.map((playerId, idx) => {
             if (playerId === participant.identity) {
               return (
                 <img
                   style={{width: '40px', height: '40px'}}
-                  src={pngMapObj[localColor]}
+                  src={pngMapObj[votesWereColors[idx]]}
                 ></img>
               )
             }
@@ -115,19 +134,23 @@ const Participant = ({
       </div>
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
-    //console.log.log("DURIONG THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE THE SEER")
     shouldWePlay = true
     i = (
       <div className="participant">
-        <h3>
-          DURIONG THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE
-          ARE THE SEER , role= {localRole}
-        </h3>
-        <h3>{participant.identity}</h3>
+        <div>
+          DURING THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE
+          THE SEER , role= {localRole}
+        </div>
+        <div>{participant.identity}</div>
 
-        <button onClick={(e) => handleSeerCheckButton(participant.identity)}>
+        <Button
+          size="small"
+          variant="contained"
+          color="default"
+          onClick={(e) => handleSeerCheckButton(participant.identity)}
+        >
           Check Role
-        </button>
+        </Button>
       </div>
     )
   } else if (
@@ -137,57 +160,82 @@ const Participant = ({
     !checkMedic &&
     localRole === 'medic'
   ) {
-    //console.log.log("DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEE IS DONE AND MEDIC IS NOT DONE AND WE ARE THE MEDIC")
     shouldWePlay = true
     i = (
       <div className="participant">
-        <h3>
+        <div>
           DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEER IS DONE AND MEDIC IS
           NOT DONE AND WE ARE THE MEDIC , role= {localRole}
-        </h3>
-        <h3>{participant.identity}</h3>
+        </div>
+        <div>{participant.identity}</div>
 
-        <button onClick={(e) => handleMedicSaveButton(participant.identity)}>
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={(e) => handleMedicSaveButton(participant.identity)}
+        >
           Save Person
-        </button>
+        </Button>
       </div>
     )
   } else if (!gameStarted) {
-    console.log('SEER IS STILL NOT SEEING GAME STARTED')
     shouldWePlay = true
     i = (
       <div className="participant">
-        <h3>GAME NOT STARTED, role= {localRole}</h3>
-        <h3>{participant.identity}</h3>
-        <h3>You are not allowed to see this person during the night</h3>
+        <div>GAME NOT STARTED, role= {localRole}</div>
+        <div>{participant.identity}</div>
       </div>
     )
   } else {
-    //console.log.log("DURING THE NIGHT BUT WE ARE A VANILLA VILLAGER")
-
     shouldWePlay = false
     i = (
       <div className="participant">
-        <h3>
+        <div>
           222DURING THE NIGHT BUT WE ARE A VANILLA VILLAGER, OR DONE WITH OUR
           TASK, role= {localRole}
-        </h3>
-        <h3>{participant.identity}</h3>
-        <h3>You are not allowed to see this person during the night</h3>
+        </div>
+        <div>{participant.identity}</div>
       </div>
     )
   }
   if (shouldWePlay) {
     return (
-      <div>
-        {i}
+      <div
+        className="individualPlayer"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-around',
+          width: '15rem',
+          margin: '5px',
+        }}
+      >
+        <div> {i} </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
-        <VideoAudio participant={participant} />
+        <div className="playerIcon">
+          <img
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '25%',
+              borderStyle: 'solid',
+              position: 'absolute',
+            }}
+            src={imageSrc}
+          ></img>
+        </div>
+        <VideoAudio participant={participant} localColor={localColor} />
         <div id={participant.identity}>
           {votesVill.map((playerId) => {
             if (playerId === participant.identity) {
-              return <img src={pngMapObj[localColor]}></img>
+              return (
+                <img
+                  style={{width: '40px', height: '40px'}}
+                  src={imageSrc}
+                ></img>
+              )
             }
           })}
         </div>
@@ -195,11 +243,39 @@ const Participant = ({
     )
   } else {
     return (
-      <div>
-        {i}
+      <div
+        className="individualPlayer"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-around',
+          width: '15rem',
+          margin: '5px',
+        }}
+      >
+        <div> {i} </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
-        <div>You are not allowed to see video at this time</div>
+        <div className="playerIcon">
+          <img
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '25%',
+              borderStyle: 'solid',
+              position: 'absolute',
+            }}
+            src={imageSrc}
+          ></img>
+        </div>
+        <img
+          style={{
+            height: '10rem',
+            borderStyle: 'solid',
+            borderRadius: '25%',
+          }}
+          src="/sleeping.png"
+        ></img>
       </div>
     )
   }
