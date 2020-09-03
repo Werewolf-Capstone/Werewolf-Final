@@ -237,7 +237,18 @@ const Participant = ({
         {i}
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
-        <div>You are not allowed to see video at this time</div>
+        <div className="playerIcon">
+          <img
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '25%',
+              borderStyle: 'solid',
+              position: 'absolute',
+            }}
+            src={pngMapObj[localColor]}
+          ></img>
+        </div>
         <img
           style={{
             height: '10rem',
