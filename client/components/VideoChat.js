@@ -58,11 +58,11 @@ const VideoChat = () => {
       db.collection('rooms')
         .doc(roomName)
         .get()
-        .then((snapshot) => {
+        .then(async (snapshot) => {
           if (snapshot.exists) {
-            const players = snapshot.child('players')
-            const gameStarted = snapshot.child('gameStarted')
-            const gameOver = snapshot.child('gameOver')
+            const players = await snapshot.get('players')
+            const gameStarted = await snapshot.get('gameStarted')
+            const gameOver = await snapshot.get('gameOver')
             if (!players.length) {
               //if room exists and no one is in it
               db.collection('rooms').doc(roomName).set(roomObj, {merge: true})
@@ -72,20 +72,16 @@ const VideoChat = () => {
               //if room exists and ppl are in it and it has started but not over
             } else if (players.length && gameStarted && gameOver) {
               //if room exists and ppl are in it and it has started but it is over
-              db.collection('rooms').doc(roomName).set(roomObj, {merge: true})
+              console.log(
+                'there are players and game is started and game is over'
+              )
+              db.collection('rooms').doc(roomName).set(roomObj)
             }
           } else {
             //if room does not exist
             db.collection('rooms').doc(roomName).set(roomObj)
           }
         })
-
-      // if (
-      //   !db.collection('rooms').doc(roomName).get() ||
-      //   (await db.collection('rooms').doc(roomName).get()).data().players
-      // ) {
-      //   db.collection('rooms').doc(roomName).set(roomObj, {merge: true})
-      // }
     },
     [roomName, username]
   )
