@@ -1,7 +1,10 @@
 module.exports = {
   twilio: {
-    accountSid: 'ACaaa52228373d321a6660480b151db441',
-    apiKey: 'SKe137c3bf6b50b72039e1d1f202b97b1f',
-    apiSecret: 'jRHpVMCmtd7fliFsNfalGKozOmrr8L6r',
+    accountSid: 'AC355d9b677de935154cd162a29d3e0ab1',
+    apiKey: 'SKf0c4bf5bbad388a07f486b8499b14666',
+    apiSecret: '3zLIopAHulk8U0IO5XRuiULsqBDRUHsr',
   },
 }
+
+// SKf0c4bf5bbad388a07f486b8499b14666
+// 3zLIopAHulk8U0IO5XRuiULsqBDRUHsr
