@@ -1,11 +1,11 @@
-/* @font-face {
+@font-face {
   font-family: 'werewolf_moonregular';
   src: url('../werewolf-moon-font-kit/werewolf_moon-webfont.woff2')
       format('woff2'),
     url('../werewolf-moon-font-kit/werewolf_moon-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-} */
+}
 
 html {
   /* background: url(https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/474910/1f98a31d957af52b03b4972fb8d46d0722de52da.jpg);
