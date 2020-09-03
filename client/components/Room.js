@@ -30,6 +30,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [didSeerHit, setDidSeerHit] = useState(false)
   const [votesVill, setVotesVill] = useState([])
   const [votesWere, setVotesWere] = useState([])
+  const [votesWereColors, setVotesWereColors] = useState([])
 
   ////console.log("WHAT IS night", night)
   const testingReset = () => {
@@ -230,18 +231,26 @@ const Room = ({roomName, token, handleLogout}) => {
       .update({votesVillagers: votesVillagers})
   }
 
-  async function handleWerewolfVoteButton(participantIdentity) {
-    let votesWerewolves = await db.collection('rooms').doc(roomName).get()
+  async function handleWerewolfVoteButton(participantIdentity, localColor) {
+    let gameState = await db.collection('rooms').doc(roomName).get()
 
     //console.log('Are we getting the correct', participantIdentity)
 
-    votesWerewolves = votesWerewolves.data().votesWerewolves
+    let votesWerewolves = gameState.data().votesWerewolves
     votesWerewolves.push(participantIdentity)
 
     await db
       .collection('rooms')
       .doc(roomName)
       .update({votesWerewolves: votesWerewolves})
+
+    let votesWerewolvesColors = gameState.data().votesWerewolvesColors
+    votesWerewolvesColors.push(localColor)
+
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({votesWerewolvesColors: votesWerewolvesColors})
   }
 
   async function handleSeerCheckButton(participantIdentity) {
@@ -372,7 +381,7 @@ const Room = ({roomName, token, handleLogout}) => {
     //   let j = Math.floor(Math.random() * (i + 1));
     //   [users[i], users[j]] = [users[j], users[i]];
     // }
-    let colors = [
+    const colors = [
       'red',
       'orange',
       'pink',
@@ -529,6 +538,7 @@ const Room = ({roomName, token, handleLogout}) => {
           setCheckWerewolf(gameState.checkWerewolf)
           setVotesVill(gameState.votesVillagers)
           setVotesWere(gameState.votesWerewolves)
+          setVotesWereColors(gameState.votesWerewolvesColors)
 
           let newParticipants = gameState.players.filter(
             (player) => !gameState.dead.includes(player)
@@ -603,6 +613,7 @@ const Room = ({roomName, token, handleLogout}) => {
         localColor={localColor}
         votesVill={votesVill}
         votesWere={votesWere}
+        votesWereColors={votesWereColors}
       />
     )
   })
@@ -656,6 +667,7 @@ const Room = ({roomName, token, handleLogout}) => {
               gameStarted={gameStarted}
               votesVill={votesVill}
               votesWere={votesWere}
+              votesWereColors={votesWereColors}
             />
             {remoteParticipants}
           </div>
