@@ -3,6 +3,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import Video from 'twilio-video'
 import Participant from './Participant'
 import {db} from './firebase'
+import {Button} from '@material-ui/core'
 
 const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
@@ -607,12 +608,36 @@ const Room = ({roomName, token, handleLogout}) => {
   })
 
   return (
-    <div className="room">
-      <h2>Room: {roomName}</h2>
-      <button onClick={handleLogout}>Log out</button>
-      <div className="local-participant">
+    <div
+      style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      className="room"
+    >
+      <h4>Room: {roomName}</h4>
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
+        onClick={handleLogout}
+      >
+        Log out
+      </Button>
+      <div
+        style={{display: 'flex', justifyContent: 'center'}}
+        className="local-participant"
+      >
         {stateRoom ? (
-          <div>
+          <div
+            className="videoContainer"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              backgroundColor: 'grey',
+              // width: '90%',
+              padding: 5,
+              margin: 20,
+            }}
+          >
             <Participant
               key={stateRoom.localParticipant.sid}
               participant={stateRoom.localParticipant}
@@ -638,21 +663,27 @@ const Room = ({roomName, token, handleLogout}) => {
           ''
         )}
       </div>
-      <button
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
         onClick={() => {
           handleStartGame()
         }}
       >
         Start Game
-      </button>
-      <button
+      </Button>
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
         onClick={() => {
           testingReset()
         }}
       >
         {' '}
         Reset game
-      </button>
+      </Button>
     </div>
   )
 }
