@@ -3,6 +3,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import VideoAudio from './VideoAudio'
 import {Button} from '@material-ui/core'
+import {db} from './firebase'
 
 const Participant = ({
   participant,
@@ -34,6 +35,18 @@ const Participant = ({
     brown: '/villagerIconBrown.png',
     blue: '/villagerIconBlue.png',
     yellow: '/villagerIconYellow.png',
+  }
+  findColorOfParticipant = async (pId) => {
+    let gameState = await db.collection('rooms').doc(roomName).get()
+
+    let participantArr = gameState.data().players
+    let playerColors = gameState.data().participantsColors
+
+    let idx = participantArr.indexOf(pId)
+
+    let color = playerColors[idx]
+
+    return colo
   }
   //console.log('what is checkWW', checkWerewolf)
   //console.log('what is checkSeer', checkSeer)
