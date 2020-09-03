@@ -52,7 +52,12 @@ const VideoChat = () => {
         },
       }).then((res) => res.json())
       setToken(data.token)
-      db.collection('rooms').doc(roomName).set(roomObj, {merge: true})
+      if (
+        !db.collection('rooms').doc(roomName) ||
+        (await db.collection('rooms').doc(roomName).get()).data().players
+      ) {
+        db.collection('rooms').doc(roomName).set(roomObj, {merge: true})
+      }
     },
     [roomName, username]
   )
