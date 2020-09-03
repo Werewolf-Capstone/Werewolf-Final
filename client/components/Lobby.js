@@ -15,6 +15,7 @@ const Lobby = ({
         display="flex"
         maxWidth="sm"
         flexdirection="column"
+        className="fadeIn2 animated"
       >
         <Box textAlign="center">
           <h2>Enter a room</h2>

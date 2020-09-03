@@ -59,6 +59,12 @@ h1 {
   text-align: center;
 }
 
+h2 {
+  color: #f50057;
+  font-family: werewolf_moonregular;
+  text-align: center;
+}
+
 /* #button {
   font-family: werewolf_moonregular;
   color: #f50057;
