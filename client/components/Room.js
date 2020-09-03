@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import Video from 'twilio-video'
 import Participant from './Participant'
 import {db} from './firebase'
+import {Button} from '@material-ui/core'
 
 const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
@@ -582,51 +583,82 @@ const Room = ({roomName, token, handleLogout}) => {
   })
 
   return (
-    <div className="room">
-      <h2>Room: {roomName}</h2>
-      <button onClick={handleLogout}>Log out</button>
-      <div className="local-participant">
+    <div
+      style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      className="room"
+    >
+      <h4>Room: {roomName}</h4>
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
+        onClick={handleLogout}
+      >
+        Log out
+      </Button>
+      <div
+        style={{display: 'flex', justifyContent: 'center'}}
+        className="local-participant"
+      >
         {stateRoom ? (
-          <Participant
-            key={stateRoom.localParticipant.sid}
-            participant={stateRoom.localParticipant}
-            handleVillagerVoteButton={handleVillagerVoteButton}
-            handleSeerCheckButton={handleSeerCheckButton}
-            handleMedicSaveButton={handleMedicSaveButton}
-            handleWerewolfVoteButton={handleWerewolfVoteButton}
-            night={night}
-            localRole={localRole}
-            localColor={localColor}
-            checkWerewolf={checkWerewolf}
-            checkSeer={checkSeer}
-            checkMedic={checkMedic}
-            werewolfChoice={werewolfChoice}
-            didSeerHit={didSeerHit}
-            gameStarted={gameStarted}
-            votesVill={votesVill}
-            votesWere={votesWere}
-          />
+          <div
+            className="videoContainer"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              backgroundColor: 'grey',
+              // width: '90%',
+              padding: 5,
+              margin: 20,
+            }}
+          >
+            <Participant
+              key={stateRoom.localParticipant.sid}
+              participant={stateRoom.localParticipant}
+              handleVillagerVoteButton={handleVillagerVoteButton}
+              handleSeerCheckButton={handleSeerCheckButton}
+              handleMedicSaveButton={handleMedicSaveButton}
+              handleWerewolfVoteButton={handleWerewolfVoteButton}
+              night={night}
+              localRole={localRole}
+              localColor={localColor}
+              checkWerewolf={checkWerewolf}
+              checkSeer={checkSeer}
+              checkMedic={checkMedic}
+              werewolfChoice={werewolfChoice}
+              didSeerHit={didSeerHit}
+              gameStarted={gameStarted}
+              votesVill={votesVill}
+              votesWere={votesWere}
+            />
+            {remoteParticipants}
+          </div>
         ) : (
           ''
         )}
       </div>
-      <button
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
         onClick={() => {
           handleStartGame()
         }}
       >
         Start Game
-      </button>
-      <button
+      </Button>
+      <Button
+        size="small"
+        variant="contained"
+        color="secondary"
         onClick={() => {
           testingReset()
         }}
       >
         {' '}
         Reset game
-      </button>
-      <h3>Remote Participants</h3>
-      <div className="remote-participants">{remoteParticipants}</div>
+      </Button>
     </div>
   )
 }
