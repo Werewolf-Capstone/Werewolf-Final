@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {SignalingOutgoingMessageInvalidError} from 'twilio-video'
 
 const VideoAudio = ({participant, shouldWePlay}) => {
   const videoRef = useRef()

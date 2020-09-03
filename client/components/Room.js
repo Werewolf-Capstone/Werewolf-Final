@@ -7,7 +7,9 @@ import {Button} from '@material-ui/core'
 
 const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
-  const [participants, _setParticipants] = useState(['hello'])
+  const [participants, _setParticipants] = useState([])
+  const [partIdentities, setPartIdentities] = useState([])
+  const [participantsColors, setParticipantsColors] = useState([])
 
   const participantsRef = useRef(participants)
 
@@ -31,6 +33,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [votesVill, setVotesVill] = useState([])
   const [votesWere, setVotesWere] = useState([])
   const [votesWereColors, setVotesWereColors] = useState([])
+  const [colors, setColors] = useState([])
 
   ////console.log("WHAT IS night", night)
   const testingReset = () => {
@@ -369,6 +372,7 @@ const Room = ({roomName, token, handleLogout}) => {
     //console.log('what is gameState in assignRoles', gameState)
 
     let players = gameState.data().players
+    let playerColors = gameState.data().colors
 
     //randomize later
     ////console.log('what is users in assign roles', users);
@@ -396,6 +400,7 @@ const Room = ({roomName, token, handleLogout}) => {
       ////console.log('what does my user look like', doc.id);
 
       colorPlayer.push(playerName)
+      playerColors.push(colors[i])
       if (i < 2) {
         ////console.log('werewolves are ', werewolves);
         werewolves.push(playerName)
@@ -517,6 +522,9 @@ const Room = ({roomName, token, handleLogout}) => {
 
       let prevPlayers = gameState.data().players
       prevPlayers.push(room.localParticipant.identity)
+
+      let participantsColors = gameState.data().participantsColors
+
       db.collection('rooms').doc(roomName).update({players: prevPlayers})
 
       room.on('participantConnected', participantConnected)
@@ -539,6 +547,11 @@ const Room = ({roomName, token, handleLogout}) => {
           setVotesVill(gameState.votesVillagers)
           setVotesWere(gameState.votesWerewolves)
           setVotesWereColors(gameState.votesWerewolvesColors)
+          setPartIdentities(gameState.players)
+
+          let colors = gameState.colors
+
+          setColors(colors)
 
           let newParticipants = gameState.players.filter(
             (player) => !gameState.dead.includes(player)
@@ -594,6 +607,23 @@ const Room = ({roomName, token, handleLogout}) => {
 
   const remoteParticipants = participants.map((participant, idx) => {
     if (idx === 0) return
+    let pngMapObj = {
+      red: '/villagerIconRed.png',
+      orange: '/villagerIconOrange.png',
+      pink: '/villagerIconPink.png',
+      purple: '/villagerIconPurple.png',
+      green: '/villagerIconGreen.png',
+      brown: '/villagerIconBrown.png',
+      blue: '/villagerIconBlue.png',
+      yellow: '/villagerIconYellow.png',
+    }
+
+    let correctIdx = partIdentities.indexOf(participant.identity)
+    let playerColor = colors[correctIdx]
+    let fileName = pngMapObj[playerColor]
+
+    console.log('what is file', fileName)
+
     return (
       <Participant
         key={participant.sid}
@@ -614,9 +644,35 @@ const Room = ({roomName, token, handleLogout}) => {
         votesVill={votesVill}
         votesWere={votesWere}
         votesWereColors={votesWereColors}
+        imageSrc={fileName}
       />
     )
   })
+
+  let pngMapObj = {
+    red: '/villagerIconRed.png',
+    orange: '/villagerIconOrange.png',
+    pink: '/villagerIconPink.png',
+    purple: '/villagerIconPurple.png',
+    green: '/villagerIconGreen.png',
+    brown: '/villagerIconBrown.png',
+    blue: '/villagerIconBlue.png',
+    yellow: '/villagerIconYellow.png',
+  }
+
+  let players = partIdentities
+
+  if (!stateRoom) return null
+  if (!stateRoom.localParticipant) return null
+  console.log('WHAT IS LOCAL P', stateRoom.localParticipant.identity)
+  let idx = players.indexOf(stateRoom.localParticipant.identity)
+  console.log('what is idx', idx)
+
+  let playerColor = colors[idx]
+  console.log('player color is', playerColor)
+  let fileName = pngMapObj[playerColor]
+
+  console.log('what is file', fileName)
 
   return (
     <div
@@ -668,6 +724,8 @@ const Room = ({roomName, token, handleLogout}) => {
               votesVill={votesVill}
               votesWere={votesWere}
               votesWereColors={votesWereColors}
+              roomName={stateRoom}
+              imageSrc={fileName}
             />
             {remoteParticipants}
           </div>
