@@ -12,6 +12,11 @@
   background-size: 100%;
 }
 
+.day {
+  background: url(https://pro2-bar-s3-cdn-cf.myportfolio.com/bf7272a8d53eb8c0faec1188fca2a40a/199f56d6-5f7f-4e64-a3d4-ae0ecb76be2f_rw_3840.jpg?h=0a2a21d4f6701d13ba3863c587e0dc7c);
+  background-size: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
