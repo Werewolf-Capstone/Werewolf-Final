@@ -98,7 +98,7 @@ a {
   -webkit-animation-duration: 2s;
   animation-duration: 2s;
 }
-/*Animation definitions*/
+/*fadeInUp animation definition*/
 @-webkit-keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -128,4 +128,36 @@ a {
 .fadeInUp {
   -webkit-animation-name: fadeInUp;
   animation-name: fadeInUp;
+}
+
+/*fadeIn animation definition*/
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+.fadeIn1 {
+  animation-delay: 1s;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+.fadeIn2 {
+  animation-delay: 2s;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
 }
