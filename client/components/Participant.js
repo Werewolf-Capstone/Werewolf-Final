@@ -54,7 +54,9 @@ const Participant = ({
     i = (
       <div>
         <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div>
-        <div>{werewolfChoice} was killed during the night </div>
+        <div style={{color: 'red'}}>
+          {werewolfChoice} was killed during the night{' '}
+        </div>
         <div className="participant">
           <div>{participant.identity}</div>
 
@@ -74,10 +76,10 @@ const Participant = ({
     i = (
       <div>
         <div>DURING THE DAY AND WE ARE THE SEER</div>
-        <div>
+        <div style={{color: 'red'}}>
           {werewolfChoice} was killed during the night , role= {localRole}
         </div>
-        <div>{didSeerHit} is a werewolf</div>
+        <div style={{color: 'red'}}>{didSeerHit} is a werewolf</div>
         <div className="participant">
           <div>{participant.identity}</div>
 
@@ -180,7 +182,6 @@ const Participant = ({
       <div className="participant">
         <div>GAME NOT STARTED, role= {localRole}</div>
         <div>{participant.identity}</div>
-        <div>You are not allowed to see this person during the night</div>
       </div>
     )
   } else {
@@ -194,14 +195,22 @@ const Participant = ({
           TASK, role= {localRole}
         </div>
         <div>{participant.identity}</div>
-        <div>You are not allowed to see this person during the night</div>
       </div>
     )
   }
   if (shouldWePlay) {
     return (
-      <div className="individualPlayer" style={{width: '15rem', margin: '5px'}}>
-        {i}
+      <div
+        className="individualPlayer"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-around',
+          width: '15rem',
+          margin: '5px',
+        }}
+      >
+        <div> {i} </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div className="playerIcon">
@@ -233,8 +242,17 @@ const Participant = ({
     )
   } else {
     return (
-      <div className="individualPlayer" style={{width: '15rem', margin: '5px'}}>
-        {i}
+      <div
+        className="individualPlayer"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-around',
+          width: '15rem',
+          margin: '5px',
+        }}
+      >
+        <div> {i} </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div className="playerIcon">

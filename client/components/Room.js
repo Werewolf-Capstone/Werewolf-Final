@@ -583,7 +583,10 @@ const Room = ({roomName, token, handleLogout}) => {
   })
 
   return (
-    <div className="room">
+    <div
+      style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      className="room"
+    >
       <h4>Room: {roomName}</h4>
       <Button
         size="small"
@@ -593,7 +596,10 @@ const Room = ({roomName, token, handleLogout}) => {
       >
         Log out
       </Button>
-      <div className="local-participant">
+      <div
+        style={{display: 'flex', justifyContent: 'center'}}
+        className="local-participant"
+      >
         {stateRoom ? (
           <div
             className="videoContainer"
@@ -602,7 +608,7 @@ const Room = ({roomName, token, handleLogout}) => {
               justifyContent: 'center',
               flexWrap: 'wrap',
               backgroundColor: 'grey',
-              width: '85%',
+              // width: '90%',
               padding: 5,
               margin: 20,
             }}
