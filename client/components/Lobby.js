@@ -23,9 +23,10 @@ const Lobby = ({
         <Box marginTop="2%" textAlign="center">
           <label htmlFor="name"></label>
           <TextField
+            className="input"
             type="text"
             id="field"
-            variant="filled"
+            variant="outlined"
             color="secondary"
             placeholder="Username"
             value={username}
@@ -37,9 +38,10 @@ const Lobby = ({
         <Box marginTop="2%" textAlign="center">
           <label htmlFor="room"></label>
           <TextField
+            className="input"
             type="text"
             id="room"
-            variant="filled"
+            variant="outlined"
             color="secondary"
             placeholder="Room Name"
             value={roomName}
