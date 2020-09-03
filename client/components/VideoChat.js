@@ -68,13 +68,12 @@ const VideoChat = () => {
               db.collection('rooms').doc(roomName).set(roomObj, {merge: true})
             } else if (players.length && !gameStarted) {
               //if room exists and ppl are in it but it has not started
+              //do nothing
             } else if (players.length && gameStarted && !gameOver) {
               //if room exists and ppl are in it and it has started but not over
+              //do nothing
             } else if (players.length && gameStarted && gameOver) {
               //if room exists and ppl are in it and it has started but it is over
-              console.log(
-                'there are players and game is started and game is over'
-              )
               db.collection('rooms').doc(roomName).set(roomObj)
             }
           } else {
