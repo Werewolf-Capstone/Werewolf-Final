@@ -21,6 +21,7 @@ const Participant = ({
   votesVill,
   localColor,
   votesWere,
+  votesWereColors,
 }) => {
   let i
   let shouldWePlay = true
@@ -47,6 +48,7 @@ const Participant = ({
   //     <audio ref={audioRef} autoPlay={true} muted={true} />
   //   </div>
   // );
+
   if (!participant) return
   ////console.log.log("what is participant11111111", participant)
   if (!night) {
@@ -109,17 +111,19 @@ const Participant = ({
           size="small"
           variant="contained"
           color="secondary"
-          onClick={() => handleWerewolfVoteButton(participant.identity)}
+          onClick={() =>
+            handleWerewolfVoteButton(participant.identity, localColor)
+          }
         >
           Kill
         </Button>
         <div id={participant.identity}>
-          {votesWere.map((playerId) => {
+          {votesWere.map((playerId, idx) => {
             if (playerId === participant.identity) {
               return (
                 <img
                   style={{width: '40px', height: '40px'}}
-                  src={pngMapObj[localColor]}
+                  src={pngMapObj[votesWereColors[idx]]}
                 ></img>
               )
             }
