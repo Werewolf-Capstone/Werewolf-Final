@@ -23,31 +23,11 @@ const Participant = ({
   localColor,
   votesWere,
   votesWereColors,
+  imageSrc,
 }) => {
   let i
   let shouldWePlay = true
-  let pngMapObj = {
-    red: '/villagerIconRed.png',
-    orange: '/villagerIconOrange.png',
-    pink: '/villagerIconPink.png',
-    purple: '/villagerIconPurple.png',
-    green: '/villagerIconGreen.png',
-    brown: '/villagerIconBrown.png',
-    blue: '/villagerIconBlue.png',
-    yellow: '/villagerIconYellow.png',
-  }
-  findColorOfParticipant = async (pId) => {
-    let gameState = await db.collection('rooms').doc(roomName).get()
 
-    let participantArr = gameState.data().players
-    let playerColors = gameState.data().participantsColors
-
-    let idx = participantArr.indexOf(pId)
-
-    let color = playerColors[idx]
-
-    return colo
-  }
   //console.log('what is checkWW', checkWerewolf)
   //console.log('what is checkSeer', checkSeer)
   //console.log('what is checkMedic', checkMedic)
@@ -232,7 +212,7 @@ const Participant = ({
               borderStyle: 'solid',
               position: 'absolute',
             }}
-            src={pngMapObj[localColor]}
+            src={imageSrc}
           ></img>
         </div>
         <VideoAudio participant={participant} localColor={localColor} />
@@ -242,7 +222,7 @@ const Participant = ({
               return (
                 <img
                   style={{width: '40px', height: '40px'}}
-                  src={pngMapObj[localColor]}
+                  src={imageSrc}
                 ></img>
               )
             }
@@ -274,7 +254,7 @@ const Participant = ({
               borderStyle: 'solid',
               position: 'absolute',
             }}
-            src={pngMapObj[localColor]}
+            src={imageSrc}
           ></img>
         </div>
         <img
