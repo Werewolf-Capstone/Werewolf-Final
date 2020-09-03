@@ -8,7 +8,9 @@ const App = () => {
   return (
     <div className="app">
       <header>
-        <h1 id="werewolf-title">Werewolf Chat</h1>
+        <h1 id="werewolf-title" className="fadeInUp animated">
+          Werewolf Chat
+        </h1>
       </header>
       <main>
         <VideoChat />
