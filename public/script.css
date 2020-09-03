@@ -7,6 +7,11 @@
   font-style: normal;
 } */
 
+html {
+  transition-timing-function: ease;
+  transition: opacity 0.4s;
+}
+
 .lobby {
   background: url(https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/474910/1f98a31d957af52b03b4972fb8d46d0722de52da.jpg);
   background-size: 100%;
@@ -166,4 +171,26 @@ a {
   animation-delay: 2s;
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
+}
+
+/*fadeOut animation definition*/
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
 }
