@@ -11,6 +11,7 @@ const VideoChat = () => {
     checkMedic: false,
     checkSeer: false,
     checkWerewolf: false,
+    colors: ["red", "orange", "pink", "purple", "green", "brown", "blue", "yellow"],
     dead: [],
     gameStarted: false,
     gameOver: false,
