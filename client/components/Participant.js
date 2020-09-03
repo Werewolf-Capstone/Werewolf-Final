@@ -28,6 +28,17 @@ const Participant = ({
   let i
   let shouldWePlay = true
 
+  let pngMapObj = {
+    red: '/villagerIconRed.png',
+    orange: '/villagerIconOrange.png',
+    pink: '/villagerIconPink.png',
+    purple: '/villagerIconPurple.png',
+    green: '/villagerIconGreen.png',
+    brown: '/villagerIconBrown.png',
+    blue: '/villagerIconBlue.png',
+    yellow: '/villagerIconYellow.png',
+  }
+
   //console.log('what is checkWW', checkWerewolf)
   //console.log('what is checkSeer', checkSeer)
   //console.log('what is checkMedic', checkMedic)
