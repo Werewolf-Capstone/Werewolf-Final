@@ -14,7 +14,6 @@ const Lobby = ({
       display="flex"
       maxWidth="sm"
       flexdirection="column"
-      justifycontent="center"
     >
       <Box textAlign="center">
         <h2>Enter a room</h2>
@@ -49,13 +48,13 @@ const Lobby = ({
           />
         </Box>
 
-        <Box
-          display="flex"
-          justifycontent="center"
-          alignItems="center"
-          marginTop="2%"
-        >
-          <Button type="submit" variant="outlined" color="secondary">
+        <Box display="flex" justifyContent="center" marginTop="2%">
+          <Button
+            type="submit"
+            variant="outlined"
+            color="secondary"
+            size="large"
+          >
             Submit
           </Button>
         </Box>
