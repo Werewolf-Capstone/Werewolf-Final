@@ -200,13 +200,19 @@ const Participant = ({
   }
   if (shouldWePlay) {
     return (
-      <div className="individualPlayer" style={{width: '15rem'}}>
+      <div className="individualPlayer" style={{width: '15rem', margin: '5px'}}>
         {i}
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div className="playerIcon">
           <img
-            style={{width: '40px', height: '40px', position: 'absolute'}}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '25%',
+              borderStyle: 'solid',
+              position: 'absolute',
+            }}
             src={pngMapObj[localColor]}
           ></img>
         </div>
@@ -227,7 +233,7 @@ const Participant = ({
     )
   } else {
     return (
-      <div className="individualPlayer" style={{width: '15rem'}}>
+      <div className="individualPlayer" style={{width: '15rem', margin: '5px'}}>
         {i}
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
