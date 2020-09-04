@@ -652,7 +652,7 @@ const Room = ({roomName, token, handleLogout}) => {
               display: 'flex',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              backgroundColor: 'grey',
+              // backgroundColor: 'grey',
               padding: 5,
               margin: 20,
             }}

@@ -117,7 +117,12 @@ const Participant = ({
             if (playerId === participant.identity) {
               return (
                 <img
-                  style={{width: '40px', height: '40px'}}
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '25%',
+                    borderStyle: 'solid',
+                  }}
                   src={pngMapObj[votesWereColors[idx]]}
                 ></img>
               )
@@ -290,7 +295,7 @@ const Participant = ({
           margin: '5px',
         }}
       >
-        <div> {info} </div>
+        <div>{info}</div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div>
