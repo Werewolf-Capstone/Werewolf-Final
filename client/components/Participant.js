@@ -51,7 +51,15 @@ const Participant = ({
       <div>
         {/* <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div> */}
         <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
-          {werewolfChoice} was killed during the night{' '}
+          {werewolfChoice === '' ? (
+            <div>
+              No one was killed..
+              <br />
+              Now get those werewolves!
+            </div>
+          ) : (
+            <div>{werewolfChoice} was killed during the night</div>
+          )}
         </div>
       </div>
     )
@@ -85,7 +93,15 @@ const Participant = ({
       <div>
         {/* <div>DURING THE DAY AND WE ARE THE SEER</div> */}
         <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
-          {werewolfChoice} was killed during the night , role= {localRole}
+          {werewolfChoice === '' ? (
+            <div>
+              No one was killed..
+              <br />
+              Now get those werewolves!
+            </div>
+          ) : (
+            <div>{werewolfChoice} was killed during the night</div>
+          )}
         </div>
         <div style={{color: 'red', fontWeight: 'bold'}}>
           {didSeerHit} is a werewolf
