@@ -53,27 +53,31 @@ const Participant = ({
         <div style={{color: 'red', fontWeight: 'bold'}}>
           {werewolfChoice} was killed during the night{' '}
         </div>
-        <div className="participant">
-          <div>{participant.identity}</div>
-        </div>
       </div>
     )
     lower = (
-      <div>
-        <Button
-          size="small"
-          variant="contained"
-          color="secondary"
-          onClick={() =>
-            handleVillagerVoteButton(
-              participant.identity,
-              localIdentity,
-              localColor
-            )
-          }
-        >
-          Kill
-        </Button>
+      <div
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      >
+        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
+          {participant.identity}
+        </div>
+        <div>
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={() =>
+              handleVillagerVoteButton(
+                participant.identity,
+                localIdentity,
+                localColor
+              )
+            }
+          >
+            Kill
+          </Button>
+        </div>
       </div>
     )
   } else if (!night && localRole === 'seer') {
@@ -86,21 +90,25 @@ const Participant = ({
         <div style={{color: 'red', fontWeight: 'bold'}}>
           {didSeerHit} is a werewolf
         </div>
-        <div className="participant">
-          <div>{participant.identity}</div>
-        </div>
       </div>
     )
     lower = (
-      <div>
-        <Button
-          size="small"
-          variant="contained"
-          color="secondary"
-          onClick={() => handleVillagerVoteButton(participant.identity)}
-        >
-          Kill
-        </Button>
+      <div
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      >
+        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
+          {participant.identity}
+        </div>
+        <div>
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={() => handleVillagerVoteButton(participant.identity)}
+          >
+            Kill
+          </Button>
+        </div>
       </div>
     )
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
@@ -111,7 +119,6 @@ const Participant = ({
           DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A
           WEREWOLF , role= {localRole}
         </div> */}
-        <div>{participant.identity}</div>
         <div id={participant.identity}>
           {votesWere.map((playerId, idx) => {
             if (playerId === participant.identity) {
@@ -132,17 +139,24 @@ const Participant = ({
       </div>
     )
     lower = (
-      <div>
-        <Button
-          size="small"
-          variant="contained"
-          color="secondary"
-          onClick={() =>
-            handleWerewolfVoteButton(participant.identity, localColor)
-          }
-        >
-          Kill
-        </Button>
+      <div
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      >
+        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
+          {participant.identity}
+        </div>
+        <div>
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={() =>
+              handleWerewolfVoteButton(participant.identity, localColor)
+            }
+          >
+            Kill
+          </Button>
+        </div>
       </div>
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
@@ -153,18 +167,24 @@ const Participant = ({
           DURING THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE
           THE SEER , role= {localRole}
         </div> */}
-        <div>{participant.identity}</div>
       </div>
     )
     lower = (
-      <Button
-        size="small"
-        variant="contained"
-        color="default"
-        onClick={(e) => handleSeerCheckButton(participant.identity)}
+      <div
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        Check Role
-      </Button>
+        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
+          {participant.identity}
+        </div>
+        <Button
+          size="small"
+          variant="contained"
+          color="default"
+          onClick={(e) => handleSeerCheckButton(participant.identity)}
+        >
+          Check Role
+        </Button>
+      </div>
     )
   } else if (
     night &&
@@ -180,25 +200,39 @@ const Participant = ({
           DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEER IS DONE AND MEDIC IS
           NOT DONE AND WE ARE THE MEDIC , role= {localRole}
         </div> */}
-        <div>{participant.identity}</div>
       </div>
     )
     lower = (
-      <Button
-        size="small"
-        variant="contained"
-        color="primary"
-        onClick={(e) => handleMedicSaveButton(participant.identity)}
+      <div
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        Save Person
-      </Button>
+        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
+          {participant.identity}
+        </div>
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={(e) => handleMedicSaveButton(participant.identity)}
+        >
+          Save Person
+        </Button>
+      </div>
     )
   } else if (!gameStarted) {
     shouldWePlay = true
     info = (
       <div className="participant">
         {/* <div>GAME NOT STARTED, role= {localRole}</div> */}
-        <div>{participant.identity}</div>
+      </div>
+    )
+    lower = (
+      <div
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      >
+        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
+          {participant.identity}
+        </div>
       </div>
     )
   } else {
@@ -208,7 +242,15 @@ const Participant = ({
         <div style={{color: 'red', fontWeight: 'bold'}}>
           Sleep well, {participant.identity}. Hopefully you survive the night.
         </div>
-        <div>{participant.identity}</div>
+      </div>
+    )
+    lower = (
+      <div
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      >
+        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
+          {participant.identity}
+        </div>
       </div>
     )
   }
@@ -320,6 +362,7 @@ const Participant = ({
             src="/sleeping.png"
           ></img>
         </div>
+        {lower}
       </div>
     )
   }
