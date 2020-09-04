@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable complexity */
-import React, {useState, useEffect, useRef} from 'react'
+import React from 'react'
 import VideoAudio from './VideoAudio'
 import {Button} from '@material-ui/core'
 
