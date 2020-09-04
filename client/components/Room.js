@@ -119,11 +119,11 @@ const Room = ({roomName, token, handleLogout}) => {
       assignRolesAndStartGame(game, roomName, localUserId)
     }
     // THIS IS STOPPING ME FROM ADDING A SECOND PLAYER TO FIRST PLAYER'S REMOTE VIDEO COMPONENT
-    // if (game.villagers.length === game.werewolves.length) {
-    //   handleGameOver('werewolves')
-    // } else if (game.werewolves.length === 0) {
-    //   handleGameOver('villagers')
-    // }
+    if (game.villagers.length === game.werewolves.length) {
+      handleGameOver('werewolves')
+    } else if (game.werewolves.length === 0) {
+      handleGameOver('villagers')
+    }
     handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in Firestore
     if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
       if (game.werewolvesChoice === game.medicChoice) {
@@ -164,11 +164,11 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
-    if (game.villagers.length === game.werewolves.length) {
-      handleGameOver('werewolves')
-    } else if (game.werewolves.length === 0) {
-      handleGameOver('villagers')
-    }
+    // if (game.villagers.length === game.werewolves.length) {
+    //   handleGameOver('werewolves')
+    // } else if (game.werewolves.length === 0) {
+    //   handleGameOver('villagers')
+    // }
     if (game.majorityReached) {
       if (game.villagers.includes(game.villagersChoice)) {
         game.villagers = game.villagers.filter((villager) => {
@@ -544,6 +544,15 @@ const Room = ({roomName, token, handleLogout}) => {
           setParticipants(newParticipants)
 
           if (!gameState.gameStarted) return
+
+          /**
+           * Check if game is over
+           */
+          if (gameState.villagers.length === gameState.werewolves.length) {
+            handleGameOver('werewolves')
+          } else if (gameState.werewolves.length === 0) {
+            handleGameOver('villagers')
+          }
 
           if (gameState.Night) {
             handleNightToDay(
