@@ -22,6 +22,14 @@ html {
   background-size: 100%;
 }
 
+.night {
+  background: url(https://pro2-bar-s3-cdn-cf.myportfolio.com/bf7272a8d53eb8c0faec1188fca2a40a/199f56d6-5f7f-4e64-a3d4-ae0ecb76be2f_rw_3840.jpg?h=0a2a21d4f6701d13ba3863c587e0dc7c);
+  background-size: 100%;
+  /* filter: brightness(30%); */
+  -webkit-animation: forest-night 5s;
+  animation: forest-night 5s;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -193,4 +201,54 @@ a {
 .fadeOut {
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
+}
+
+/* figure {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  -webkit-animation:forest-night 10s infinite;
+  animation:forest-night 10s infinite;
+} */
+/* Night Fade */
+@-webkit-keyframes forest-night {
+  0% {
+    filter: hue-rotate(0deg) brightness(0%);
+  }
+  10% {
+    filter: hue-rotate(0deg) brightness(50%);
+  }
+  20% {
+    filter: hue-rotate(0deg) brightness(100%);
+  }
+  50% {
+    filter: hue-rotate(0deg) brightness(2);
+  }
+  70% {
+    filter: hue-rotate(220deg) brightness(50%);
+  }
+  100% {
+    filter: hue-rotate(0deg) brightness(0%);
+  }
+}
+@keyframes forest-night {
+  0% {
+    filter: hue-rotate(0deg) brightness(0%);
+  }
+  10% {
+    filter: hue-rotate(0deg) brightness(50%);
+  }
+  20% {
+    filter: hue-rotate(0deg) brightness(100%);
+  }
+  50% {
+    filter: hue-rotate(0deg) brightness(2);
+  }
+  70% {
+    filter: hue-rotate(220deg) brightness(50%);
+  }
+  100% {
+    filter: hue-rotate(0deg) brightness(0%);
+  }
 }

@@ -7,6 +7,7 @@ import {db} from './firebase'
 import {Button} from '@material-ui/core'
 import Day from './Day'
 import GameOver from './GameOver'
+import Night from './Night'
 
 const Room = ({roomName, token, handleLogout}) => {
   /**
@@ -662,7 +663,7 @@ const Room = ({roomName, token, handleLogout}) => {
       className="room"
     >
       {/* <h4>Room: {roomName}</h4> */}
-      {gameOver ? <GameOver winner={winner} /> : <GameOver />}
+      {gameOver ? <GameOver winner={winner} /> : <Night />}
       <Button
         size="small"
         variant="contained"
