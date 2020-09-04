@@ -114,6 +114,8 @@ const VideoChat = () => {
 
   const handleLogout = useCallback((event) => {
     setToken(null)
+    document.getElementById('background').classList.add('lobby')
+    document.getElementById('background').classList.remove('day')
   }, [])
 
   /**
