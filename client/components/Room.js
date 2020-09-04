@@ -6,6 +6,7 @@ import {db} from './firebase'
 import {Button} from '@material-ui/core'
 import Rules from './Rules.js'
 import Day from './Day.js'
+import MajorityReached from './MajorityReached'
 
 const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
