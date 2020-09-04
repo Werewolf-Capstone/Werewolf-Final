@@ -50,7 +50,7 @@ const Participant = ({
     info = (
       <div>
         {/* <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div> */}
-        <div style={{color: 'red'}}>
+        <div style={{color: 'red', fontWeight: 'bold'}}>
           {werewolfChoice} was killed during the night{' '}
         </div>
         <div className="participant">
@@ -80,10 +80,12 @@ const Participant = ({
     info = (
       <div>
         {/* <div>DURING THE DAY AND WE ARE THE SEER</div> */}
-        <div style={{color: 'red'}}>
+        <div style={{color: 'red', fontWeight: 'bold'}}>
           {werewolfChoice} was killed during the night , role= {localRole}
         </div>
-        <div style={{color: 'red'}}>{didSeerHit} is a werewolf</div>
+        <div style={{color: 'red', fontWeight: 'bold'}}>
+          {didSeerHit} is a werewolf
+        </div>
         <div className="participant">
           <div>{participant.identity}</div>
         </div>
@@ -198,7 +200,9 @@ const Participant = ({
     shouldWePlay = false
     info = (
       <div className="participant">
-        <div>Sleep well. Hopefully you survive the night.</div>
+        <div style={{color: 'red', fontWeight: 'bold'}}>
+          Sleep well, {participant.identity}. Hopefully you survive the night.
+        </div>
         <div>{participant.identity}</div>
       </div>
     )
@@ -211,6 +215,7 @@ const Participant = ({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-around',
+          alignItems: 'center',
           width: '15rem',
           margin: '5px',
         }}
@@ -244,23 +249,26 @@ const Participant = ({
             }
           })} */}
         </div>
-        <div className="playerIcon">
-          <img
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '25%',
-              borderStyle: 'solid',
-              position: 'absolute',
-            }}
-            src={imageSrc}
-          ></img>
+        <div>
+          <div className="playerIcon">
+            <img
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '25%',
+                borderStyle: 'solid',
+                position: 'absolute',
+              }}
+              src={imageSrc}
+            ></img>
+          </div>
+          <VideoAudio
+            participant={participant}
+            localColor={localColor}
+            isLocal={isLocal}
+          />
         </div>
-        <VideoAudio
-          participant={participant}
-          localColor={localColor}
-          isLocal={isLocal}
-        />
+
         {lower}
       </div>
     )
@@ -272,6 +280,7 @@ const Participant = ({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-around',
+          alignItems: 'center',
           width: '15rem',
           margin: '5px',
         }}
@@ -279,26 +288,28 @@ const Participant = ({
         <div> {info} </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
-        <div className="playerIcon">
+        <div>
+          <div className="playerIcon">
+            <img
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '25%',
+                borderStyle: 'solid',
+                position: 'absolute',
+              }}
+              src={imageSrc}
+            ></img>
+          </div>
           <img
             style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '25%',
+              height: '10rem',
               borderStyle: 'solid',
-              position: 'absolute',
+              borderRadius: '25%',
             }}
-            src={imageSrc}
+            src="/sleeping.png"
           ></img>
         </div>
-        <img
-          style={{
-            height: '10rem',
-            borderStyle: 'solid',
-            borderRadius: '25%',
-          }}
-          src="/sleeping.png"
-        ></img>
       </div>
     )
   }
