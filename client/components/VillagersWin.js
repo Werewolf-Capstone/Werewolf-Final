@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MajorityReached() {
+export default function VillagersWin() {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
   const handleClose = () => {
@@ -27,7 +27,7 @@ export default function MajorityReached() {
             className="fadeIn animated"
           >
             <img
-              src="/majorityReached.png"
+              src="/villagersWin.png"
               alt="Werewolf"
               width="50%"
               height="50%"

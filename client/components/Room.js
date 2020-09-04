@@ -7,6 +7,7 @@ import {Button} from '@material-ui/core'
 import Rules from './Rules.js'
 import Day from './Day.js'
 import MajorityReached from './MajorityReached'
+import VillagersWin from './VillagersWin'
 
 const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
@@ -627,9 +628,9 @@ const Room = ({roomName, token, handleLogout}) => {
       className="room"
     >
       {/* <h4>Room: {roomName}</h4> */}
-
-      {/* <MajorityReached /> */}
       <Day />
+      {/* <MajorityReached /> */}
+      {/* <VillagersWin /> */}
       <Rules />
       <Button
         size="small"
