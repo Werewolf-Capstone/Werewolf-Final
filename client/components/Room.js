@@ -4,6 +4,7 @@ import Video from 'twilio-video'
 import Participant from './Participant'
 import {db} from './firebase'
 import {Button} from '@material-ui/core'
+import Rules from './Rules.js'
 
 const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
@@ -626,6 +627,7 @@ const Room = ({roomName, token, handleLogout}) => {
       {document.getElementById('background').classList.add('day')}
       {document.getElementById('background').classList.remove('lobby')}
       <h4>Room: {roomName}</h4>
+      <Rules />
       <Button
         size="small"
         variant="contained"
