@@ -662,7 +662,7 @@ const Room = ({roomName, token, handleLogout}) => {
       className="room"
     >
       {/* <h4>Room: {roomName}</h4> */}
-      {gameOver ? <GameOver winner={winner} /> : <Day />}
+      {gameOver ? <GameOver winner={winner} /> : <GameOver />}
       <Button
         size="small"
         variant="contained"
