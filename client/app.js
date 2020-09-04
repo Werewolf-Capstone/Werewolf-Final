@@ -12,7 +12,7 @@ const App = () => {
         {/* <h1 id="werewolf-title" className="fadeInUp animated">
           Werewolf Chat
         </h1> */}
-        <Container>
+        {/* <Container>
           <Box
             display="flex"
             justifyContent="center"
@@ -27,8 +27,9 @@ const App = () => {
               height="50%"
             />
           </Box>
-        </Container>
+        </Container> */}
       </header>
+
       <main>
         <VideoChat />
       </main>

@@ -10,6 +10,22 @@ const Lobby = ({
 }) => {
   return (
     <div>
+      <Container>
+        <Box
+          display="flex"
+          justifyContent="center"
+          marginTop="7%"
+          marginBottom="5%"
+          className="fadeInUp animated"
+        >
+          <img
+            src="/werewolfTitle.png"
+            alt="Werewolf"
+            width="50%"
+            height="50%"
+          />
+        </Box>
+      </Container>
       <Container
         id="landing-page-container"
         display="flex"
