@@ -8,6 +8,7 @@ import Rules from './Rules.js'
 import Day from './Day.js'
 import MajorityReached from './MajorityReached'
 import VillagersWin from './VillagersWin'
+import WerewolvesWin from './WerewolvesWin'
 
 const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
@@ -631,6 +632,7 @@ const Room = ({roomName, token, handleLogout}) => {
       <Day />
       {/* <MajorityReached /> */}
       {/* <VillagersWin /> */}
+      {/* <WerewolvesWin /> */}
       <Rules />
       <Button
         size="small"
