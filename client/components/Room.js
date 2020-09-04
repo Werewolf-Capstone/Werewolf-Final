@@ -32,6 +32,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [votesWere, setVotesWere] = useState([])
   const [votesWereColors, setVotesWereColors] = useState([])
   const [colors, setColors] = useState([])
+  const [winner, setWinner] = useState('')
 
   const participantsRef = useRef(participants)
 
@@ -683,7 +684,7 @@ const Room = ({roomName, token, handleLogout}) => {
               display: 'flex',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              backgroundColor: 'grey',
+              // backgroundColor: 'grey',
               padding: 5,
               margin: 20,
             }}
@@ -718,16 +719,24 @@ const Room = ({roomName, token, handleLogout}) => {
           ''
         )}
       </div>
-      <Button
-        size="small"
-        variant="contained"
-        color="secondary"
-        onClick={() => {
-          handleStartGame()
-        }}
-      >
-        Start Game
-      </Button>
+
+      {!gameStarted ? (
+        <div>
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              handleStartGame()
+            }}
+          >
+            Start Game
+          </Button>
+        </div>
+      ) : (
+        ''
+      )}
+
       <Button
         size="small"
         variant="contained"
@@ -736,7 +745,7 @@ const Room = ({roomName, token, handleLogout}) => {
           testingReset()
         }}
       >
-        {' '}
+        {/* {' '} */}
         Reset game
       </Button>
     </div>
