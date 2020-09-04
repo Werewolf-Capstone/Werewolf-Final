@@ -12,7 +12,6 @@ const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
   const [participants, _setParticipants] = useState([])
   const [participantIdentities, setParticipantIdentities] = useState([])
-  const [participantVotes, setParticipantVotes] = useState([])
   const [participantsColors, setParticipantsColors] = useState([])
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
@@ -52,6 +51,7 @@ const Room = ({roomName, token, handleLogout}) => {
       medic: '',
       medicChoice: '',
       players: [],
+      participantVotes: ['', '', '', '', '', '', '', ''],
       seer: '',
       seerChoice: '',
       villagers: [],
@@ -216,19 +216,21 @@ const Room = ({roomName, token, handleLogout}) => {
    * @param {*} participantIdentity - the participant's username (that is, the player a villager is trying to kill)
    */
   async function handleVillagerVoteButton(participantIdentity, localIdentity) {
+    console.log('inside handle vill vote localIdent', localIdentity)
     let gameState = await db.collection('rooms').doc(roomName).get()
-    let participantVotes = gameState.data().participantVotes
-    let votesVillagers = gameState.data().votesVillagers
+    let participantVotes = await gameState.data().participantVotes
+    let votesVillagers = await gameState.data().votesVillagers
 
     // if we have a person we voted for already, we need to replace them and remove them from votesVillagers
     // before adding a new vote to votesVillgers
     let localIdx = participantVotes.indexOf(localIdentity)
     let prevVote = ''
-    if (participantsVotes[localIdx] !== '') {
-      prevVote = participantsVotes[localIdx]
+    console.log('what is localIdx', localIdx)
+    if (participantVotes[localIdx] !== '') {
+      prevVote = participantVotes[localIdx]
       let votesVillagersIdx = votesVillagers.indexOf(prevVote)
       votesVillagers.splice(votesVillagersIdx, 1)
-      participantsVotes[localIdx] = participantIdentity
+      participantVotes[localIdx] = participantIdentity
     }
 
     votesVillagers.push(participantIdentity)
@@ -585,6 +587,7 @@ const Room = ({roomName, token, handleLogout}) => {
         votesWere={votesWere}
         votesWereColors={votesWereColors}
         imageSrc={fileName}
+        localIdentity={stateRoom.localParticipant.identity}
       />
     )
   })

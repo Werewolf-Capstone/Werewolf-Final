@@ -23,6 +23,7 @@ const Participant = ({
   votesWere,
   votesWereColors,
   imageSrc,
+  localIdentity,
 }) => {
   let info
   let lower
@@ -59,7 +60,9 @@ const Participant = ({
           size="small"
           variant="contained"
           color="secondary"
-          onClick={() => handleVillagerVoteButton(participant.identity)}
+          onClick={() =>
+            handleVillagerVoteButton(participant.identity, localIdentity)
+          }
         >
           Kill
         </Button>
