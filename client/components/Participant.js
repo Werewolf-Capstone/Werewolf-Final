@@ -240,7 +240,7 @@ const Participant = ({
     info = (
       <div className="participant">
         <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
-          Sleep well, {participant.identity}. Hopefully you survive the night.
+          Sleep well, {participant.identity}.<br /> Hope you survive the night.
         </div>
       </div>
     )
