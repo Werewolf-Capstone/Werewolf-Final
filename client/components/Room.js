@@ -53,6 +53,7 @@ const Room = ({roomName, token, handleLogout}) => {
       medic: '',
       medicChoice: '',
       players: [],
+      participantVotes: ['', '', '', '', '', '', '', ''],
       seer: '',
       seerChoice: '',
       villagers: [],
@@ -225,12 +226,25 @@ const Room = ({roomName, token, handleLogout}) => {
    * Handler function which updates a villager's vote based on the user they are choosing to kill
    * @param {*} participantIdentity - the participant's username (that is, the player a villager is trying to kill)
    */
-  async function handleVillagerVoteButton(participantIdentity) {
-    let votesVillagers = await db.collection('rooms').doc(roomName).get()
+  async function handleVillagerVoteButton(participantIdentity, localIdentity) {
+    console.log('inside handle vill vote localIdent', localIdentity)
+    let gameState = await db.collection('rooms').doc(roomName).get()
+    let participantVotes = await gameState.data().participantVotes
+    let votesVillagers = await gameState.data().votesVillagers
 
-    votesVillagers = votesVillagers.data().votesVillagers
+    // if we have a person we voted for already, we need to replace them and remove them from votesVillagers
+    // before adding a new vote to votesVillgers
+    let localIdx = participantVotes.indexOf(localIdentity)
+    let prevVote = ''
+    console.log('what is localIdx', localIdx)
+    if (participantVotes[localIdx] !== '') {
+      prevVote = participantVotes[localIdx]
+      let votesVillagersIdx = votesVillagers.indexOf(prevVote)
+      votesVillagers.splice(votesVillagersIdx, 1)
+      participantVotes[localIdx] = participantIdentity
+    }
+
     votesVillagers.push(participantIdentity)
-
     await db
       .collection('rooms')
       .doc(roomName)
@@ -584,6 +598,8 @@ const Room = ({roomName, token, handleLogout}) => {
         votesWere={votesWere}
         votesWereColors={votesWereColors}
         imageSrc={fileName}
+        localIdentity={stateRoom.localParticipant.identity}
+        isLocal={false}
       />
     )
   })
@@ -662,6 +678,7 @@ const Room = ({roomName, token, handleLogout}) => {
               votesWereColors={votesWereColors}
               roomName={stateRoom}
               imageSrc={fileName}
+              isLocal={true}
             />
             {remoteParticipants}
           </div>
