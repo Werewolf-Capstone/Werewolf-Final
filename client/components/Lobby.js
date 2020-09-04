@@ -5,11 +5,11 @@ const Lobby = ({
   handleUsernameChange,
   roomName,
   handleRoomNameChange,
-  handleSubmit
+  handleSubmit,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Enter a room</h2>
+      <h1>Enter a room</h1>
       <div>
         <label htmlFor="name">Name:</label>
         <input
