@@ -31,6 +31,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [votesWere, setVotesWere] = useState([])
   const [votesWereColors, setVotesWereColors] = useState([])
   const [colors, setColors] = useState([])
+  const [winner, setWinner] = useState('')
 
   const participantsRef = useRef(participants)
 
