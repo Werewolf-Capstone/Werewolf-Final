@@ -23,6 +23,8 @@ const Participant = ({
   votesWere,
   votesWereColors,
   imageSrc,
+  localIdentity,
+  isLocal,
 }) => {
   let info
   let lower
@@ -40,6 +42,8 @@ const Participant = ({
   }
 
   if (!participant) return
+
+  console.log('what is isLocal in participant', isLocal)
 
   if (!night) {
     info = (
@@ -59,7 +63,9 @@ const Participant = ({
           size="small"
           variant="contained"
           color="secondary"
-          onClick={() => handleVillagerVoteButton(participant.identity)}
+          onClick={() =>
+            handleVillagerVoteButton(participant.identity, localIdentity)
+          }
         >
           Kill
         </Button>
@@ -235,7 +241,11 @@ const Participant = ({
             src={imageSrc}
           ></img>
         </div>
-        <VideoAudio participant={participant} localColor={localColor} />
+        <VideoAudio
+          participant={participant}
+          localColor={localColor}
+          isLocal={isLocal}
+        />
         {lower}
       </div>
     )
