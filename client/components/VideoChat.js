@@ -37,6 +37,7 @@ const VideoChat = () => {
     villagers: [],
     villagersChoice: '',
     votesVillagers: [],
+    votesVillagersColors: [],
     votesWerewolves: [],
     votesWerewolvesColors: [],
     werewolvesChoice: '',
