@@ -219,7 +219,10 @@ const Participant = ({
           margin: '5px',
         }}
       >
-        <div> {info} </div>
+        <div>
+          {info}
+          {localRole === 'seer' ? <h3>{didSeerHit} test seer</h3> : null}
+        </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div id={participant.identity}>
