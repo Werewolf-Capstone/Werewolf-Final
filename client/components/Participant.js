@@ -3,6 +3,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import VideoAudio from './VideoAudio'
 import {Button} from '@material-ui/core'
+import {db} from './firebase'
 
 const Participant = ({
   participant,
@@ -22,9 +23,11 @@ const Participant = ({
   localColor,
   votesWere,
   votesWereColors,
+  imageSrc,
 }) => {
   let i
   let shouldWePlay = true
+
   let pngMapObj = {
     red: '/villagerIconRed.png',
     orange: '/villagerIconOrange.png',
@@ -35,6 +38,7 @@ const Participant = ({
     blue: '/villagerIconBlue.png',
     yellow: '/villagerIconYellow.png',
   }
+
   //console.log('what is checkWW', checkWerewolf)
   //console.log('what is checkSeer', checkSeer)
   //console.log('what is checkMedic', checkMedic)
@@ -50,9 +54,8 @@ const Participant = ({
   // );
 
   if (!participant) return
-  ////console.log.log("what is participant11111111", participant)
+
   if (!night) {
-    ////console.log.log("DURING THE DAY NO OTHER CHECKS")
     i = (
       <div>
         <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div>
@@ -97,7 +100,6 @@ const Participant = ({
       </div>
     )
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
-    ////console.log.log("DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A WEREWOLF")
     shouldWePlay = true
     i = (
       <div className="participant">
@@ -132,13 +134,12 @@ const Participant = ({
       </div>
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
-    ////console.log.log("DURIONG THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE THE SEER")
     shouldWePlay = true
     i = (
       <div className="participant">
         <div>
-          DURIONG THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE
-          ARE THE SEER , role= {localRole}
+          DURING THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE
+          THE SEER , role= {localRole}
         </div>
         <div>{participant.identity}</div>
 
@@ -159,7 +160,6 @@ const Participant = ({
     !checkMedic &&
     localRole === 'medic'
   ) {
-    ////console.log.log("DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEE IS DONE AND MEDIC IS NOT DONE AND WE ARE THE MEDIC")
     shouldWePlay = true
     i = (
       <div className="participant">
@@ -180,7 +180,6 @@ const Participant = ({
       </div>
     )
   } else if (!gameStarted) {
-    //console.log('SEER IS STILL NOT SEEING GAME STARTED')
     shouldWePlay = true
     i = (
       <div className="participant">
@@ -189,8 +188,6 @@ const Participant = ({
       </div>
     )
   } else {
-    ////console.log.log("DURING THE NIGHT BUT WE ARE A VANILLA VILLAGER")
-
     shouldWePlay = false
     i = (
       <div className="participant">
@@ -226,7 +223,7 @@ const Participant = ({
               borderStyle: 'solid',
               position: 'absolute',
             }}
-            src={pngMapObj[localColor]}
+            src={imageSrc}
           ></img>
         </div>
         <VideoAudio participant={participant} localColor={localColor} />
@@ -236,7 +233,7 @@ const Participant = ({
               return (
                 <img
                   style={{width: '40px', height: '40px'}}
-                  src={pngMapObj[localColor]}
+                  src={imageSrc}
                 ></img>
               )
             }
@@ -268,7 +265,7 @@ const Participant = ({
               borderStyle: 'solid',
               position: 'absolute',
             }}
-            src={pngMapObj[localColor]}
+            src={imageSrc}
           ></img>
         </div>
         <img
