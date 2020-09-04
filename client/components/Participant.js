@@ -44,7 +44,7 @@ const Participant = ({
   if (!night) {
     info = (
       <div>
-        <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div>
+        {/* <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div> */}
         <div style={{color: 'red'}}>
           {werewolfChoice} was killed during the night{' '}
         </div>
@@ -66,10 +66,9 @@ const Participant = ({
       </div>
     )
   } else if (!night && localRole === 'seer') {
-    ////console.log.log("DURING THE DAY AND WE ARE THE SEER")
     info = (
       <div>
-        <div>DURING THE DAY AND WE ARE THE SEER</div>
+        {/* <div>DURING THE DAY AND WE ARE THE SEER</div> */}
         <div style={{color: 'red'}}>
           {werewolfChoice} was killed during the night , role= {localRole}
         </div>
@@ -95,10 +94,10 @@ const Participant = ({
     shouldWePlay = true
     info = (
       <div className="participant">
-        <div>
+        {/* <div>
           DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A
           WEREWOLF , role= {localRole}
-        </div>
+        </div> */}
         <div>{participant.identity}</div>
         <div id={participant.identity}>
           {votesWere.map((playerId, idx) => {
@@ -132,10 +131,10 @@ const Participant = ({
     shouldWePlay = true
     info = (
       <div className="participant">
-        <div>
+        {/* <div>
           DURING THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE
           THE SEER , role= {localRole}
-        </div>
+        </div> */}
         <div>{participant.identity}</div>
       </div>
     )
@@ -159,10 +158,10 @@ const Participant = ({
     shouldWePlay = true
     info = (
       <div className="participant">
-        <div>
+        {/* <div>
           DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEER IS DONE AND MEDIC IS
           NOT DONE AND WE ARE THE MEDIC , role= {localRole}
-        </div>
+        </div> */}
         <div>{participant.identity}</div>
       </div>
     )
@@ -180,7 +179,7 @@ const Participant = ({
     shouldWePlay = true
     info = (
       <div className="participant">
-        <div>GAME NOT STARTED, role= {localRole}</div>
+        {/* <div>GAME NOT STARTED, role= {localRole}</div> */}
         <div>{participant.identity}</div>
       </div>
     )
@@ -188,10 +187,7 @@ const Participant = ({
     shouldWePlay = false
     info = (
       <div className="participant">
-        <div>
-          222DURING THE NIGHT BUT WE ARE A VANILLA VILLAGER, OR DONE WITH OUR
-          TASK, role= {localRole}
-        </div>
+        <div>Sleep well. Hopefully you survive the night.</div>
         <div>{participant.identity}</div>
       </div>
     )
