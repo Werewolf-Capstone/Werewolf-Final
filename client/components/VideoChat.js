@@ -27,6 +27,8 @@ const VideoChat = () => {
     dead: [],
     gameStarted: false,
     gameOver: false,
+    majorityReached: false,
+    participantVotes: ['', '', '', '', '', '', '', ''],
     medic: '',
     medicChoice: '',
     players: [],
