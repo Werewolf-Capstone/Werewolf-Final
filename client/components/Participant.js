@@ -25,8 +25,20 @@ const Participant = ({
   votesWereColors,
   imageSrc,
 }) => {
-  let i
+  let info
+  let lower
   let shouldWePlay = true
+
+  let pngMapObj = {
+    red: '/villagerIconRed.png',
+    orange: '/villagerIconOrange.png',
+    pink: '/villagerIconPink.png',
+    purple: '/villagerIconPurple.png',
+    green: '/villagerIconGreen.png',
+    brown: '/villagerIconBrown.png',
+    blue: '/villagerIconBlue.png',
+    yellow: '/villagerIconYellow.png',
+  }
 
   //console.log('what is checkWW', checkWerewolf)
   //console.log('what is checkSeer', checkSeer)
@@ -45,7 +57,7 @@ const Participant = ({
   if (!participant) return
 
   if (!night) {
-    i = (
+    info = (
       <div>
         <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div>
         <div style={{color: 'red'}}>
@@ -53,21 +65,24 @@ const Participant = ({
         </div>
         <div className="participant">
           <div>{participant.identity}</div>
-
-          <Button
-            size="small"
-            variant="contained"
-            color="secondary"
-            onClick={() => handleVillagerVoteButton(participant.identity)}
-          >
-            Kill
-          </Button>
         </div>
+      </div>
+    )
+    lower = (
+      <div>
+        <Button
+          size="small"
+          variant="contained"
+          color="secondary"
+          onClick={() => handleVillagerVoteButton(participant.identity)}
+        >
+          Kill
+        </Button>
       </div>
     )
   } else if (!night && localRole === 'seer') {
     ////console.log.log("DURING THE DAY AND WE ARE THE SEER")
-    i = (
+    info = (
       <div>
         <div>DURING THE DAY AND WE ARE THE SEER</div>
         <div style={{color: 'red'}}>
@@ -76,38 +91,30 @@ const Participant = ({
         <div style={{color: 'red'}}>{didSeerHit} is a werewolf</div>
         <div className="participant">
           <div>{participant.identity}</div>
-
-          <Button
-            size="small"
-            variant="contained"
-            color="secondary"
-            onClick={() => handleVillagerVoteButton(participant.identity)}
-          >
-            Kill
-          </Button>
         </div>
+      </div>
+    )
+    lower = (
+      <div>
+        <Button
+          size="small"
+          variant="contained"
+          color="secondary"
+          onClick={() => handleVillagerVoteButton(participant.identity)}
+        >
+          Kill
+        </Button>
       </div>
     )
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
     shouldWePlay = true
-    i = (
+    info = (
       <div className="participant">
         <div>
           DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A
           WEREWOLF , role= {localRole}
         </div>
         <div>{participant.identity}</div>
-
-        <Button
-          size="small"
-          variant="contained"
-          color="secondary"
-          onClick={() =>
-            handleWerewolfVoteButton(participant.identity, localColor)
-          }
-        >
-          Kill
-        </Button>
         <div id={participant.identity}>
           {votesWere.map((playerId, idx) => {
             if (playerId === participant.identity) {
@@ -122,25 +129,40 @@ const Participant = ({
         </div>
       </div>
     )
+    lower = (
+      <div>
+        <Button
+          size="small"
+          variant="contained"
+          color="secondary"
+          onClick={() =>
+            handleWerewolfVoteButton(participant.identity, localColor)
+          }
+        >
+          Kill
+        </Button>
+      </div>
+    )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
     shouldWePlay = true
-    i = (
+    info = (
       <div className="participant">
         <div>
           DURING THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE
           THE SEER , role= {localRole}
         </div>
         <div>{participant.identity}</div>
-
-        <Button
-          size="small"
-          variant="contained"
-          color="default"
-          onClick={(e) => handleSeerCheckButton(participant.identity)}
-        >
-          Check Role
-        </Button>
       </div>
+    )
+    lower = (
+      <Button
+        size="small"
+        variant="contained"
+        color="default"
+        onClick={(e) => handleSeerCheckButton(participant.identity)}
+      >
+        Check Role
+      </Button>
     )
   } else if (
     night &&
@@ -150,27 +172,28 @@ const Participant = ({
     localRole === 'medic'
   ) {
     shouldWePlay = true
-    i = (
+    info = (
       <div className="participant">
         <div>
           DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEER IS DONE AND MEDIC IS
           NOT DONE AND WE ARE THE MEDIC , role= {localRole}
         </div>
         <div>{participant.identity}</div>
-
-        <Button
-          size="small"
-          variant="contained"
-          color="primary"
-          onClick={(e) => handleMedicSaveButton(participant.identity)}
-        >
-          Save Person
-        </Button>
       </div>
+    )
+    lower = (
+      <Button
+        size="small"
+        variant="contained"
+        color="primary"
+        onClick={(e) => handleMedicSaveButton(participant.identity)}
+      >
+        Save Person
+      </Button>
     )
   } else if (!gameStarted) {
     shouldWePlay = true
-    i = (
+    info = (
       <div className="participant">
         <div>GAME NOT STARTED, role= {localRole}</div>
         <div>{participant.identity}</div>
@@ -178,7 +201,7 @@ const Participant = ({
     )
   } else {
     shouldWePlay = false
-    i = (
+    info = (
       <div className="participant">
         <div>
           222DURING THE NIGHT BUT WE ARE A VANILLA VILLAGER, OR DONE WITH OUR
@@ -200,9 +223,21 @@ const Participant = ({
           margin: '5px',
         }}
       >
-        <div> {i} </div>
+        <div> {info} </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
+        <div id={participant.identity}>
+          {votesVill.map((playerId) => {
+            if (playerId === participant.identity) {
+              return (
+                <img
+                  style={{width: '40px', height: '40px'}}
+                  src={imageSrc}
+                ></img>
+              )
+            }
+          })}
+        </div>
         <div className="playerIcon">
           <img
             style={{
@@ -216,18 +251,7 @@ const Participant = ({
           ></img>
         </div>
         <VideoAudio participant={participant} localColor={localColor} />
-        <div id={participant.identity}>
-          {votesVill.map((playerId) => {
-            if (playerId === participant.identity) {
-              return (
-                <img
-                  style={{width: '40px', height: '40px'}}
-                  src={imageSrc}
-                ></img>
-              )
-            }
-          })}
-        </div>
+        {lower}
       </div>
     )
   } else {
@@ -242,7 +266,7 @@ const Participant = ({
           margin: '5px',
         }}
       >
-        <div> {i} </div>
+        <div> {info} </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div className="playerIcon">
