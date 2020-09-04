@@ -1,7 +1,7 @@
 import React from 'react'
 import Backdrop from '@material-ui/core/Backdrop'
 import {makeStyles} from '@material-ui/core/styles'
-import {Container, Box} from '@material-ui/core'
+import {Container, Box, Button} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -12,13 +12,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MajorityReached() {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
   const handleClose = () => {
     setOpen(false)
   }
-  const handleToggle = () => {
-    setOpen(!open)
-  }
+  // const handleToggle = () => {
+  //   setOpen(!open)
+  // }
 
   return (
     <div>
@@ -31,15 +31,13 @@ export default function MajorityReached() {
           <Box
             display="flex"
             justifyContent="center"
-            marginTop="7%"
-            marginBottom="5%"
             className="fadeIn animated"
           >
             <img
               src="/majorityReached.png"
               alt="Werewolf"
-              width="30%"
-              height="30%"
+              width="50%"
+              height="50%"
             />
           </Box>
         </Container>

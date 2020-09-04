@@ -626,10 +626,9 @@ const Room = ({roomName, token, handleLogout}) => {
       style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       className="room"
     >
-      {/* {document.getElementById('background').classList.add('day')}
-      {document.getElementById('background').classList.remove('lobby')} */}
       {/* <h4>Room: {roomName}</h4> */}
 
+      {/* <MajorityReached /> */}
       <Day />
       <Rules />
       <Button
