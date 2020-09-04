@@ -64,6 +64,7 @@ const Room = ({roomName, token, handleLogout}) => {
       votesVillagers: [],
       votesWerewolves: [],
       votesVillagersColors: [],
+      votesWerewolvesColors: [],
       werewolves: [],
       werewolvesChoice: '',
       winner: '',
