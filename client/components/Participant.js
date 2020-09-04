@@ -1,9 +1,8 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable complexity */
-import React, {useState, useEffect, useRef} from 'react'
+import React from 'react'
 import VideoAudio from './VideoAudio'
 import {Button} from '@material-ui/core'
-import {db} from './firebase'
 
 const Participant = ({
   participant,
@@ -39,20 +38,6 @@ const Participant = ({
     blue: '/villagerIconBlue.png',
     yellow: '/villagerIconYellow.png',
   }
-
-  //console.log('what is checkWW', checkWerewolf)
-  //console.log('what is checkSeer', checkSeer)
-  //console.log('what is checkMedic', checkMedic)
-  //console.log('what is localRole', localRole)
-  //console.log('what is votesVill', votesVill)
-
-  // return (
-  //   <div className="participant">
-  //     <h3>{participant.identity}</h3>
-  //     <video ref={videoRef} autoPlay={true} />
-  //     <audio ref={audioRef} autoPlay={true} muted={true} />
-  //   </div>
-  // );
 
   if (!participant) return
 

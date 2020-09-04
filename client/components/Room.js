@@ -6,25 +6,18 @@ import {db} from './firebase'
 import {Button} from '@material-ui/core'
 
 const Room = ({roomName, token, handleLogout}) => {
+  /**
+   * Functional state and respective setter functions
+   */
   const [stateRoom, setStateRoom] = useState(null)
   const [participants, _setParticipants] = useState([])
-  const [partIdentities, setPartIdentities] = useState([])
+  const [participantIdentities, setParticipantIdentities] = useState([])
   const [participantsColors, setParticipantsColors] = useState([])
-
-  const participantsRef = useRef(participants)
-
-  const setParticipants = (data) => {
-    participantsRef.current = data
-    console.log('whjat is data', data)
-    _setParticipants(data)
-    console.log('WHAT IS part ref', participantsRef.current)
-  }
-
-  // potentially needed game logic state
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
   const [localColor, setLocalColor] = useState('')
   const [gameStarted, setGameStarted] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
   const [checkWerewolf, setCheckWerewolf] = useState(false)
   const [checkSeer, setCheckSeer] = useState(false)
   const [checkMedic, setCheckMedic] = useState(false)
@@ -35,7 +28,16 @@ const Room = ({roomName, token, handleLogout}) => {
   const [votesWereColors, setVotesWereColors] = useState([])
   const [colors, setColors] = useState([])
 
-  ////console.log("WHAT IS night", night)
+  const participantsRef = useRef(participants)
+
+  const setParticipants = (data) => {
+    participantsRef.current = data
+    _setParticipants(data)
+  }
+
+  /**
+   * Reset button (for testing purposes only)
+   */
   const testingReset = () => {
     const newGame = {
       Night: true,
@@ -59,60 +61,61 @@ const Room = ({roomName, token, handleLogout}) => {
     }
     db.collection('rooms').doc(roomName).update(newGame)
   }
+
+  /**
+   * Handler functions for setting state.
+   * These need to be defined because we can't pass the functional setter functions into another component.
+   */
   const handleStartGame = () => {
     setGameStarted(true)
-    ////console.log("starting game")
     db.collection('rooms').doc(roomName).update({gameStarted: true})
   }
-
-  const handleNight = (someValue) => {
-    // some logic
-    setNight(someValue)
+  const handleNight = (val) => {
+    setNight(val)
   }
-  const handleLocalRole = (someValue) => {
-    // some logic
-    //console.log('are we making it into handleLocalRole')
-    setLocalRole(someValue)
+  const handleLocalRole = (val) => {
+    setLocalRole(val)
   }
-  const handleCheckMedic = (someValue) => {
-    // some logic
-    setCheckMedic(someValue)
+  const handleCheckMedic = (val) => {
+    setCheckMedic(val)
   }
-  const handleGameStarted = (someValue) => {
-    // some logic
-    setGameStarted(someValue)
+  const handleGameStarted = (val) => {
+    setGameStarted(val)
   }
-  const handleCheckWerewolf = (someValue) => {
-    // some logic
-    setCheckWerewolf(someValue)
+  const handleGameOver = () => {
+    //if num(werewolves) == num(villagers) or num(werewolves) == 0: set gameOver(true)
+    setGameOver(true)
   }
-  const handleCheckSeer = (someValue) => {
-    // some logic
-    setCheckSeer(someValue)
+  const handleCheckWerewolf = (val) => {
+    setCheckWerewolf(val)
   }
-  const handleWerewolfChoice = (someValue) => {
-    // some logic
-    setWerewolfChoice(someValue)
+  const handleCheckSeer = (val) => {
+    setCheckSeer(val)
   }
-  const handleDidSeerHit = (someValue) => {
-    // some logic
-    setDidSeerHit(someValue)
+  const handleWerewolfChoice = (val) => {
+    setWerewolfChoice(val)
+  }
+  const handleDidSeerHit = (val) => {
+    setDidSeerHit(val)
   }
 
   // GAME LOGIC FUNCTIONS
 
+  /**
+   * Handles the transition from night to day by filtering out the player killed (if they weren't saved by the medic), resetting all votes, and updating game status
+   * @param {*} game - game object gotten from the snapshot of the 'rooms' document
+   * @param {*} roomName - the game room's doc ID
+   * @param {*} localUserId - the local user's username
+   */
   function handleNightToDay(game, roomName, localUserId) {
-    ////console.log("handleNightToDay starting", game, roomName, localUserId)
     if (game.villagers.length === 0) {
       assignRolesAndStartGame(game, roomName, localUserId)
     }
-    handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in our DB
-    // this.handleSeer();
-    // this.handleMedic();
+    handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in Firestore
     if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
       if (game.werewolvesChoice === game.medicChoice) {
         game.werewolvesChoice = ''
-        handleWerewolfChoice('')
+        handleWerewolfChoice('') //nullify the werewolves' kill if the medic saved the same player
       } else {
         game.villagers = game.villagers.filter((villager) => {
           return villager !== game.werewolvesChoice
@@ -120,12 +123,11 @@ const Room = ({roomName, token, handleLogout}) => {
         if (game.werewolvesChoice !== '') {
           game.dead.push(game.werewolvesChoice)
           game.players = game.players.filter(
-            (player) => player != game.werewolvesChoice
+            (player) => player !== game.werewolvesChoice
           )
         }
       }
     } else {
-      //outer IF
       return
     }
     game.Night = false
@@ -136,7 +138,6 @@ const Room = ({roomName, token, handleLogout}) => {
     game.checkSeer = false
     game.votesWerewolves = []
     game.villagersChoice = ''
-    //updating game state in DB
 
     db.collection('rooms').doc(roomName).update(game)
 
@@ -147,7 +148,6 @@ const Room = ({roomName, token, handleLogout}) => {
    * Handles the transition from day to night by filtering out the player killed, checking if they were a villager or werewolf, resetting all votes, and updating game status
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document
    */
-
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
     if (game.majorityReached) {
@@ -168,14 +168,9 @@ const Room = ({roomName, token, handleLogout}) => {
       return
     }
     game.Night = true
-    // game.villagersChoice = ""
     game.wereWolvesChoice = ''
     game.majorityReached = false
     game.votesVillagers = []
-    //updating game state in DB
-
-    ////console.log('DURING DAY, ABOUT TO GO TO NIGHT', game);
-
     db.collection('rooms').doc(roomName).update(game)
 
     handleNight(true)
@@ -190,8 +185,6 @@ const Room = ({roomName, token, handleLogout}) => {
 
     const totalPlayers = game.villagers.length + game.werewolves.length
     let votingObject = {} //key will be a user, value is how many votes for that user
-    // let players = await db.collection('rooms').doc(this.state.gameId).data().players
-
     let players = await db.collection('rooms').doc(roomName).get()
     let votesVillagers = players.data().votesVillagers
 
@@ -203,7 +196,6 @@ const Room = ({roomName, token, handleLogout}) => {
         votingObject[player] = 1
       }
     }
-    ////console.log('in handle majority', votingObject);
 
     for (let player of Object.keys(votingObject)) {
       if (votingObject[player] > Math.floor(totalPlayers / 2)) {
@@ -220,7 +212,7 @@ const Room = ({roomName, token, handleLogout}) => {
 
   /**
    * Handler function which updates a villager's vote based on the user they are choosing to kill
-   * @param {*} userPeerId - the user's PeerJS ID (that is, the user a villager is trying to kill)
+   * @param {*} participantIdentity - the participant's username (that is, the player a villager is trying to kill)
    */
   async function handleVillagerVoteButton(participantIdentity) {
     let votesVillagers = await db.collection('rooms').doc(roomName).get()
@@ -234,10 +226,13 @@ const Room = ({roomName, token, handleLogout}) => {
       .update({votesVillagers: votesVillagers})
   }
 
+  /**
+   * Handler function which updates a werewolf's vote based on the user they are choosing to kill
+   * @param {*} participantIdentity - the target participant's username (i.e the player a werewolf is trying to kill)
+   * @param {*} localColor - the local user's voting color
+   */
   async function handleWerewolfVoteButton(participantIdentity, localColor) {
     let gameState = await db.collection('rooms').doc(roomName).get()
-
-    //console.log('Are we getting the correct', participantIdentity)
 
     let votesWerewolves = gameState.data().votesWerewolves
     votesWerewolves.push(participantIdentity)
@@ -256,6 +251,10 @@ const Room = ({roomName, token, handleLogout}) => {
       .update({votesWerewolvesColors: votesWerewolvesColors})
   }
 
+  /**
+   * Handler function which updates a seer's selection based on the user whose role they are seeing
+   * @param {*} participantIdentity - the target participant's username (i.e the player the seer is trying to see)
+   */
   async function handleSeerCheckButton(participantIdentity) {
     const roomObj = await db.collection('rooms').doc(roomName).get()
 
@@ -271,6 +270,11 @@ const Room = ({roomName, token, handleLogout}) => {
       .doc(roomName)
       .update({checkSeer: true, seerChoice: participantIdentity})
   }
+
+  /**
+   * Handler function which updates a medic's selection based on the user whose role they are saving
+   * @param {*} participantIdentity - the target participant's username (i.e the player the medic is trying to save)
+   */
   async function handleMedicSaveButton(participantIdentity) {
     handleCheckMedic(true)
 
@@ -285,20 +289,10 @@ const Room = ({roomName, token, handleLogout}) => {
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document
    */
   async function handleWerewolfVote(roomObj, roomName) {
-    // const roomObj = await db
-    //   .collection('room')
-    //   .doc(roomName)
-    //   .get();
-
-    // let players = roomObj.data().players;
-    // ^^^ do we need this code above with 'players' ?
-
     const totalPlayers = roomObj.werewolves.length
 
     let votesWerewolves = await db.collection('rooms').doc(roomName).get()
     votesWerewolves = votesWerewolves.data().votesWerewolves
-
-    ////console.log('what are my villagers', votesWerewolves);
 
     let votingObject = {}
 
@@ -310,15 +304,12 @@ const Room = ({roomName, token, handleLogout}) => {
         votingObject[player] = 1
       }
     }
-    ////console.log('voting object is', votingObject);
+
     for (let player of Object.keys(votingObject)) {
       if (votingObject[player] > Math.floor(totalPlayers / 2)) {
-        // db.collection('rooms').doc(this.state.gameId).villagersChoice.update(player) // find real way to do this
         db.collection('rooms')
           .doc(roomName)
           .update({werewolvesChoice: player, checkWerewolf: true})
-        // also have to update local state
-
         handleCheckWerewolf(true)
         handleWerewolfChoice(player)
       }
@@ -330,14 +321,11 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   async function handleSeer(roomName) {
     const player = await db.collection('rooms').doc(roomName).get()
-
     const seerChoice = player.data().seerChoice
 
     if (seerChoice === '') return
     else {
-      ////console.log('setting checkSeer to true');
       db.collection('rooms').doc(roomName).update({checkSeer: true})
-      // also have to update local state
       handleCheckSeer(true)
     }
   }
@@ -352,11 +340,7 @@ const Room = ({roomName, token, handleLogout}) => {
 
     if (medicChoice === '') return
     else {
-      ////console.log('setting checkMedic to true');
       db.collection('rooms').doc(roomName).update({checkMedic: true})
-
-      // also have to update local state
-
       await handleCheckMedic(true)
     }
   }
@@ -364,23 +348,17 @@ const Room = ({roomName, token, handleLogout}) => {
   /**
    * Randomly assigns roles to users, updates the roles in firestore, and subsequently updates the 'gameStarted' boolean in the 'rooms' database
    * @param {*} game - game object gotten from the snapshot of the 'rooms' database once the game starts
+   * @param {*} roomName - the game room's doc ID
+   * @param {*} localUserId - the local user's username
    */
   async function assignRolesAndStartGame(game, roomName, localUserId) {
-    //console.log('In assignRolesAndStartGame', game, roomName, localUserId)
     let gameState = await db.collection('rooms').doc(roomName).get()
-
-    //console.log('what is gameState in assignRoles', gameState)
-
     let players = gameState.data().players
     let playerColors = gameState.data().colors
-
-    //randomize later
-    ////console.log('what is users in assign roles', users);
-
     let werewolves = []
     let villagers = []
 
-    //shuffle users array
+    //shuffle users array in order to assign random roles
     // for (let i = users.length - 1; i > 0; i--) {
     //   let j = Math.floor(Math.random() * (i + 1));
     //   [users[i], users[j]] = [users[j], users[i]];
@@ -396,13 +374,11 @@ const Room = ({roomName, token, handleLogout}) => {
       'yellow',
     ]
     let colorPlayer = []
-    players.forEach((playerName, i) => {
-      ////console.log('what does my user look like', doc.id);
 
+    players.forEach((playerName, i) => {
       colorPlayer.push(playerName)
       playerColors.push(colors[i])
       if (i < 2) {
-        ////console.log('werewolves are ', werewolves);
         werewolves.push(playerName)
       } else if (i === 2) {
         db.collection('rooms').doc(roomName).update({seer: playerName})
@@ -413,10 +389,16 @@ const Room = ({roomName, token, handleLogout}) => {
       } else {
         villagers.push(playerName)
       }
-    }) // end of forEach loop
+    })
+
+    /**
+     *
+     * @param {*} player
+     */
     function checkPlayer(player) {
-      return player == colorP
+      return player === colorP
     }
+
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
     setLocalColor(colors[localIndex])
 
@@ -432,69 +414,33 @@ const Room = ({roomName, token, handleLogout}) => {
     let medic = gameState.data().medic
 
     if (villagers.includes(localUserId)) {
-      //console.log('setting role as villager')
       handleLocalRole('villager')
     }
     if (werewolves.includes(localUserId)) {
-      //console.log('setting role as werewolf')
       handleLocalRole('werewolf')
     }
     if (seer === localUserId) {
-      //console.log('setting role as seer')
       handleLocalRole('seer')
     }
     if (medic === localUserId) {
-      //console.log('setting role as medic')
       handleLocalRole('medic')
     }
   }
 
-  //end of GAME LOGIC functions
-
-  // useEffect(() => {
-  //   ////console.log("GAME STARTED USE EFFECT")
-  //   db
-  //   .collection('rooms')
-  //   .doc(roomName)
-  //   .onSnapshot(async (snapshot) => {
-  //     ////console.log("made it into onSnapshot")
-  //     let gameState = snapshot.data();
-
-  //     ////console.log("gameState is", gameState)
-
-  //     if (!gameState.gameStarted) return;
-
-  //     if (gameState.Night) {
-  //       ////console.log("pre initial handleNightDay")
-  //       //console.log("what is our local identity", participants[0])
-
-  //       handleNightToDay(gameState, roomName, participants[0].identity);
-  //     } else {
-  //       ////console.log("are we making it into here")
-  //       handleDayToNight(gameState,roomName);
-  //     }
-  //   });
-
-  // }, [gameStarted]);
-
+  /**
+   *
+   * Runs after render is committed to screen.
+   */
   useEffect(() => {
     const participantConnected = (participant) => {
-      // setParticipants((prevParticipants) => [...prevParticipants, participant])
       setParticipants([...participantsRef.current, participant])
-
-      console.log('particiapnts', participantsRef.current)
     }
 
     const participantDisconnected = (participant) => {
-      console.log('WHAT IS PARTICIPANTS REF', participantsRef.current)
       let newParticipantz = [...participantsRef.current]
-      console.log('PRE NP', newParticipantz)
       newParticipantz = newParticipantz.filter((p) => p !== participant)
-      console.log('POST NP', newParticipantz)
 
       setParticipants(newParticipantz)
-
-      console.log('player identity BEFOR ', participantsRef.current)
 
       let playerIdentitys = newParticipantz.map(
         (participant) => participant.identity
@@ -503,8 +449,6 @@ const Room = ({roomName, token, handleLogout}) => {
         alert('Hello')
       }, 0)
 
-      console.log('player identity AFTER ', playerIdentitys)
-
       db.collection('rooms').doc(roomName).update({players: playerIdentitys})
     }
 
@@ -512,10 +456,6 @@ const Room = ({roomName, token, handleLogout}) => {
       name: roomName,
     }).then(async (room) => {
       setStateRoom(room)
-      // setParticipants((prevParticipants) => [
-      //   ...prevParticipants,
-      //   room.localParticipant,
-      // ])
       setParticipants([...participantsRef.current, room.localParticipant])
 
       const gameState = await db.collection('rooms').doc(roomName).get()
@@ -534,20 +474,16 @@ const Room = ({roomName, token, handleLogout}) => {
       db.collection('rooms')
         .doc(roomName)
         .onSnapshot(async (snapshot) => {
-          ////console.log("made it into onSnapshot")
           let gameState = snapshot.data()
 
-          //console.log('what is our gameStarted111', gameState)
-
           setGameStarted(gameState.gameStarted)
-
           setCheckSeer(gameState.checkSeer)
           setCheckMedic(gameState.checkMedic)
           setCheckWerewolf(gameState.checkWerewolf)
           setVotesVill(gameState.votesVillagers)
           setVotesWere(gameState.votesWerewolves)
           setVotesWereColors(gameState.votesWerewolvesColors)
-          setPartIdentities(gameState.players)
+          setParticipantIdentities(gameState.players)
 
           let colors = gameState.colors
 
@@ -556,11 +492,7 @@ const Room = ({roomName, token, handleLogout}) => {
           let newParticipants = gameState.players.filter(
             (player) => !gameState.dead.includes(player)
           )
-          //console.log('FILTERED FOR DEAD PPL', newParticipants)
 
-          // setParticipants((prevParticipants) =>
-          //   prevParticipants.filter((p) => newParticipants.includes(p.identity))
-          // )
           let temp = [...participantsRef.current]
           newParticipants = temp.filter((p) =>
             newParticipants.includes(p.identity)
@@ -568,20 +500,15 @@ const Room = ({roomName, token, handleLogout}) => {
 
           setParticipants(newParticipants)
 
-          ////console.log("gameState is", gameState)
-
           if (!gameState.gameStarted) return
 
           if (gameState.Night) {
-            ////console.log("pre initial handleNightDay")
-
             handleNightToDay(
               gameState,
               roomName,
               room.localParticipant.identity
             )
           } else {
-            ////console.log("are we making it into here")
             handleDayToNight(gameState, roomName)
           }
         })
@@ -605,6 +532,9 @@ const Room = ({roomName, token, handleLogout}) => {
     }
   }, [roomName, token])
 
+  /**
+   * Rendering all remote participants
+   */
   const remoteParticipants = participants.map((participant, idx) => {
     if (idx === 0) return
     let pngMapObj = {
@@ -618,11 +548,9 @@ const Room = ({roomName, token, handleLogout}) => {
       yellow: '/villagerIconYellow.png',
     }
 
-    let correctIdx = partIdentities.indexOf(participant.identity)
+    let correctIdx = participantIdentities.indexOf(participant.identity)
     let playerColor = colors[correctIdx]
     let fileName = pngMapObj[playerColor]
-
-    console.log('what is file', fileName)
 
     return (
       <Participant
@@ -649,6 +577,7 @@ const Room = ({roomName, token, handleLogout}) => {
     )
   })
 
+  //colored voting icons
   let pngMapObj = {
     red: '/villagerIconRed.png',
     orange: '/villagerIconOrange.png',
@@ -660,19 +589,16 @@ const Room = ({roomName, token, handleLogout}) => {
     yellow: '/villagerIconYellow.png',
   }
 
-  let players = partIdentities
+  /**
+   * Render local participant
+   */
+  let players = participantIdentities
 
   if (!stateRoom) return null
   if (!stateRoom.localParticipant) return null
-  console.log('WHAT IS LOCAL P', stateRoom.localParticipant.identity)
   let idx = players.indexOf(stateRoom.localParticipant.identity)
-  console.log('what is idx', idx)
-
   let playerColor = colors[idx]
-  console.log('player color is', playerColor)
   let fileName = pngMapObj[playerColor]
-
-  console.log('what is file', fileName)
 
   return (
     <div
@@ -700,7 +626,6 @@ const Room = ({roomName, token, handleLogout}) => {
               justifyContent: 'center',
               flexWrap: 'wrap',
               backgroundColor: 'grey',
-              // width: '90%',
               padding: 5,
               margin: 20,
             }}
