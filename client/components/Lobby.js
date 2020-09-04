@@ -5,7 +5,7 @@ const Lobby = ({
   handleUsernameChange,
   roomName,
   handleRoomNameChange,
-  handleSubmit
+  handleSubmit,
 }) => {
   return (
     <form onSubmit={handleSubmit}>

@@ -5,13 +5,25 @@ import Room from './Room'
 import {db} from './firebase'
 
 const VideoChat = () => {
+  /**
+   * The default game state of a room object in the Firestore database
+   */
   const roomObj = {
     Night: true,
     checkMajority: false,
     checkMedic: false,
     checkSeer: false,
     checkWerewolf: false,
-    colors: ["red", "orange", "pink", "purple", "green", "brown", "blue", "yellow"],
+    colors: [
+      'red',
+      'orange',
+      'pink',
+      'purple',
+      'green',
+      'brown',
+      'blue',
+      'yellow',
+    ],
     dead: [],
     gameStarted: false,
     gameOver: false,
@@ -29,6 +41,9 @@ const VideoChat = () => {
     werewolves: [],
   }
 
+  /**
+   * Functional state and respective setter functions
+   */
   const [username, setUsername] = useState('')
   const [roomName, setRoomName] = useState('')
   const [token, setToken] = useState(null)
@@ -53,8 +68,9 @@ const VideoChat = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((res) => res.json())
-      setToken(data.token)
+      }).then((res) => res.json()) //getting Twilio token
+
+      setToken(data.token) //setting state with Twilio token that gets you into the correct room
 
       /**
        * Logic to either add players to the correct game, or to create a new game if the old one is over
@@ -71,19 +87,21 @@ const VideoChat = () => {
               !players.length ||
               (players.length && gameStarted && gameOver)
             ) {
-              //if room exists and no one is in it, or
-              //if room exists and the game is over
               db.collection('rooms').doc(roomName).set(roomObj)
+              /**
+               * Reset the pre-existing room if:
+               * 1) no one is in it, or
+               * 2) the game is over
+               */
 
               /**
-               * Otherwise,
-               * if room exists and ppl are in it, we do nothing here as they will
+               * Otherwise, if the room exists and players are in it, we do nothing here as they will
                * be passed along into the existing room w/o any modification needed.
-               * if the game is already under way, logic in Room.js will not let them join as participants
+               * If the game is already under way, logic in Room.js will not let them join as participants
                */
             }
           } else {
-            //if room does not exist
+            // If room does not exist, create a new one
             db.collection('rooms').doc(roomName).set(roomObj)
           }
         })
@@ -95,6 +113,11 @@ const VideoChat = () => {
     setToken(null)
   }, [])
 
+  /**
+   * Conditional Render:
+   * If a visitor already has a token, render the Room component.
+   * Otherwise, send them to the Lobby (i.e. landing page)
+   */
   let render
   if (token) {
     render = (
