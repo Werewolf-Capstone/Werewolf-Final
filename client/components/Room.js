@@ -226,27 +226,33 @@ const Room = ({roomName, token, handleLogout}) => {
     console.log('inside handle vill vote localIdent', localIdentity)
     let gameState = await db.collection('rooms').doc(roomName).get()
     let participantVotes = await gameState.data().participantVotes
+    let players = await gameState.data().players
     let votesVillagers = await gameState.data().votesVillagers
+    let votesVillagersColors = await gameState.data().votesVillagersColors
 
     // if we have a person we voted for already, we need to replace them and remove them from votesVillagers
     // before adding a new vote to votesVillgers
-    let localIdx = participantVotes.indexOf(localIdentity)
+    let localIdx = players.indexOf(localIdentity)
     let prevVote = ''
     console.log('what is localIdx', localIdx)
     if (participantVotes[localIdx] !== '') {
+      console.log('did I make it into here')
       prevVote = participantVotes[localIdx]
       let votesVillagersIdx = votesVillagers.indexOf(prevVote)
       votesVillagers.splice(votesVillagersIdx, 1)
-      participantVotes[localIdx] = participantIdentity
+
+      let voteColorIdx = votesVillagersColors.indexOf(localColor)
+      votesVillagersColors.splice(voteColorIdx, 1)
     }
 
     votesVillagers.push(participantIdentity)
+    participantVotes[localIdx] = participantIdentity
 
-    let votesVillagersColors = gameState.data().votesVillagersColors
     votesVillagersColors.push(localColor)
     await db.collection('rooms').doc(roomName).update({
       votesVillagers: votesVillagers,
       votesVillagersColors: votesVillagersColors,
+      participantVotes: participantVotes,
     })
   }
 
