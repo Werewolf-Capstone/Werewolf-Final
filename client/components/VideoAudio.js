@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react'
 
-const VideoAudio = ({participant, shouldWePlay}) => {
+const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   const videoRef = useRef()
   const audioRef = useRef()
 
-  console.log('should we play', shouldWePlay)
+  console.log('are we a local user', isLocal)
 
   const [videoTracks, setVideoTracks] = useState([])
   const [audioTracks, setAudioTracks] = useState([])
@@ -77,9 +77,9 @@ const VideoAudio = ({participant, shouldWePlay}) => {
         }}
         ref={videoRef}
         autoPlay={shouldWePlay}
-        muted={true}
+        muted={isLocal}
       />
-      <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} />
+      <audio ref={audioRef} autoPlay={shouldWePlay} muted={!isLocal} />
     </div>
   )
 }

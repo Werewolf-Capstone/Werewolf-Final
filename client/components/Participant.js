@@ -18,11 +18,14 @@ const Participant = ({
   werewolfChoice,
   didSeerHit,
   gameStarted,
-  votesVill,
   localColor,
+  votesVill,
+  votesVillColors,
   votesWere,
   votesWereColors,
   imageSrc,
+  localIdentity,
+  isLocal,
 }) => {
   let info
   let lower
@@ -40,6 +43,8 @@ const Participant = ({
   }
 
   if (!participant) return
+
+  console.log('what is isLocal in participant', isLocal)
 
   if (!night) {
     info = (
@@ -59,7 +64,13 @@ const Participant = ({
           size="small"
           variant="contained"
           color="secondary"
-          onClick={() => handleVillagerVoteButton(participant.identity)}
+          onClick={() =>
+            handleVillagerVoteButton(
+              participant.identity,
+              localIdentity,
+              localColor
+            )
+          }
         >
           Kill
         </Button>
@@ -204,20 +215,34 @@ const Participant = ({
           margin: '5px',
         }}
       >
-        <div> {info} </div>
+        <div>
+          {info}
+          {localRole === 'seer' ? <h3>{didSeerHit} test seer</h3> : null}
+        </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div id={participant.identity}>
-          {votesVill.map((playerId) => {
+          {votesVill.map((playerId, idx) => {
             if (playerId === participant.identity) {
               return (
                 <img
                   style={{width: '40px', height: '40px'}}
-                  src={imageSrc}
+                  src={pngMapObj[votesVillColors[idx]]}
                 ></img>
               )
             }
           })}
+
+          {/* {votesWere.map((playerId, idx) => {
+            if (playerId === participant.identity) {
+              return (
+                <img
+                  style={{width: '40px', height: '40px'}}
+                  src={pngMapObj[votesWereColors[idx]]}
+                ></img>
+              )
+            }
+          })} */}
         </div>
         <div className="playerIcon">
           <img
@@ -231,7 +256,11 @@ const Participant = ({
             src={imageSrc}
           ></img>
         </div>
-        <VideoAudio participant={participant} localColor={localColor} />
+        <VideoAudio
+          participant={participant}
+          localColor={localColor}
+          isLocal={isLocal}
+        />
         {lower}
       </div>
     )
