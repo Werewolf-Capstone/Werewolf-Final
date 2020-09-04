@@ -50,7 +50,7 @@ const Participant = ({
     info = (
       <div>
         {/* <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div> */}
-        <div style={{color: 'red', fontWeight: 'bold'}}>
+        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
           {werewolfChoice} was killed during the night{' '}
         </div>
       </div>
@@ -84,7 +84,7 @@ const Participant = ({
     info = (
       <div>
         {/* <div>DURING THE DAY AND WE ARE THE SEER</div> */}
-        <div style={{color: 'red', fontWeight: 'bold'}}>
+        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
           {werewolfChoice} was killed during the night , role= {localRole}
         </div>
         <div style={{color: 'red', fontWeight: 'bold'}}>
@@ -239,7 +239,7 @@ const Participant = ({
     shouldWePlay = false
     info = (
       <div className="participant">
-        <div style={{color: 'red', fontWeight: 'bold'}}>
+        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
           Sleep well, {participant.identity}. Hopefully you survive the night.
         </div>
       </div>
