@@ -63,19 +63,15 @@ const Room = ({roomName, token, handleLogout}) => {
   }
 
   const handleNight = (someValue) => {
-    // some logic
     setNight(someValue)
   }
   const handleLocalRole = (someValue) => {
-    // some logic
     setLocalRole(someValue)
   }
   const handleCheckMedic = (someValue) => {
-    // some logic
     setCheckMedic(someValue)
   }
   const handleGameStarted = (someValue) => {
-    // some logic
     setGameStarted(someValue)
   }
 
@@ -86,19 +82,15 @@ const Room = ({roomName, token, handleLogout}) => {
   }
 
   const handleCheckWerewolf = (someValue) => {
-    // some logic
     setCheckWerewolf(someValue)
   }
   const handleCheckSeer = (someValue) => {
-    // some logic
     setCheckSeer(someValue)
   }
   const handleWerewolfChoice = (someValue) => {
-    // some logic
     setWerewolfChoice(someValue)
   }
   const handleDidSeerHit = (someValue) => {
-    // some logic
     setDidSeerHit(someValue)
   }
 
@@ -168,11 +160,9 @@ const Room = ({roomName, token, handleLogout}) => {
       return
     }
     game.Night = true
-    // game.villagersChoice = ""
     game.wereWolvesChoice = ''
     game.majorityReached = false
     game.votesVillagers = []
-    //updating game state in DB
     db.collection('rooms').doc(roomName).update(game)
 
     handleNight(true)
@@ -187,8 +177,6 @@ const Room = ({roomName, token, handleLogout}) => {
 
     const totalPlayers = game.villagers.length + game.werewolves.length
     let votingObject = {} //key will be a user, value is how many votes for that user
-    // let players = await db.collection('rooms').doc(this.state.gameId).data().players
-
     let players = await db.collection('rooms').doc(roomName).get()
     let votesVillagers = players.data().votesVillagers
 
@@ -279,14 +267,6 @@ const Room = ({roomName, token, handleLogout}) => {
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document
    */
   async function handleWerewolfVote(roomObj, roomName) {
-    // const roomObj = await db
-    //   .collection('room')
-    //   .doc(roomName)
-    //   .get();
-
-    // let players = roomObj.data().players;
-    // ^^^ do we need this code above with 'players' ?
-
     const totalPlayers = roomObj.werewolves.length
 
     let votesWerewolves = await db.collection('rooms').doc(roomName).get()
@@ -305,12 +285,9 @@ const Room = ({roomName, token, handleLogout}) => {
 
     for (let player of Object.keys(votingObject)) {
       if (votingObject[player] > Math.floor(totalPlayers / 2)) {
-        // db.collection('rooms').doc(this.state.gameId).villagersChoice.update(player) // find real way to do this
         db.collection('rooms')
           .doc(roomName)
           .update({werewolvesChoice: player, checkWerewolf: true})
-        // also have to update local state
-
         handleCheckWerewolf(true)
         handleWerewolfChoice(player)
       }
@@ -328,7 +305,6 @@ const Room = ({roomName, token, handleLogout}) => {
     if (seerChoice === '') return
     else {
       db.collection('rooms').doc(roomName).update({checkSeer: true})
-      // also have to update local state
       handleCheckSeer(true)
     }
   }
@@ -344,9 +320,6 @@ const Room = ({roomName, token, handleLogout}) => {
     if (medicChoice === '') return
     else {
       db.collection('rooms').doc(roomName).update({checkMedic: true})
-
-      // also have to update local state
-
       await handleCheckMedic(true)
     }
   }
@@ -378,6 +351,7 @@ const Room = ({roomName, token, handleLogout}) => {
       'yellow',
     ]
     let colorPlayer = []
+
     players.forEach((playerName, i) => {
       colorPlayer.push(playerName)
       playerColors.push(colors[i])
@@ -392,10 +366,12 @@ const Room = ({roomName, token, handleLogout}) => {
       } else {
         villagers.push(playerName)
       }
-    }) // end of forEach loop
+    })
+
     function checkPlayer(player) {
-      return player == colorP
+      return player === colorP
     }
+
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
     setLocalColor(colors[localIndex])
 
@@ -423,34 +399,6 @@ const Room = ({roomName, token, handleLogout}) => {
       handleLocalRole('medic')
     }
   }
-
-  //end of GAME LOGIC functions
-
-  // useEffect(() => {
-  //   ////console.log("GAME STARTED USE EFFECT")
-  //   db
-  //   .collection('rooms')
-  //   .doc(roomName)
-  //   .onSnapshot(async (snapshot) => {
-  //     ////console.log("made it into onSnapshot")
-  //     let gameState = snapshot.data();
-
-  //     ////console.log("gameState is", gameState)
-
-  //     if (!gameState.gameStarted) return;
-
-  //     if (gameState.Night) {
-  //       ////console.log("pre initial handleNightDay")
-  //       //console.log("what is our local identity", participants[0])
-
-  //       handleNightToDay(gameState, roomName, participants[0].identity);
-  //     } else {
-  //       ////console.log("are we making it into here")
-  //       handleDayToNight(gameState,roomName);
-  //     }
-  //   });
-
-  // }, [gameStarted]);
 
   useEffect(() => {
     const participantConnected = (participant) => {
