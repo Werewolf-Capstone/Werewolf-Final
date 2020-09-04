@@ -114,11 +114,11 @@ const Room = ({roomName, token, handleLogout}) => {
     if (game.villagers.length === 0) {
       assignRolesAndStartGame(game, roomName, localUserId)
     }
-    if (game.villagers.length === game.werewolves.length) {
-      handleGameOver('werewolves')
-    } else if (game.werewolves.length === 0) {
-      handleGameOver('villagers')
-    }
+    // if (game.villagers.length === game.werewolves.length) {
+    //   handleGameOver('werewolves')
+    // } else if (game.werewolves.length === 0) {
+    //   handleGameOver('villagers')
+    // }
     handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in Firestore
     if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
       if (game.werewolvesChoice === game.medicChoice) {
@@ -159,11 +159,11 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
-    if (game.villagers.length === game.werewolves.length) {
-      handleGameOver('werewolves')
-    } else if (game.werewolves.length === 0) {
-      handleGameOver('villagers')
-    }
+    // if (game.villagers.length === game.werewolves.length) {
+    //   handleGameOver('werewolves')
+    // } else if (game.werewolves.length === 0) {
+    //   handleGameOver('villagers')
+    // }
     if (game.majorityReached) {
       if (game.villagers.includes(game.villagersChoice)) {
         game.villagers = game.villagers.filter((villager) => {
@@ -178,7 +178,6 @@ const Room = ({roomName, token, handleLogout}) => {
         game.dead.push(game.villagersChoice)
       }
     } else {
-      //outer IF
       return
     }
     game.Night = true
