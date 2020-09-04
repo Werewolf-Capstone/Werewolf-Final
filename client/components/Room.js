@@ -1,4 +1,5 @@
 /* eslint-disable max-statements */
+/* eslint-disable complexity */
 import React, {useState, useEffect, useRef} from 'react'
 import Video from 'twilio-video'
 import Participant from './Participant'
@@ -17,8 +18,8 @@ const Room = ({roomName, token, handleLogout}) => {
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
   const [localColor, setLocalColor] = useState('')
-  const [gameStarted, setGameStarted] = useState(false)
   const [gameOver, setGameOver] = useState(false)
+  const [gameStarted, setGameStarted] = useState(false)
   const [checkWerewolf, setCheckWerewolf] = useState(false)
   const [checkSeer, setCheckSeer] = useState(false)
   const [checkMedic, setCheckMedic] = useState(false)
@@ -48,6 +49,7 @@ const Room = ({roomName, token, handleLogout}) => {
       checkSeer: false,
       checkWerewolf: false,
       dead: [],
+      gameOver: false,
       gameStarted: false,
       majorityReached: false,
       medic: '',
@@ -62,6 +64,7 @@ const Room = ({roomName, token, handleLogout}) => {
       votesVillagersColors: [],
       werewolves: [],
       werewolvesChoice: '',
+      winner: '',
     }
     db.collection('rooms').doc(roomName).update(newGame)
   }
@@ -86,9 +89,9 @@ const Room = ({roomName, token, handleLogout}) => {
   const handleGameStarted = (val) => {
     setGameStarted(val)
   }
-  const handleGameOver = () => {
-    //if num(werewolves) == num(villagers) or num(werewolves) == 0: set gameOver(true)
+  const handleGameOver = (winner) => {
     setGameOver(true)
+    db.collection('rooms').doc(roomName).update({gameOver: true, winner})
   }
   const handleCheckWerewolf = (val) => {
     setCheckWerewolf(val)
@@ -114,6 +117,12 @@ const Room = ({roomName, token, handleLogout}) => {
   function handleNightToDay(game, roomName, localUserId) {
     if (game.villagers.length === 0) {
       assignRolesAndStartGame(game, roomName, localUserId)
+    }
+    // THIS IS STOPPING ME FROM ADDING A SECOND PLAYER TO FIRST PLAYER'S REMOTE VIDEO COMPONENT
+    if (game.villagers.length === game.werewolves.length) {
+      handleGameOver('werewolves')
+    } else if (game.werewolves.length === 0) {
+      handleGameOver('villagers')
     }
     handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in Firestore
     if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
@@ -151,9 +160,15 @@ const Room = ({roomName, token, handleLogout}) => {
   /**
    * Handles the transition from day to night by filtering out the player killed, checking if they were a villager or werewolf, resetting all votes, and updating game status
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document
+   * @param {*} roomName - the game room's doc ID
    */
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
+    // if (game.villagers.length === game.werewolves.length) {
+    //   handleGameOver('werewolves')
+    // } else if (game.werewolves.length === 0) {
+    //   handleGameOver('villagers')
+    // }
     if (game.majorityReached) {
       if (game.villagers.includes(game.villagersChoice)) {
         game.villagers = game.villagers.filter((villager) => {
@@ -168,7 +183,6 @@ const Room = ({roomName, token, handleLogout}) => {
         game.dead.push(game.villagersChoice)
       }
     } else {
-      //outer IF
       return
     }
     game.Night = true
@@ -185,8 +199,6 @@ const Room = ({roomName, token, handleLogout}) => {
    * @param {*} game - game object gotten from the snapshot of the 'rooms' document once the game starts
    */
   async function handleMajority(game, roomName) {
-    //end goal to update villageGers
-
     const totalPlayers = game.villagers.length + game.werewolves.length
     let votingObject = {} //key will be a user, value is how many votes for that user
     let players = await db.collection('rooms').doc(roomName).get()
@@ -532,6 +544,15 @@ const Room = ({roomName, token, handleLogout}) => {
           setParticipants(newParticipants)
 
           if (!gameState.gameStarted) return
+
+          /**
+           * Check if game is over
+           */
+          if (gameState.villagers.length === gameState.werewolves.length) {
+            handleGameOver('werewolves')
+          } else if (gameState.werewolves.length === 0) {
+            handleGameOver('villagers')
+          }
 
           if (gameState.Night) {
             handleNightToDay(
