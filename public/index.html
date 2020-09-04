@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="background" class="lobby fadeOut">
   <head>
     <link rel="icon" href="/wolf.jpg" />
 
@@ -10,6 +10,9 @@
       let audio = document.getElementById('homepageaudio')
       audio.volume = 0.1
     </script> -->
+
+    <!--Animation connection-->
+    <link rel="stylesheet" href="animate.css" />
     <meta
       name="Werewolf"
       content="A digital implementation of the social deduction game, Werewolf,"
@@ -28,6 +31,9 @@
     <audio id="homepageaudio" loop="true" autoplay="true">
       <source src="./background.mp3" type="audio/mpeg" />
     </audio> -->
+
+    <!-- Animation Library -->
+    <script src="anijs-min.js"></script>
     <div id="root"></div>
   </body>
 </html>
