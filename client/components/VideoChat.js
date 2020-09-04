@@ -39,6 +39,7 @@ const VideoChat = () => {
     votesWerewolvesColors: [],
     werewolvesChoice: '',
     werewolves: [],
+    winner: '',
   }
 
   /**
