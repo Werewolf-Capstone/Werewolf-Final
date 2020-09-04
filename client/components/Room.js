@@ -117,6 +117,7 @@ const Room = ({roomName, token, handleLogout}) => {
     if (game.villagers.length === 0) {
       assignRolesAndStartGame(game, roomName, localUserId)
     }
+    // THIS IS STOPPING ME FROM ADDING A SECOND PLAYER TO FIRST PLAYER'S REMOTE VIDEO COMPONENT
     // if (game.villagers.length === game.werewolves.length) {
     //   handleGameOver('werewolves')
     // } else if (game.werewolves.length === 0) {
@@ -162,11 +163,11 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
-    // if (game.villagers.length === game.werewolves.length) {
-    //   handleGameOver('werewolves')
-    // } else if (game.werewolves.length === 0) {
-    //   handleGameOver('villagers')
-    // }
+    if (game.villagers.length === game.werewolves.length) {
+      handleGameOver('werewolves')
+    } else if (game.werewolves.length === 0) {
+      handleGameOver('villagers')
+    }
     if (game.majorityReached) {
       if (game.villagers.includes(game.villagersChoice)) {
         game.villagers = game.villagers.filter((villager) => {
