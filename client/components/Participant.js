@@ -24,6 +24,7 @@ const Participant = ({
   votesWereColors,
   imageSrc,
   localIdentity,
+  isLocal,
 }) => {
   let info
   let lower
@@ -41,6 +42,8 @@ const Participant = ({
   }
 
   if (!participant) return
+
+  console.log('what is isLocal in participant', isLocal)
 
   if (!night) {
     info = (
@@ -238,7 +241,11 @@ const Participant = ({
             src={imageSrc}
           ></img>
         </div>
-        <VideoAudio participant={participant} localColor={localColor} />
+        <VideoAudio
+          participant={participant}
+          localColor={localColor}
+          isLocal={isLocal}
+        />
         {lower}
       </div>
     )

@@ -588,6 +588,7 @@ const Room = ({roomName, token, handleLogout}) => {
         votesWereColors={votesWereColors}
         imageSrc={fileName}
         localIdentity={stateRoom.localParticipant.identity}
+        isLocal={false}
       />
     )
   })
@@ -666,6 +667,7 @@ const Room = ({roomName, token, handleLogout}) => {
               votesWereColors={votesWereColors}
               roomName={stateRoom}
               imageSrc={fileName}
+              isLocal={true}
             />
             {remoteParticipants}
           </div>
