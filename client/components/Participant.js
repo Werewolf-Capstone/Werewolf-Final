@@ -18,8 +18,9 @@ const Participant = ({
   werewolfChoice,
   didSeerHit,
   gameStarted,
-  votesVill,
   localColor,
+  votesVill,
+  votesVillColors,
   votesWere,
   votesWereColors,
   imageSrc,
@@ -64,7 +65,11 @@ const Participant = ({
           variant="contained"
           color="secondary"
           onClick={() =>
-            handleVillagerVoteButton(participant.identity, localIdentity)
+            handleVillagerVoteButton(
+              participant.identity,
+              localIdentity,
+              localColor
+            )
           }
         >
           Kill
@@ -218,16 +223,27 @@ const Participant = ({
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div id={participant.identity}>
-          {votesVill.map((playerId) => {
+          {votesVill.map((playerId, idx) => {
             if (playerId === participant.identity) {
               return (
                 <img
                   style={{width: '40px', height: '40px'}}
-                  src={imageSrc}
+                  src={pngMapObj[votesVillColors[idx]]}
                 ></img>
               )
             }
           })}
+
+          {/* {votesWere.map((playerId, idx) => {
+            if (playerId === participant.identity) {
+              return (
+                <img
+                  style={{width: '40px', height: '40px'}}
+                  src={pngMapObj[votesWereColors[idx]]}
+                ></img>
+              )
+            }
+          })} */}
         </div>
         <div className="playerIcon">
           <img
