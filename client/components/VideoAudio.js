@@ -77,7 +77,7 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
         }}
         ref={videoRef}
         autoPlay={shouldWePlay}
-        muted={!isLocal}
+        muted={isLocal}
       />
       <audio ref={audioRef} autoPlay={shouldWePlay} muted={!isLocal} />
     </div>
