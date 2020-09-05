@@ -280,9 +280,9 @@ const Room = ({roomName, token, handleLogout}) => {
       let voteColorIdx = votesVillagersColors.indexOf(localColor)
       votesVillagersColors.splice(voteColorIdx, 1)
     }
-    let newObj = {}
-    newObj[participantIdentity] = localIdx
-    votesVillagers.push(newObj)
+    let participantObj = {}
+    participantObj[participantIdentity] = localIdx
+    votesVillagers.push(participantObj)
     participantVotes[localIdx] = participantIdentity
 
     votesVillagersColors.push(localColor)
