@@ -237,7 +237,6 @@ const Room = ({roomName, token, handleLogout}) => {
     localIdentity,
     localColor
   ) {
-    console.log('inside handle vill vote localIdent', localIdentity)
     let gameState = await db.collection('rooms').doc(roomName).get()
     let participantVotes = await gameState.data().participantVotes
     let players = await gameState.data().players
@@ -248,9 +247,7 @@ const Room = ({roomName, token, handleLogout}) => {
     // before adding a new vote to votesVillgers
     let localIdx = players.indexOf(localIdentity)
     let prevVote = ''
-    console.log('what is localIdx', localIdx)
     if (participantVotes[localIdx] !== '') {
-      console.log('did I make it into here')
       prevVote = participantVotes[localIdx]
       let votesVillagersIdx = votesVillagers.indexOf(prevVote)
       votesVillagers.splice(votesVillagersIdx, 1)
@@ -547,15 +544,6 @@ const Room = ({roomName, token, handleLogout}) => {
 
           if (!gameState.gameStarted) return
 
-          /**
-           * Check if game is over
-           */
-          if (gameState.villagers.length === gameState.werewolves.length) {
-            handleGameOver('werewolves')
-          } else if (gameState.werewolves.length === 0) {
-            handleGameOver('villagers')
-          }
-
           if (gameState.Night) {
             handleNightToDay(
               gameState,
@@ -564,6 +552,22 @@ const Room = ({roomName, token, handleLogout}) => {
             )
           } else {
             handleDayToNight(gameState, roomName)
+          }
+
+          /**
+           * Check if game is over
+           */
+          if (
+            gameState.werewolves.length === 0 &&
+            gameState.villagers.length === 0
+          ) {
+            //
+          } else if (
+            gameState.villagers.length === gameState.werewolves.length
+          ) {
+            handleGameOver('werewolves')
+          } else if (gameState.werewolves.length === 0) {
+            handleGameOver('villagers')
           }
         })
     })
@@ -683,7 +687,7 @@ const Room = ({roomName, token, handleLogout}) => {
               display: 'flex',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              backgroundColor: 'grey',
+              // backgroundColor: 'grey',
               padding: 5,
               margin: 20,
             }}
@@ -718,16 +722,24 @@ const Room = ({roomName, token, handleLogout}) => {
           ''
         )}
       </div>
-      <Button
-        size="small"
-        variant="contained"
-        color="secondary"
-        onClick={() => {
-          handleStartGame()
-        }}
-      >
-        Start Game
-      </Button>
+
+      {!gameStarted ? (
+        <div>
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              handleStartGame()
+            }}
+          >
+            Start Game
+          </Button>
+        </div>
+      ) : (
+        ''
+      )}
+
       <Button
         size="small"
         variant="contained"
@@ -736,7 +748,7 @@ const Room = ({roomName, token, handleLogout}) => {
           testingReset()
         }}
       >
-        {' '}
+        {/* {' '} */}
         Reset game
       </Button>
     </div>
