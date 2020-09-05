@@ -91,6 +91,15 @@ code {
   position: absolute;
 }
 
+.individualPlayer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 15rem;
+  margin: 5px;
+}
+
 #werewolf-title {
   font-family: werewolf_moonregular;
   font-size: 50px;

@@ -236,17 +236,7 @@ const Participant = ({
   }
   if (shouldWePlay) {
     return (
-      <div
-        className="individualPlayer"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          width: '15rem',
-          margin: '5px',
-        }}
-      >
+      <div className="individualPlayer">
         <div>
           {info}
           {localRole === 'seer' && didSeerHit ? (
@@ -294,17 +284,7 @@ const Participant = ({
     )
   } else {
     return (
-      <div
-        className="individualPlayer"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          width: '15rem',
-          margin: '5px',
-        }}
-      >
+      <div className="individualPlayer">
         <div>{info}</div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
