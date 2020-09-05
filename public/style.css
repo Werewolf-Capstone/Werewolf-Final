@@ -100,6 +100,13 @@ code {
   position: absolute;
 }
 
+.playerVotingIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 25%;
+  border-style: solid;
+}
+
 .individualPlayer {
   display: flex;
   flex-direction: column;

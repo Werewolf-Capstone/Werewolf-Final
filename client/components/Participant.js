@@ -45,7 +45,21 @@ const Participant = ({
   if (!participant) return
 
   if (!night) {
-    info = null
+    info = (
+      <div id={participant.identity}>
+        {votesVill.map((playerObj, idx) => {
+          console.log('mapping over votesVIll, what is pobj', playerObj)
+          if (Object.keys(playerObj)[0] === participant.identity) {
+            return (
+              <img
+                className="playerVotingIcon"
+                src={pngMapObj[votesVillColors[idx]]}
+              ></img>
+            )
+          }
+        })}
+      </div>
+    )
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
@@ -67,25 +81,6 @@ const Participant = ({
         </div>
       </div>
     )
-    // } else if (!night && localRole === 'seer') {
-    //   info = (
-    //     <div>  </div>
-    //   )
-    //   lower = (
-    //     <div className="lowerInfoBox">
-    //       <div className="participantIdentity"> {participant.identity} </div>
-    //       <div>
-    //         <Button
-    //           size="small"
-    //           variant="contained"
-    //           color="secondary"
-    //           onClick={() => handleVillagerVoteButton(participant.identity)}
-    //         >
-    //           Kill
-    //         </Button>
-    //       </div>
-    //     </div>
-    //   )
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
     shouldWePlay = true
     info = (
@@ -194,7 +189,7 @@ const Participant = ({
             <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
           ) : null}
         </div>
-        <div id={participant.identity}>
+        {/* <div id={participant.identity}>
           {votesVill.map((playerObj, idx) => {
             console.log('mapping over votesVIll, what is pobj', playerObj)
             if (Object.keys(playerObj)[0] === participant.identity) {
@@ -206,7 +201,7 @@ const Participant = ({
               )
             }
           })}
-        </div>
+        </div> */}
         <div>
           <div>
             <img className="playerIcon" src={imageSrc}></img>
