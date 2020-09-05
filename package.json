@@ -38,7 +38,7 @@
       "git add"
     ]
   },
-  "author": "Fullstack Academy of Code",
+  "author": "Jonathan Albert (JAlbertCode), Aleks Mitrovic (babybear4812), Michael Pesek (mpesek4), Cameron Holsinger (echolsinger)",
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.11.0",

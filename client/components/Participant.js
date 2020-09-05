@@ -44,12 +44,9 @@ const Participant = ({
 
   if (!participant) return
 
-  console.log('what is isLocal in participant', isLocal)
-
   if (!night) {
     info = (
       <div>
-        {/* <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div> */}
         <div className="infoBox">
           {werewolfChoice === '' ? (
             <div>
@@ -87,7 +84,6 @@ const Participant = ({
   } else if (!night && localRole === 'seer') {
     info = (
       <div>
-        {/* <div>DURING THE DAY AND WE ARE THE SEER</div> */}
         <div className="infoBox">
           {werewolfChoice === '' ? (
             <div>
@@ -120,10 +116,6 @@ const Participant = ({
     shouldWePlay = true
     info = (
       <div>
-        {/* <div>
-          DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A
-          WEREWOLF , role= {localRole}
-        </div> */}
         <div id={participant.identity}>
           {votesWere.map((playerId, idx) => {
             if (playerId === participant.identity) {
@@ -162,14 +154,7 @@ const Participant = ({
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
     shouldWePlay = true
-    info = (
-      <div>
-        {/* <div>
-          DURING THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE
-          THE SEER , role= {localRole}
-        </div> */}
-      </div>
-    )
+    info = <div></div>
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
@@ -177,7 +162,7 @@ const Participant = ({
           size="small"
           variant="contained"
           color="default"
-          onClick={(e) => handleSeerCheckButton(participant.identity)}
+          onClick={() => handleSeerCheckButton(participant.identity)}
         >
           Check Role
         </Button>
@@ -191,14 +176,7 @@ const Participant = ({
     localRole === 'medic'
   ) {
     shouldWePlay = true
-    info = (
-      <div>
-        {/* <div>
-          DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEER IS DONE AND MEDIC IS
-          NOT DONE AND WE ARE THE MEDIC , role= {localRole}
-        </div> */}
-      </div>
-    )
+    info = <div></div>
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
@@ -206,7 +184,7 @@ const Participant = ({
           size="small"
           variant="contained"
           color="primary"
-          onClick={(e) => handleMedicSaveButton(participant.identity)}
+          onClick={() => handleMedicSaveButton(participant.identity)}
         >
           Save Person
         </Button>
@@ -214,7 +192,7 @@ const Participant = ({
     )
   } else if (!gameStarted) {
     shouldWePlay = true
-    info = <div>{/* <div>GAME NOT STARTED, role= {localRole}</div> */}</div>
+    info = <div></div>
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity">{participant.identity}</div>
@@ -242,8 +220,6 @@ const Participant = ({
             <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
           ) : null}
         </div>
-        {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
-        <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div id={participant.identity}>
           {votesVill.map((playerId, idx) => {
             if (playerId === participant.identity) {
@@ -255,17 +231,6 @@ const Participant = ({
               )
             }
           })}
-
-          {/* {votesWere.map((playerId, idx) => {
-            if (playerId === participant.identity) {
-              return (
-                <img
-                  style={{width: '40px', height: '40px'}}
-                  src={pngMapObj[votesWereColors[idx]]}
-                ></img>
-              )
-            }
-          })} */}
         </div>
         <div>
           <div>
@@ -285,8 +250,6 @@ const Participant = ({
     return (
       <div className="individualPlayer">
         <div>{info}</div>
-        {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
-        <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div>
           <div>
             <img className="playerIcon" src={imageSrc}></img>
