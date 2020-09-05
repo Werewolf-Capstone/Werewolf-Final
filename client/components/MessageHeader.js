@@ -6,7 +6,7 @@ const MessageHeader = ({werewolfChoice, night}) => {
       <div className="messageHeader">
         {werewolfChoice === '' ? (
           <div>
-            Thankfully, no one was killed last night.
+            Luckily, no one was killed last night.
             <br />
             Kill those werewolves before they can attack again!
           </div>
@@ -15,7 +15,7 @@ const MessageHeader = ({werewolfChoice, night}) => {
             {werewolfChoice} was killed during the night. Avenge{' '}
             {werewolfChoice}'s death!
             <br />
-            Kill those werewolves!
+            Kill all the werewolves!
           </div>
         )}
       </div>
