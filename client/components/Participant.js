@@ -53,7 +53,7 @@ const Participant = ({
         <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
           {werewolfChoice === '' ? (
             <div>
-              No one was killed..
+              No one was killed...
               <br />
               Now get those werewolves!
             </div>
@@ -95,7 +95,7 @@ const Participant = ({
         <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
           {werewolfChoice === '' ? (
             <div>
-              No one was killed..
+              No one was killed...
               <br />
               Now get those werewolves!
             </div>
