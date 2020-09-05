@@ -198,6 +198,7 @@ const Room = ({roomName, token, handleLogout}) => {
     db.collection('rooms').doc(roomName).update(game)
 
     handleNight(true)
+    handleDidSeerHit(false)
   }
 
   /**
