@@ -477,13 +477,12 @@ const Room = ({roomName, token, handleLogout}) => {
       let newParticipantz = [...participantsRef.current]
       newParticipantz = newParticipantz.filter((p) => p !== participant)
 
-      setParticipants(newParticipantz)
-
       let playerIdentitys = newParticipantz.map(
         (participant) => participant.identity
       )
 
       db.collection('rooms').doc(roomName).update({players: playerIdentitys})
+      setParticipants(newParticipantz)
     }
 
     Video.connect(token, {
@@ -524,16 +523,16 @@ const Room = ({roomName, token, handleLogout}) => {
 
           setColors(colors)
 
-          let newParticipants = gameState.players.filter(
-            (player) => !gameState.dead.includes(player)
-          )
+          // let newParticipants = gameState.players.filter(
+          //   (player) => !gameState.dead.includes(player)
+          // )
 
-          let temp = [...participantsRef.current]
-          newParticipants = temp.filter((p) =>
-            newParticipants.includes(p.identity)
-          )
+          // let temp = [...participantsRef.current]
+          // newParticipants = temp.filter((p) =>
+          //   newParticipants.includes(p.identity)
+          // )
 
-          setParticipants(newParticipants)
+          // setParticipants(newParticipants)
 
           if (!gameState.gameStarted) return
 
