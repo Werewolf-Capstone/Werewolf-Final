@@ -50,7 +50,7 @@ const Participant = ({
     info = (
       <div>
         {/* <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div> */}
-        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
+        <div className="infoBox">
           {werewolfChoice === '' ? (
             <div>
               No one was killed...
@@ -90,7 +90,7 @@ const Participant = ({
     info = (
       <div>
         {/* <div>DURING THE DAY AND WE ARE THE SEER</div> */}
-        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
+        <div className="infoBox">
           {werewolfChoice === '' ? (
             <div>
               No one was killed...
@@ -126,7 +126,7 @@ const Participant = ({
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
     shouldWePlay = true
     info = (
-      <div className="participant">
+      <div>
         {/* <div>
           DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A
           WEREWOLF , role= {localRole}
@@ -172,7 +172,7 @@ const Participant = ({
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
     shouldWePlay = true
     info = (
-      <div className="participant">
+      <div>
         {/* <div>
           DURING THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE
           THE SEER , role= {localRole}
@@ -203,7 +203,7 @@ const Participant = ({
   ) {
     shouldWePlay = true
     info = (
-      <div className="participant">
+      <div>
         {/* <div>
           DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEER IS DONE AND MEDIC IS
           NOT DONE AND WE ARE THE MEDIC , role= {localRole}
@@ -227,11 +227,7 @@ const Participant = ({
     )
   } else if (!gameStarted) {
     shouldWePlay = true
-    info = (
-      <div className="participant">
-        {/* <div>GAME NOT STARTED, role= {localRole}</div> */}
-      </div>
-    )
+    info = <div>{/* <div>GAME NOT STARTED, role= {localRole}</div> */}</div>
     lower = (
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
@@ -242,19 +238,17 @@ const Participant = ({
   } else {
     shouldWePlay = false
     info = (
-      <div className="participant">
-        <div
-          style={{
-            color: 'red',
-            fontFamily: 'Georgia',
-            textShadow: '10px 10px 5px white',
-            fontWeight: 'bold',
-            fontStyle: 'italic',
-            textAlign: 'center',
-          }}
-        >
-          Sleep well, {participant.identity}.<br /> Hope you survive the night.
-        </div>
+      <div
+        style={{
+          color: 'red',
+          fontFamily: 'Georgia',
+          textShadow: '10px 10px 5px white',
+          fontWeight: 'bold',
+          fontStyle: 'italic',
+          textAlign: 'center',
+        }}
+      >
+        Sleep well, {participant.identity}.<br /> Hope you survive the night.
       </div>
     )
     lower = (
