@@ -40,6 +40,15 @@ code {
     monospace;
 }
 
+.participantIdentity {
+  color: white;
+  font-size: 35px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px black;
+  font-weight: bold;
+  font-style: italic;
+}
+
 #werewolf-title {
   font-family: werewolf_moonregular;
   font-size: 50px;

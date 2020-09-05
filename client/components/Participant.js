@@ -246,16 +246,23 @@ const Participant = ({
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+        <div className="participantIdentity">{participant.identity}</div>
       </div>
     )
   } else {
     shouldWePlay = false
     info = (
       <div className="participant">
-        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
+        <div
+          style={{
+            color: 'red',
+            fontFamily: 'Georgia',
+            textShadow: '10px 10px 5px white',
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+            textAlign: 'center',
+          }}
+        >
           Sleep well, {participant.identity}.<br /> Hope you survive the night.
         </div>
       </div>
@@ -264,7 +271,16 @@ const Participant = ({
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
+        <div
+          style={{
+            color: 'white',
+            fontSize: 25,
+            fontFamily: 'Georgia',
+            textShadow: '2px 2px 5px black',
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+          }}
+        >
           {participant.identity}
         </div>
       </div>
