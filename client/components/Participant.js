@@ -179,25 +179,7 @@ const Participant = ({
   if (shouldWePlay) {
     return (
       <div className="individualPlayer">
-        <div className="infoBox">
-          {info}
-          {localRole === 'seer' && didSeerHit ? (
-            <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
-          ) : null}
-        </div>
-        {/* <div id={participant.identity}>
-          {votesVill.map((playerObj, idx) => {
-            console.log('mapping over votesVIll, what is pobj', playerObj)
-            if (Object.keys(playerObj)[0] === participant.identity) {
-              return (
-                <img
-                  className="playerIcon"
-                  src={pngMapObj[votesVillColors[idx]]}
-                ></img>
-              )
-            }
-          })}
-        </div> */}
+        <div className="infoBox">{info}</div>
         <div>
           <div>
             <img className="playerIcon" src={imageSrc}></img>
