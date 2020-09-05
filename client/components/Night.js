@@ -13,7 +13,7 @@ export default function Night() {
         marginBottom="5%"
         className="fadeIn animated"
       >
-        <img src="/dayTime.png" alt="Werewolf" width="30%" height="30%" />
+        <img src="/night.png" alt="Werewolf" width="30%" height="30%" />
       </Box>
     </Container>
   )

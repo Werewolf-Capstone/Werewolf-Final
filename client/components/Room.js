@@ -641,7 +641,7 @@ const Room = ({roomName, token, handleLogout}) => {
       style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       className="room"
     >
-      {gameOver ? <GameOver winner={winner} /> : <Day />}
+      {gameOver ? <GameOver winner={winner} /> : <Night />}
       <Button
         size="small"
         variant="contained"
