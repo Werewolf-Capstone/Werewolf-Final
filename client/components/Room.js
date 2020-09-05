@@ -665,7 +665,11 @@ const Room = ({roomName, token, handleLogout}) => {
 
   return (
     <div>
-      <MessageHeader werewolfChoice={werewolfChoice} night={night} />
+      <MessageHeader
+        werewolfChoice={werewolfChoice}
+        night={night}
+        gameStarted={gameStarted}
+      />
 
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}

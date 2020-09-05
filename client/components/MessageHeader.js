@@ -1,6 +1,7 @@
 import React from 'react'
+import Participant from './Participant'
 
-const MessageHeader = ({werewolfChoice, night}) => {
+const MessageHeader = ({werewolfChoice, night, gameStarted}) => {
   if (!night) {
     return (
       <div className="messageHeader">
@@ -20,8 +21,14 @@ const MessageHeader = ({werewolfChoice, night}) => {
         )}
       </div>
     )
-  }
-  return null
+  } else if (night && gameStarted) {
+    return (
+      <div className="messageHeader">
+        Sleep well, everyone.
+        <br /> Hope you survive the night.
+      </div>
+    )
+  } else return <div className="messageHeader"></div>
 }
 
 export default MessageHeader
