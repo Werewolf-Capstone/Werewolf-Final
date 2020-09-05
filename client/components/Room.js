@@ -669,6 +669,8 @@ const Room = ({roomName, token, handleLogout}) => {
         werewolfChoice={werewolfChoice}
         night={night}
         gameStarted={gameStarted}
+        localRole={localRole}
+        didSeerHit={didSeerHit}
       />
 
       <div
