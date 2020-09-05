@@ -89,15 +89,12 @@ const createApp = () => {
   app.get('/video/token', (req, res) => {
     const identity = req.query.identity
     const room = req.query.room
-
-    console.log('what is config', config)
     const token = videoToken(identity, room, config)
     sendTokenResponse(token, res)
   })
   app.post('/video/token', (req, res) => {
     const identity = req.body.identity
     const room = req.body.room
-    console.log('what is config', config)
     const token = videoToken(identity, room, config)
     sendTokenResponse(token, res)
   })

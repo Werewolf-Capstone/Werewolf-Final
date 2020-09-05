@@ -2,7 +2,7 @@ const twilio = require('twilio')
 const AccessToken = twilio.jwt.AccessToken
 const {VideoGrant} = AccessToken
 
-const generateToken = config => {
+const generateToken = (config) => {
   return new AccessToken(
     config.twilio.accountSid,
     config.twilio.apiKey,
@@ -17,7 +17,6 @@ const videoToken = (identity, room, config) => {
   } else {
     videoGrant = new VideoGrant()
   }
-  console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', config)
   const token = generateToken(config)
   token.addGrant(videoGrant)
   token.identity = identity
