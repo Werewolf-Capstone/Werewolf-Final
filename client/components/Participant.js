@@ -238,16 +238,7 @@ const Participant = ({
   } else {
     shouldWePlay = false
     info = (
-      <div
-        style={{
-          color: 'red',
-          fontFamily: 'Georgia',
-          textShadow: '10px 10px 5px white',
-          fontWeight: 'bold',
-          fontStyle: 'italic',
-          textAlign: 'center',
-        }}
-      >
+      <div className="sleepingBox">
         Sleep well, {participant.identity}.<br /> Hope you survive the night.
       </div>
     )

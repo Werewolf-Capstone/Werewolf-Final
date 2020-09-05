@@ -58,6 +58,15 @@ code {
   text-align: center;
 }
 
+.sleepingBox {
+  color: rgb(235, 221, 221);
+  font-size: 17px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px black;
+  font-weight: bold;
+  text-align: center;
+}
+
 #werewolf-title {
   font-family: werewolf_moonregular;
   font-size: 50px;
