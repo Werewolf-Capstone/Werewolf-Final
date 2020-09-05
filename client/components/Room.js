@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
 /* eslint-disable complexity */
+
 import React, {useState, useEffect, useRef} from 'react'
 import Video from 'twilio-video'
 import Participant from './Participant'
@@ -188,7 +189,6 @@ const Room = ({roomName, token, handleLogout}) => {
       game.players = game.players.filter((player) => {
         return player !== game.villagersChoice
       })
-
       if (!game.dead.includes(game.villagersChoice)) {
         game.dead.push(game.villagersChoice)
       }
@@ -216,7 +216,7 @@ const Room = ({roomName, token, handleLogout}) => {
 
     for (let player of votesVillagers) {
       player = Object.keys(player)[0]
-      console.log('what is player in handle majority')
+      console.log('what is player in handleMajority')
       // need to add rooms and users tables to state
       if (Object.keys(votingObject).includes(player)) {
         votingObject[player] += 1
@@ -262,14 +262,36 @@ const Room = ({roomName, token, handleLogout}) => {
     let prevVote = ''
     if (participantVotes[localIdx] !== '') {
       prevVote = participantVotes[localIdx]
-      let votesVillagersIdx = votesVillagers.indexOf(prevVote)
+      console.log('what is my previous vote', prevVote)
+      // let lookupObj = {
+      //   prevVote: localIdx
+      // }
+      let lookupObj = {}
+      lookupObj.prevVote = localIdx
+      let votesVillagersIdx = -1
+      let counter = 0
+
+      for (let element of votesVillagers) {
+        let key = Object.keys(element)[0]
+        console.log('what is element', element)
+        console.log('what is key', key)
+        if (key === prevVote && element[key] === localIdx) {
+          votesVillagersIdx = counter
+        }
+        counter += 1
+      }
+      console.log(
+        'what is index in votesVillagers of my prev vote',
+        votesVillagersIdx
+      )
       votesVillagers.splice(votesVillagersIdx, 1)
 
       let voteColorIdx = votesVillagersColors.indexOf(localColor)
       votesVillagersColors.splice(voteColorIdx, 1)
     }
-
-    votesVillagers.push(participantIdentity)
+    let temp = {}
+    temp[participantIdentity] = localIdx
+    votesVillagers.push(temp)
     participantVotes[localIdx] = participantIdentity
 
     votesVillagersColors.push(localColor)
@@ -486,13 +508,12 @@ const Room = ({roomName, token, handleLogout}) => {
       let newParticipantz = [...participantsRef.current]
       newParticipantz = newParticipantz.filter((p) => p !== participant)
 
-      setParticipants(newParticipantz)
-
       let playerIdentitys = newParticipantz.map(
         (participant) => participant.identity
       )
 
       db.collection('rooms').doc(roomName).update({players: playerIdentitys})
+      setParticipants(newParticipantz)
     }
 
     Video.connect(token, {
