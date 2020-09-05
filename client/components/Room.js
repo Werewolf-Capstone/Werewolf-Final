@@ -639,7 +639,7 @@ const Room = ({roomName, token, handleLogout}) => {
 
   return (
     <div>
-      <MessageHeader werewolfChoice={werewolfChoice} />
+      <MessageHeader werewolfChoice={werewolfChoice} night={night} />
 
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
@@ -665,7 +665,6 @@ const Room = ({roomName, token, handleLogout}) => {
                 display: 'flex',
                 justifyContent: 'center',
                 flexWrap: 'wrap',
-                // backgroundColor: 'grey',
                 padding: 5,
                 margin: 20,
               }}

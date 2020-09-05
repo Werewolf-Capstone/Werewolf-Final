@@ -1,7 +1,7 @@
 import React from 'react'
 
-const MessageHeader = ({werewolfChoice}) => {
-  if (werewolfChoice === '') {
+const MessageHeader = ({werewolfChoice, night}) => {
+  if (!night) {
     return (
       <div className="messageHeader">
         {werewolfChoice === '' ? (
@@ -21,6 +21,7 @@ const MessageHeader = ({werewolfChoice}) => {
       </div>
     )
   }
+  return null
 }
 
 export default MessageHeader
