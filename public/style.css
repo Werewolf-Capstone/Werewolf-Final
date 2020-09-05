@@ -39,6 +39,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/*Style for MessageHeader component*/
+.messageHeader {
+  color: rgb(244, 232, 232);
+  font-size: 40px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px black;
+  font-weight: bold;
+  text-align: center;
+}
 
 /*Styling for messages that render above and below the individual video components*/
 .lowerInfoBox {
