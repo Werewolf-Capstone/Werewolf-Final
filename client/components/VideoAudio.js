@@ -3,9 +3,6 @@ import React, {useState, useEffect, useRef} from 'react'
 const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   const videoRef = useRef()
   const audioRef = useRef()
-
-  console.log('are we a local user', isLocal)
-
   const [videoTracks, setVideoTracks] = useState([])
   const [audioTracks, setAudioTracks] = useState([])
 
@@ -28,7 +25,6 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
     }
 
     const trackUnsubscribed = (track) => {
-      console.log('are we making it INTO HER?!??!?!??!?!?!?!?!?')
       if (track.kind === 'video') {
         setVideoTracks((videoTracks) => videoTracks.filter((v) => v !== track))
       } else if (track.kind === 'audio') {
@@ -47,7 +43,6 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   }, [participant])
 
   useEffect(() => {
-    console.log('MAKING IT INTO VIDEO TRACK ATTACH?!?!?!?')
     const videoTrack = videoTracks[0]
     if (videoTrack) {
       videoTrack.attach(videoRef.current)

@@ -48,6 +48,66 @@ code {
     monospace;
 }
 
+/*Styling for messages that render above and below the individual video components*/
+.lowerInfoBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.participantIdentity {
+  color: rgb(235, 221, 221);
+  font-size: 30px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px black;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.infoBox {
+  color: rgb(244, 232, 232);
+  font-size: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px black;
+  font-weight: bold;
+  text-align: center;
+}
+
+.seerInfoBox {
+  color: rgb(243, 96, 96);
+  font-size: 25px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px rgb(70, 69, 69);
+  font-weight: bold;
+  text-align: center;
+}
+
+.sleepingBox {
+  color: rgb(244, 232, 232);
+  font-size: 17px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px black;
+  font-weight: bold;
+  text-align: center;
+}
+
+.playerIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 25%;
+  border-style: solid;
+  position: absolute;
+}
+
+.individualPlayer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 15rem;
+  margin: 5px;
+}
+
 #werewolf-title {
   font-family: werewolf_moonregular;
   font-size: 50px;

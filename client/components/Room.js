@@ -16,7 +16,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
   const [participants, _setParticipants] = useState([])
   const [participantIdentities, setParticipantIdentities] = useState([])
-  const [participantsColors, setParticipantsColors] = useState([])
+  //const [participantsColors, setParticipantsColors] = useState([])
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
   const [localColor, setLocalColor] = useState('')
@@ -39,6 +39,17 @@ const Room = ({roomName, token, handleLogout}) => {
   const setParticipants = (data) => {
     participantsRef.current = data
     _setParticipants(data)
+  }
+
+  const pngMapObj = {
+    red: '/villagerIconRed.png',
+    orange: '/villagerIconOrange.png',
+    pink: '/villagerIconPink.png',
+    purple: '/villagerIconPurple.png',
+    green: '/villagerIconGreen.png',
+    brown: '/villagerIconBrown.png',
+    blue: '/villagerIconBlue.png',
+    yellow: '/villagerIconYellow.png',
   }
 
   /**
@@ -65,6 +76,7 @@ const Room = ({roomName, token, handleLogout}) => {
       votesVillagers: [],
       votesWerewolves: [],
       votesVillagersColors: [],
+      votesWerewolvesColors: [],
       werewolves: [],
       werewolvesChoice: '',
       winner: '',
@@ -93,6 +105,7 @@ const Room = ({roomName, token, handleLogout}) => {
     setGameStarted(val)
   }
   const handleGameOver = (winner) => {
+    console.log('about to set gameOver to true')
     setGameOver(true)
     db.collection('rooms').doc(roomName).update({gameOver: true, winner})
   }
@@ -121,12 +134,7 @@ const Room = ({roomName, token, handleLogout}) => {
     if (game.villagers.length === 0) {
       assignRolesAndStartGame(game, roomName, localUserId)
     }
-    // THIS IS STOPPING ME FROM ADDING A SECOND PLAYER TO FIRST PLAYER'S REMOTE VIDEO COMPONENT
-    if (game.villagers.length === game.werewolves.length) {
-      handleGameOver('werewolves')
-    } else if (game.werewolves.length === 0) {
-      handleGameOver('villagers')
-    }
+
     handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in Firestore
     if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
       if (game.werewolvesChoice === game.medicChoice) {
@@ -167,11 +175,7 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
-    // if (game.villagers.length === game.werewolves.length) {
-    //   handleGameOver('werewolves')
-    // } else if (game.werewolves.length === 0) {
-    //   handleGameOver('villagers')
-    // }
+
     if (game.majorityReached) {
       if (game.villagers.includes(game.villagersChoice)) {
         game.villagers = game.villagers.filter((villager) => {
@@ -238,7 +242,6 @@ const Room = ({roomName, token, handleLogout}) => {
     localIdentity,
     localColor
   ) {
-    console.log('inside handle vill vote localIdent', localIdentity)
     let gameState = await db.collection('rooms').doc(roomName).get()
     let participantVotes = await gameState.data().participantVotes
     let players = await gameState.data().players
@@ -249,9 +252,7 @@ const Room = ({roomName, token, handleLogout}) => {
     // before adding a new vote to votesVillgers
     let localIdx = players.indexOf(localIdentity)
     let prevVote = ''
-    console.log('what is localIdx', localIdx)
     if (participantVotes[localIdx] !== '') {
-      console.log('did I make it into here')
       prevVote = participantVotes[localIdx]
       let votesVillagersIdx = votesVillagers.indexOf(prevVote)
       votesVillagers.splice(votesVillagersIdx, 1)
@@ -436,14 +437,6 @@ const Room = ({roomName, token, handleLogout}) => {
       }
     })
 
-    /**
-     *
-     * @param {*} player
-     */
-    function checkPlayer(player) {
-      return player === colorP
-    }
-
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
     setLocalColor(colors[localIndex])
 
@@ -490,9 +483,6 @@ const Room = ({roomName, token, handleLogout}) => {
       let playerIdentitys = newParticipantz.map(
         (participant) => participant.identity
       )
-      setTimeout(function () {
-        alert('Hello')
-      }, 0)
 
       db.collection('rooms').doc(roomName).update({players: playerIdentitys})
     }
@@ -508,7 +498,7 @@ const Room = ({roomName, token, handleLogout}) => {
       let prevPlayers = gameState.data().players
       prevPlayers.push(room.localParticipant.identity)
 
-      let participantsColors = gameState.data().participantsColors
+      //let participantsColors = gameState.data().participantsColors
 
       db.collection('rooms').doc(roomName).update({players: prevPlayers})
 
@@ -548,15 +538,6 @@ const Room = ({roomName, token, handleLogout}) => {
 
           if (!gameState.gameStarted) return
 
-          /**
-           * Check if game is over
-           */
-          if (gameState.villagers.length === gameState.werewolves.length) {
-            handleGameOver('werewolves')
-          } else if (gameState.werewolves.length === 0) {
-            handleGameOver('villagers')
-          }
-
           if (gameState.Night) {
             handleNightToDay(
               gameState,
@@ -566,9 +547,28 @@ const Room = ({roomName, token, handleLogout}) => {
           } else {
             handleDayToNight(gameState, roomName)
           }
+
+          /**
+           * Check if game is over.
+           */
+          if (
+            gameState.werewolves.length === 0 &&
+            gameState.villagers.length === 0
+          ) {
+            // If both arrays are empty, keep going.
+            // This check was put in place to avoid calling Game Over before roles are assigned.
+          } else if (
+            gameState.villagers.length === gameState.werewolves.length ||
+            gameState.werewolves.length === 0
+          ) {
+            handleGameOver('werewolves')
+          }
         })
     })
 
+    /**
+     * Disconnects a player from the room if they refresh or close the tab.
+     */
     return () => {
       setStateRoom((currentRoom) => {
         if (currentRoom && currentRoom.localParticipant.state === 'connected') {
@@ -592,16 +592,6 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   const remoteParticipants = participants.map((participant, idx) => {
     if (idx === 0) return
-    let pngMapObj = {
-      red: '/villagerIconRed.png',
-      orange: '/villagerIconOrange.png',
-      pink: '/villagerIconPink.png',
-      purple: '/villagerIconPurple.png',
-      green: '/villagerIconGreen.png',
-      brown: '/villagerIconBrown.png',
-      blue: '/villagerIconBlue.png',
-      yellow: '/villagerIconYellow.png',
-    }
 
     let correctIdx = participantIdentities.indexOf(participant.identity)
     let playerColor = colors[correctIdx]
@@ -635,18 +625,6 @@ const Room = ({roomName, token, handleLogout}) => {
     )
   })
 
-  //colored voting icons
-  let pngMapObj = {
-    red: '/villagerIconRed.png',
-    orange: '/villagerIconOrange.png',
-    pink: '/villagerIconPink.png',
-    purple: '/villagerIconPurple.png',
-    green: '/villagerIconGreen.png',
-    brown: '/villagerIconBrown.png',
-    blue: '/villagerIconBlue.png',
-    yellow: '/villagerIconYellow.png',
-  }
-
   /**
    * Render local participant
    */
@@ -663,8 +641,7 @@ const Room = ({roomName, token, handleLogout}) => {
       style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       className="room"
     >
-      {/* <h4>Room: {roomName}</h4> */}
-      {gameOver ? <GameOver winner={winner} /> : <Night />}
+      {gameOver ? <GameOver winner={winner} /> : <Day />}
       <Button
         size="small"
         variant="contained"
