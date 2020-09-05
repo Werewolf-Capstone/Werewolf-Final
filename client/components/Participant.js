@@ -45,21 +45,7 @@ const Participant = ({
   if (!participant) return
 
   if (!night) {
-    info = (
-      <div>
-        <div className="infoBox">
-          {werewolfChoice === '' ? (
-            <div>
-              No one was killed...
-              <br />
-              Now get those werewolves!
-            </div>
-          ) : (
-            <div>{werewolfChoice} was killed during the night</div>
-          )}
-        </div>
-      </div>
-    )
+    info = null
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
@@ -81,37 +67,25 @@ const Participant = ({
         </div>
       </div>
     )
-  } else if (!night && localRole === 'seer') {
-    info = (
-      <div>
-        <div className="infoBox">
-          {werewolfChoice === '' ? (
-            <div>
-              No one was killed...
-              <br />
-              Now get those werewolves!
-            </div>
-          ) : (
-            <div>{werewolfChoice} was killed during the night</div>
-          )}
-        </div>
-      </div>
-    )
-    lower = (
-      <div className="lowerInfoBox">
-        <div className="participantIdentity"> {participant.identity} </div>
-        <div>
-          <Button
-            size="small"
-            variant="contained"
-            color="secondary"
-            onClick={() => handleVillagerVoteButton(participant.identity)}
-          >
-            Kill
-          </Button>
-        </div>
-      </div>
-    )
+    // } else if (!night && localRole === 'seer') {
+    //   info = (
+    //     <div>  </div>
+    //   )
+    //   lower = (
+    //     <div className="lowerInfoBox">
+    //       <div className="participantIdentity"> {participant.identity} </div>
+    //       <div>
+    //         <Button
+    //           size="small"
+    //           variant="contained"
+    //           color="secondary"
+    //           onClick={() => handleVillagerVoteButton(participant.identity)}
+    //         >
+    //           Kill
+    //         </Button>
+    //       </div>
+    //     </div>
+    //   )
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
     shouldWePlay = true
     info = (
@@ -154,7 +128,7 @@ const Participant = ({
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
     shouldWePlay = true
-    info = <div></div>
+    info = null
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
@@ -176,7 +150,7 @@ const Participant = ({
     localRole === 'medic'
   ) {
     shouldWePlay = true
-    info = <div></div>
+    info = null
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
@@ -192,7 +166,7 @@ const Participant = ({
     )
   } else if (!gameStarted) {
     shouldWePlay = true
-    info = <div></div>
+    info = null
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity">{participant.identity}</div>
