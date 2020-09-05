@@ -44,12 +44,9 @@ const Participant = ({
 
   if (!participant) return
 
-  console.log('what is isLocal in participant', isLocal)
-
   if (!night) {
     info = (
       <div>
-        {/* <div>DURING THE DAY NO OTHER CHECKS , role= {localRole}</div> */}
         <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
           {werewolfChoice} was killed during the night{' '}
         </div>
@@ -83,7 +80,6 @@ const Participant = ({
   } else if (!night && localRole === 'seer') {
     info = (
       <div>
-        {/* <div>DURING THE DAY AND WE ARE THE SEER</div> */}
         <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
           {werewolfChoice} was killed during the night , role= {localRole}
         </div>
@@ -115,10 +111,6 @@ const Participant = ({
     shouldWePlay = true
     info = (
       <div className="participant">
-        {/* <div>
-          DURING THE NIGHT AND WEREWOLVES AREN'T DONE CHECKING AND WE ARE A
-          WEREWOLF , role= {localRole}
-        </div> */}
         <div id={participant.identity}>
           {votesWere.map((playerId, idx) => {
             if (playerId === participant.identity) {
@@ -161,14 +153,7 @@ const Participant = ({
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
     shouldWePlay = true
-    info = (
-      <div className="participant">
-        {/* <div>
-          DURING THE NIGHT AND WEREWOLVES ARE DONE, SEER IS NOT DONE, AND WE ARE
-          THE SEER , role= {localRole}
-        </div> */}
-      </div>
-    )
+    info = <div className="participant"></div>
     lower = (
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
@@ -194,14 +179,7 @@ const Participant = ({
     localRole === 'medic'
   ) {
     shouldWePlay = true
-    info = (
-      <div className="participant">
-        {/* <div>
-          DURING THE NIGHT AND WEREWOLVES ARE DONE AND SEER IS DONE AND MEDIC IS
-          NOT DONE AND WE ARE THE MEDIC , role= {localRole}
-        </div> */}
-      </div>
-    )
+    info = <div className="participant"></div>
     lower = (
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
@@ -221,11 +199,7 @@ const Participant = ({
     )
   } else if (!gameStarted) {
     shouldWePlay = true
-    info = (
-      <div className="participant">
-        {/* <div>GAME NOT STARTED, role= {localRole}</div> */}
-      </div>
-    )
+    info = <div className="participant"></div>
     lower = (
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
@@ -271,8 +245,6 @@ const Participant = ({
           {info}
           {localRole === 'seer' ? <h3>{didSeerHit} test seer</h3> : null}
         </div>
-        {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
-        <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div id={participant.identity}>
           {votesVill.map((playerId, idx) => {
             if (playerId === participant.identity) {
@@ -289,17 +261,6 @@ const Participant = ({
               )
             }
           })}
-
-          {/* {votesWere.map((playerId, idx) => {
-            if (playerId === participant.identity) {
-              return (
-                <img
-                  style={{width: '40px', height: '40px'}}
-                  src={pngMapObj[votesWereColors[idx]]}
-                ></img>
-              )
-            }
-          })} */}
         </div>
         <div>
           <div className="playerIcon">
@@ -338,8 +299,6 @@ const Participant = ({
         }}
       >
         <div>{info}</div>
-        {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
-        <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div>
           <div className="playerIcon">
             <img

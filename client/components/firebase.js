@@ -1,6 +1,6 @@
 import {config} from './config'
 import firebase from 'firebase'
-console.log(config)
+
 firebase.initializeApp(config)
 
 export const auth = firebase.auth()

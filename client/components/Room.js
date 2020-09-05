@@ -92,6 +92,7 @@ const Room = ({roomName, token, handleLogout}) => {
     setGameStarted(val)
   }
   const handleGameOver = (winner) => {
+    console.log('about to set gameOver to true')
     setGameOver(true)
     db.collection('rooms').doc(roomName).update({gameOver: true, winner})
   }
@@ -121,11 +122,11 @@ const Room = ({roomName, token, handleLogout}) => {
       assignRolesAndStartGame(game, roomName, localUserId)
     }
     // THIS IS STOPPING ME FROM ADDING A SECOND PLAYER TO FIRST PLAYER'S REMOTE VIDEO COMPONENT
-    if (game.villagers.length === game.werewolves.length) {
-      handleGameOver('werewolves')
-    } else if (game.werewolves.length === 0) {
-      handleGameOver('villagers')
-    }
+    // if (game.villagers.length === game.werewolves.length) {
+    //   handleGameOver('werewolves')
+    // } else if (game.werewolves.length === 0) {
+    //   handleGameOver('villagers')
+    // }
     handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in Firestore
     if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
       if (game.werewolvesChoice === game.medicChoice) {
@@ -561,12 +562,27 @@ const Room = ({roomName, token, handleLogout}) => {
             gameState.werewolves.length === 0 &&
             gameState.villagers.length === 0
           ) {
-            //
+            console.log(
+              'ww = 0 and villagers = 0:',
+              gameState.werewolves.length,
+              gameState.villagers.length,
+              gameOver
+            )
           } else if (
             gameState.villagers.length === gameState.werewolves.length
           ) {
+            console.log(
+              'ww and villagers have same length:',
+              gameState.werewolves.length,
+              gameState.villagers.length
+            )
             handleGameOver('werewolves')
           } else if (gameState.werewolves.length === 0) {
+            console.log(
+              'no werewolves:',
+              gameState.werewolves.length,
+              gameState.villagers.length
+            )
             handleGameOver('villagers')
           }
         })
@@ -666,7 +682,6 @@ const Room = ({roomName, token, handleLogout}) => {
       style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       className="room"
     >
-      {/* <h4>Room: {roomName}</h4> */}
       {gameOver ? <GameOver winner={winner} /> : <Day />}
       <Button
         size="small"
