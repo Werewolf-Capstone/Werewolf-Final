@@ -64,9 +64,7 @@ const Participant = ({
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
+      <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
@@ -107,9 +105,7 @@ const Participant = ({
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
+      <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
@@ -151,9 +147,7 @@ const Participant = ({
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
+      <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
@@ -180,9 +174,7 @@ const Participant = ({
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
+      <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
         <Button
           size="small"
@@ -211,9 +203,7 @@ const Participant = ({
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
+      <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
         <Button
           size="small"
@@ -229,9 +219,7 @@ const Participant = ({
     shouldWePlay = true
     info = <div>{/* <div>GAME NOT STARTED, role= {localRole}</div> */}</div>
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
+      <div className="lowerInfoBox">
         <div className="participantIdentity">{participant.identity}</div>
       </div>
     )
@@ -243,9 +231,7 @@ const Participant = ({
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
+      <div className="lowerInfoBox">
         <div className="participantIdentity">{participant.identity}</div>
       </div>
     )

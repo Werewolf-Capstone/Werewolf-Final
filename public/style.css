@@ -40,6 +40,13 @@ code {
     monospace;
 }
 
+/*Styling for messages that render above and below the individual video components*/
+.lowerInfoBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .participantIdentity {
   color: rgb(235, 221, 221);
   font-size: 30px;
