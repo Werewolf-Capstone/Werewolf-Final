@@ -183,7 +183,7 @@ const Participant = ({
   if (shouldWePlay) {
     return (
       <div className="individualPlayer">
-        <div>
+        <div className="infoBox">
           {info}
           {localRole === 'seer' && didSeerHit ? (
             <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
@@ -218,7 +218,7 @@ const Participant = ({
   } else {
     return (
       <div className="individualPlayer">
-        <div>{info}</div>
+        <div className="infoBox">{info}</div>
         <div>
           <div>
             <img className="playerIcon" src={imageSrc}></img>
