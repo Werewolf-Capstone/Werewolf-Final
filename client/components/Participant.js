@@ -47,18 +47,22 @@ const Participant = ({
   if (!night) {
     info = (
       <div>
-        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
-          {werewolfChoice} was killed during the night{' '}
+        <div className="infoBox">
+          {werewolfChoice === '' ? (
+            <div>
+              No one was killed...
+              <br />
+              Now get those werewolves!
+            </div>
+          ) : (
+            <div>{werewolfChoice} was killed during the night</div>
+          )}
         </div>
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+      <div className="lowerInfoBox">
+        <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
             size="small"
@@ -80,21 +84,22 @@ const Participant = ({
   } else if (!night && localRole === 'seer') {
     info = (
       <div>
-        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
-          {werewolfChoice} was killed during the night , role= {localRole}
-        </div>
-        <div style={{color: 'red', fontWeight: 'bold'}}>
-          {didSeerHit} is a werewolf
+        <div className="infoBox">
+          {werewolfChoice === '' ? (
+            <div>
+              No one was killed...
+              <br />
+              Now get those werewolves!
+            </div>
+          ) : (
+            <div>{werewolfChoice} was killed during the night</div>
+          )}
         </div>
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+      <div className="lowerInfoBox">
+        <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
             size="small"
@@ -110,7 +115,7 @@ const Participant = ({
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
     shouldWePlay = true
     info = (
-      <div className="participant">
+      <div>
         <div id={participant.identity}>
           {votesWere.map((playerId, idx) => {
             if (playerId === participant.identity) {
@@ -131,12 +136,8 @@ const Participant = ({
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+      <div className="lowerInfoBox">
+        <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
             size="small"
@@ -153,14 +154,10 @@ const Participant = ({
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
     shouldWePlay = true
-    info = <div className="participant"></div>
+    info = <div></div>
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+      <div className="lowerInfoBox">
+        <div className="participantIdentity"> {participant.identity} </div>
         <Button
           size="small"
           variant="contained"
@@ -179,14 +176,10 @@ const Participant = ({
     localRole === 'medic'
   ) {
     shouldWePlay = true
-    info = <div className="participant"></div>
+    info = <div></div>
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+      <div className="lowerInfoBox">
+        <div className="participantIdentity"> {participant.identity} </div>
         <Button
           size="small"
           variant="contained"
@@ -199,63 +192,40 @@ const Participant = ({
     )
   } else if (!gameStarted) {
     shouldWePlay = true
-    info = <div className="participant"></div>
+    info = <div></div>
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+      <div className="lowerInfoBox">
+        <div className="participantIdentity">{participant.identity}</div>
       </div>
     )
   } else {
     shouldWePlay = false
     info = (
-      <div className="participant">
-        <div style={{color: 'red', fontWeight: 'bold', textAlign: 'center'}}>
-          Sleep well, {participant.identity}.<br /> Hope you survive the night.
-        </div>
+      <div className="sleepingBox">
+        Sleep well, {participant.identity}.<br /> Hope you survive the night.
       </div>
     )
     lower = (
-      <div
-        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+      <div className="lowerInfoBox">
+        <div className="participantIdentity">{participant.identity}</div>
       </div>
     )
   }
   if (shouldWePlay) {
     return (
-      <div
-        className="individualPlayer"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          width: '15rem',
-          margin: '5px',
-        }}
-      >
+      <div className="individualPlayer">
         <div>
           {info}
-          {localRole === 'seer' ? <h3>{didSeerHit} test seer</h3> : null}
+          {localRole === 'seer' && didSeerHit ? (
+            <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
+          ) : null}
         </div>
         <div id={participant.identity}>
           {votesVill.map((playerId, idx) => {
             if (playerId === participant.identity) {
               return (
                 <img
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '25%',
-                    borderStyle: 'solid',
-                  }}
+                  className="playerIcon"
                   src={pngMapObj[votesVillColors[idx]]}
                 ></img>
               )
@@ -263,17 +233,8 @@ const Participant = ({
           })}
         </div>
         <div>
-          <div className="playerIcon">
-            <img
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '25%',
-                borderStyle: 'solid',
-                position: 'absolute',
-              }}
-              src={imageSrc}
-            ></img>
+          <div>
+            <img className="playerIcon" src={imageSrc}></img>
           </div>
           <VideoAudio
             participant={participant}
@@ -287,30 +248,11 @@ const Participant = ({
     )
   } else {
     return (
-      <div
-        className="individualPlayer"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          width: '15rem',
-          margin: '5px',
-        }}
-      >
+      <div className="individualPlayer">
         <div>{info}</div>
         <div>
-          <div className="playerIcon">
-            <img
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '25%',
-                borderStyle: 'solid',
-                position: 'absolute',
-              }}
-              src={imageSrc}
-            ></img>
+          <div>
+            <img className="playerIcon" src={imageSrc}></img>
           </div>
           <img
             style={{
