@@ -165,7 +165,7 @@ const Participant = ({
           size="small"
           variant="contained"
           color="default"
-          onClick={(e) => handleSeerCheckButton(participant.identity)}
+          onClick={() => handleSeerCheckButton(participant.identity)}
         >
           Check Role
         </Button>
@@ -191,7 +191,7 @@ const Participant = ({
           size="small"
           variant="contained"
           color="primary"
-          onClick={(e) => handleMedicSaveButton(participant.identity)}
+          onClick={() => handleMedicSaveButton(participant.identity)}
         >
           Save Person
         </Button>

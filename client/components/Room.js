@@ -40,6 +40,17 @@ const Room = ({roomName, token, handleLogout}) => {
     _setParticipants(data)
   }
 
+  const pngMapObj = {
+    red: '/villagerIconRed.png',
+    orange: '/villagerIconOrange.png',
+    pink: '/villagerIconPink.png',
+    purple: '/villagerIconPurple.png',
+    green: '/villagerIconGreen.png',
+    brown: '/villagerIconBrown.png',
+    blue: '/villagerIconBlue.png',
+    yellow: '/villagerIconYellow.png',
+  }
+
   /**
    * Reset button (for testing purposes only)
    */
@@ -579,16 +590,6 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   const remoteParticipants = participants.map((participant, idx) => {
     if (idx === 0) return
-    let pngMapObj = {
-      red: '/villagerIconRed.png',
-      orange: '/villagerIconOrange.png',
-      pink: '/villagerIconPink.png',
-      purple: '/villagerIconPurple.png',
-      green: '/villagerIconGreen.png',
-      brown: '/villagerIconBrown.png',
-      blue: '/villagerIconBlue.png',
-      yellow: '/villagerIconYellow.png',
-    }
 
     let correctIdx = participantIdentities.indexOf(participant.identity)
     let playerColor = colors[correctIdx]
@@ -621,18 +622,6 @@ const Room = ({roomName, token, handleLogout}) => {
       />
     )
   })
-
-  //colored voting icons
-  let pngMapObj = {
-    red: '/villagerIconRed.png',
-    orange: '/villagerIconOrange.png',
-    pink: '/villagerIconPink.png',
-    purple: '/villagerIconPurple.png',
-    green: '/villagerIconGreen.png',
-    brown: '/villagerIconBrown.png',
-    blue: '/villagerIconBlue.png',
-    yellow: '/villagerIconYellow.png',
-  }
 
   /**
    * Render local participant

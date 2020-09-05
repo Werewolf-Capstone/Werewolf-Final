@@ -82,16 +82,17 @@ const VideoChat = () => {
       db.collection('rooms')
         .doc(roomName)
         .get()
-        .then(async (snapshot) => {
-          if (snapshot.exists) {
-            const players = await snapshot.get('players')
-            const gameStarted = await snapshot.get('gameStarted')
-            const gameOver = await snapshot.get('gameOver')
+        .then(async (room) => {
+          if (room.exists) {
+            const players = await room.get('players')
+            const gameStarted = await room.get('gameStarted')
+            const gameOver = await room.get('gameOver')
+
             if (
               !players.length ||
               (players.length && gameStarted && gameOver)
             ) {
-              db.collection('rooms').doc(roomName).set(roomObj)
+              db.collection('rooms').doc(roomName).update(roomObj)
               /**
                * Reset the pre-existing room if:
                * 1) no one is in it, or
