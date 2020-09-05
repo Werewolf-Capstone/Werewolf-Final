@@ -14,8 +14,10 @@ const MessageHeader = ({
           <div>
             Luckily, no one was killed last night.
             <br />
-            Now kill the werewolves before they can attack again! <br />
-            And guess what...{didSeerHit} IS a werewolf!
+            Now kill the werewolves before they can attack again!
+            <div style={{color: 'red', textDecoration: 'underline'}}>
+              And guess what...{didSeerHit} IS a werewolf!
+            </div>
           </div>
         ) : (
           <div>
