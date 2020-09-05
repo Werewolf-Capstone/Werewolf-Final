@@ -15,7 +15,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
   const [participants, _setParticipants] = useState([])
   const [participantIdentities, setParticipantIdentities] = useState([])
-  const [participantsColors, setParticipantsColors] = useState([])
+  //const [participantsColors, setParticipantsColors] = useState([])
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
   const [localColor, setLocalColor] = useState('')
@@ -121,12 +121,7 @@ const Room = ({roomName, token, handleLogout}) => {
     if (game.villagers.length === 0) {
       assignRolesAndStartGame(game, roomName, localUserId)
     }
-    // THIS IS STOPPING ME FROM ADDING A SECOND PLAYER TO FIRST PLAYER'S REMOTE VIDEO COMPONENT
-    // if (game.villagers.length === game.werewolves.length) {
-    //   handleGameOver('werewolves')
-    // } else if (game.werewolves.length === 0) {
-    //   handleGameOver('villagers')
-    // }
+
     handleWerewolfVote(game, roomName) // checks if werewolves have agreed on a vote, and sets in Firestore
     if (game.checkWerewolf && game.checkSeer && game.checkMedic) {
       if (game.werewolvesChoice === game.medicChoice) {
@@ -167,11 +162,7 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   function handleDayToNight(game, roomName) {
     handleMajority(game, roomName)
-    // if (game.villagers.length === game.werewolves.length) {
-    //   handleGameOver('werewolves')
-    // } else if (game.werewolves.length === 0) {
-    //   handleGameOver('villagers')
-    // }
+
     if (game.majorityReached) {
       if (game.villagers.includes(game.villagersChoice)) {
         game.villagers = game.villagers.filter((villager) => {
@@ -433,14 +424,6 @@ const Room = ({roomName, token, handleLogout}) => {
       }
     })
 
-    /**
-     *
-     * @param {*} player
-     */
-    function checkPlayer(player) {
-      return player === colorP
-    }
-
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
     setLocalColor(colors[localIndex])
 
@@ -487,9 +470,6 @@ const Room = ({roomName, token, handleLogout}) => {
       let playerIdentitys = newParticipantz.map(
         (participant) => participant.identity
       )
-      setTimeout(function () {
-        alert('Hello')
-      }, 0)
 
       db.collection('rooms').doc(roomName).update({players: playerIdentitys})
     }
@@ -505,7 +485,7 @@ const Room = ({roomName, token, handleLogout}) => {
       let prevPlayers = gameState.data().players
       prevPlayers.push(room.localParticipant.identity)
 
-      let participantsColors = gameState.data().participantsColors
+      //let participantsColors = gameState.data().participantsColors
 
       db.collection('rooms').doc(roomName).update({players: prevPlayers})
 
@@ -556,38 +536,26 @@ const Room = ({roomName, token, handleLogout}) => {
           }
 
           /**
-           * Check if game is over
+           * Check if game is over.
            */
           if (
             gameState.werewolves.length === 0 &&
             gameState.villagers.length === 0
           ) {
-            console.log(
-              'ww = 0 and villagers = 0:',
-              gameState.werewolves.length,
-              gameState.villagers.length,
-              gameOver
-            )
+            // If both arrays are empty, keep going.
+            // This check was put in place to avoid calling Game Over before roles are assigned.
           } else if (
-            gameState.villagers.length === gameState.werewolves.length
+            gameState.villagers.length === gameState.werewolves.length ||
+            gameState.werewolves.length === 0
           ) {
-            console.log(
-              'ww and villagers have same length:',
-              gameState.werewolves.length,
-              gameState.villagers.length
-            )
             handleGameOver('werewolves')
-          } else if (gameState.werewolves.length === 0) {
-            console.log(
-              'no werewolves:',
-              gameState.werewolves.length,
-              gameState.villagers.length
-            )
-            handleGameOver('villagers')
           }
         })
     })
 
+    /**
+     * Disconnects a player from the room if they refresh or close the tab.
+     */
     return () => {
       setStateRoom((currentRoom) => {
         if (currentRoom && currentRoom.localParticipant.state === 'connected') {
