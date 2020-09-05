@@ -14,7 +14,7 @@ const MessageHeader = ({
           <div>
             Luckily, no one was killed last night.
             <br />
-            Kill the werewolves before they can attack again! <br />
+            Now kill the werewolves before they can attack again! <br />
             And guess what...{didSeerHit} IS a werewolf!
           </div>
         ) : (
@@ -35,7 +35,7 @@ const MessageHeader = ({
           <div>
             Luckily, no one was killed last night.
             <br />
-            Kill the werewolves before they can attack again!
+            Now kill the werewolves before they can attack again!
           </div>
         ) : (
           <div>
