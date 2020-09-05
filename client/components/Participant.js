@@ -67,9 +67,7 @@ const Participant = ({
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+        <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
             size="small"
@@ -112,9 +110,7 @@ const Participant = ({
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+        <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
             size="small"
@@ -158,9 +154,7 @@ const Participant = ({
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+        <div className="participantIdentity"> {participant.identity} </div>
         <div>
           <Button
             size="small"
@@ -189,9 +183,7 @@ const Participant = ({
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+        <div className="participantIdentity"> {participant.identity} </div>
         <Button
           size="small"
           variant="contained"
@@ -222,9 +214,7 @@ const Participant = ({
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <div style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic'}}>
-          {participant.identity}
-        </div>
+        <div className="participantIdentity"> {participant.identity} </div>
         <Button
           size="small"
           variant="contained"
@@ -271,18 +261,7 @@ const Participant = ({
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <div
-          style={{
-            color: 'white',
-            fontSize: 25,
-            fontFamily: 'Georgia',
-            textShadow: '2px 2px 5px black',
-            fontWeight: 'bold',
-            fontStyle: 'italic',
-          }}
-        >
-          {participant.identity}
-        </div>
+        <div className="participantIdentity">{participant.identity}</div>
       </div>
     )
   }
