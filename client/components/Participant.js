@@ -99,7 +99,7 @@ const Participant = ({
             <div>{werewolfChoice} was killed during the night</div>
           )}
         </div>
-        <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
+        {/* <div className="seerInfoBox">{didSeerHit} is a werewolf!</div> */}
       </div>
     )
     lower = (
@@ -260,12 +260,7 @@ const Participant = ({
             if (playerId === participant.identity) {
               return (
                 <img
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '25%',
-                    borderStyle: 'solid',
-                  }}
+                  className="playerIcon"
                   src={pngMapObj[votesVillColors[idx]]}
                 ></img>
               )
@@ -284,17 +279,8 @@ const Participant = ({
           })} */}
         </div>
         <div>
-          <div className="playerIcon">
-            <img
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '25%',
-                borderStyle: 'solid',
-                position: 'absolute',
-              }}
-              src={imageSrc}
-            ></img>
+          <div>
+            <img className="playerIcon" src={imageSrc}></img>
           </div>
           <VideoAudio
             participant={participant}
@@ -323,17 +309,8 @@ const Participant = ({
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
         <div>
-          <div className="playerIcon">
-            <img
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '25%',
-                borderStyle: 'solid',
-                position: 'absolute',
-              }}
-              src={imageSrc}
-            ></img>
+          <div>
+            <img className="playerIcon" src={imageSrc}></img>
           </div>
           <img
             style={{
