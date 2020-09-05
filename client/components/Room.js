@@ -213,6 +213,8 @@ const Room = ({roomName, token, handleLogout}) => {
     let votesVillagers = players.data().votesVillagers
 
     for (let player of votesVillagers) {
+      player = Object.keys(player)[0]
+      console.log('what is player in handleMajority')
       // need to add rooms and users tables to state
       if (Object.keys(votingObject).includes(player)) {
         votingObject[player] += 1
@@ -225,11 +227,14 @@ const Room = ({roomName, token, handleLogout}) => {
       if (votingObject[player] > Math.floor(totalPlayers / 2)) {
         let newDead = players.data().dead
         newDead.push(player)
-        db.collection('rooms').doc(roomName).update({
-          villagersChoice: player,
-          majorityReached: true,
-          dead: newDead,
-        })
+        db.collection('rooms')
+          .doc(roomName)
+          .update({
+            villagersChoice: player,
+            majorityReached: true,
+            dead: newDead,
+            participantVotes: ['', '', '', '', '', '', '', ''],
+          })
       }
     }
   }
@@ -547,16 +552,16 @@ const Room = ({roomName, token, handleLogout}) => {
 
           setColors(colors)
 
-          // let newParticipants = gameState.players.filter(
-          //   (player) => !gameState.dead.includes(player)
-          // )
+          let newParticipants = gameState.players.filter(
+            (player) => !gameState.dead.includes(player)
+          )
 
-          // let temp = [...participantsRef.current]
-          // newParticipants = temp.filter((p) =>
-          //   newParticipants.includes(p.identity)
-          // )
+          let temp = [...participantsRef.current]
+          newParticipants = temp.filter((p) =>
+            newParticipants.includes(p.identity)
+          )
 
-          // setParticipants(newParticipants)
+          setParticipants(newParticipants)
 
           if (!gameState.gameStarted) return
 
