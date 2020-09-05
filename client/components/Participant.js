@@ -44,8 +44,6 @@ const Participant = ({
 
   if (!participant) return
 
-  console.log('what is isLocal in participant', isLocal)
-
   if (!night) {
     info = (
       <div>

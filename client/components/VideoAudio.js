@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react'
+import * as faceapi from 'face-api.js'
 
 const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   const videoRef = useRef()
   const audioRef = useRef()
-
-  console.log('are we a local user', isLocal)
+  const canvasRef = useRef()
 
   const [videoTracks, setVideoTracks] = useState([])
   const [audioTracks, setAudioTracks] = useState([])
@@ -47,6 +47,53 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   }, [participant])
 
   useEffect(() => {
+    let results = []
+    console.log('videoREf.current use effect', videoRef.current)
+    async function getFace(localVideo, options) {
+      results = await faceapi.mtcnn(localVideo, options)
+    }
+    const faceapiWrapper = async () => {
+      await faceapi.loadMtcnnModel('./weights')
+      await faceapi.loadFaceRecognitionModel('./weights')
+    }
+
+    faceapiWrapper()
+
+    const streamConstraints = {audio: true, video: true}
+    const mtcnnForwardParams = {
+      minFaceSize: 100,
+    }
+
+    console.log('what are results', results)
+    videoRef.current.addEventListener('playing', () => {
+      let ctx = canvasRef.current.getContext('2d')
+      let image = new Image()
+      image.src = './werewolf.png'
+      console.log('making it into playing listener')
+
+      function step() {
+        getFace(videoRef.current, mtcnnForwardParams)
+        ctx.drawImage(videoRef.current, 0, 0)
+        console.log('resulst are', results)
+        results.map((result) => {
+          ctx.drawImage(
+            image,
+            result.faceDetection.box.x + 15,
+            result.faceDetection.box.y + 30,
+            result.faceDetection.box.width,
+            result.faceDetection.box.width * (image.height / image.width)
+          )
+        })
+        requestAnimationFrame(step)
+      }
+      requestAnimationFrame(step)
+    })
+
+    videoRef.current = canvasRef.current.captureStream(30)
+    let isCaller = true
+  }, [videoRef.current])
+
+  useEffect(() => {
     console.log('MAKING IT INTO VIDEO TRACK ATTACH?!?!?!?')
     const videoTrack = videoTracks[0]
     if (videoTrack) {
@@ -68,18 +115,20 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   }, [audioTracks])
 
   return (
-    <div>
-      <video
-        style={{
-          height: '10rem',
-          borderStyle: 'solid',
-          borderRadius: '25%',
-        }}
-        ref={videoRef}
-        autoPlay={shouldWePlay}
-        muted={isLocal}
-      />
-      <audio ref={audioRef} autoPlay={shouldWePlay} muted={!isLocal} />
+    <div id="cr" style={{display: 'none'}}>
+      <canvas id="localCanvas" width="400" height="400" ref={canvasRef}>
+        <video
+          style={{
+            height: '10rem',
+            borderStyle: 'solid',
+            borderRadius: '25%',
+          }}
+          ref={videoRef}
+          autoPlay={shouldWePlay}
+          muted={isLocal}
+        />
+        <audio ref={audioRef} autoPlay={shouldWePlay} muted={!isLocal} />
+      </canvas>
     </div>
   )
 }
