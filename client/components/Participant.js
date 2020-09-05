@@ -170,9 +170,6 @@ const Participant = ({
   } else {
     shouldWePlay = false
     info = null
-    // <div className="sleepingBox">
-    //   Sleep well, {participant.identity}.<br /> Hope you survive the night.
-    // </div>
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity">{participant.identity}</div>
