@@ -5,6 +5,39 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   const videoRef = useRef()
   const audioRef = useRef()
   const canvasRef = useRef()
+  let results = []
+  async function getFace(localVideo, options) {
+    results = await faceapi.mtcnn(localVideo, options)
+  }
+  const handlePlaying = () => {
+    let ctx = canvasRef.current.getContext('2d')
+    let image = new Image()
+    image.src = './werewolf.png'
+
+    const mtcnnForwardParams = {
+      minFaceSize: 100,
+    }
+    if (!videoRef.current) return
+    console.log('what is videoRef.current111', typeof videoRef.current)
+    console.log('what is videoRef.current111', videoRef)
+
+    function step() {
+      getFace(videoRef.current, mtcnnForwardParams)
+      ctx.drawImage(videoRef.current, 0, 0)
+      console.log('resulst are', results)
+      results.map((result) => {
+        ctx.drawImage(
+          image,
+          result.detection.box.x + 15,
+          result.detection.box.y + 30,
+          result.detection.box.width,
+          result.detection.box.width * (image.height / image.width)
+        )
+      })
+      requestAnimationFrame(step)
+    }
+    requestAnimationFrame(step)
+  }
 
   const [videoTracks, setVideoTracks] = useState([])
   const [audioTracks, setAudioTracks] = useState([])
@@ -28,7 +61,6 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
     }
 
     const trackUnsubscribed = (track) => {
-      console.log('are we making it INTO HER?!??!?!??!?!?!?!?!?')
       if (track.kind === 'video') {
         setVideoTracks((videoTracks) => videoTracks.filter((v) => v !== track))
       } else if (track.kind === 'audio') {
@@ -47,11 +79,6 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   }, [participant])
 
   useEffect(() => {
-    let results = []
-    console.log('videoREf.current use effect', videoRef.current)
-    async function getFace(localVideo, options) {
-      results = await faceapi.mtcnn(localVideo, options)
-    }
     const faceapiWrapper = async () => {
       await faceapi.loadMtcnnModel('./weights')
       await faceapi.loadFaceRecognitionModel('./weights')
@@ -60,36 +87,7 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
     faceapiWrapper()
 
     const streamConstraints = {audio: true, video: true}
-    const mtcnnForwardParams = {
-      minFaceSize: 100,
-    }
 
-    console.log('what are results', results)
-    videoRef.current.addEventListener('playing', () => {
-      let ctx = canvasRef.current.getContext('2d')
-      let image = new Image()
-      image.src = './werewolf.png'
-      console.log('making it into playing listener')
-
-      function step() {
-        getFace(videoRef.current, mtcnnForwardParams)
-        ctx.drawImage(videoRef.current, 0, 0)
-        console.log('resulst are', results)
-        results.map((result) => {
-          ctx.drawImage(
-            image,
-            result.faceDetection.box.x + 15,
-            result.faceDetection.box.y + 30,
-            result.faceDetection.box.width,
-            result.faceDetection.box.width * (image.height / image.width)
-          )
-        })
-        requestAnimationFrame(step)
-      }
-      requestAnimationFrame(step)
-    })
-
-    videoRef.current = canvasRef.current.captureStream(30)
     let isCaller = true
   }, [videoRef.current])
 
@@ -115,20 +113,29 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
   }, [audioTracks])
 
   return (
-    <div id="cr" style={{display: 'none'}}>
-      <canvas id="localCanvas" width="400" height="400" ref={canvasRef}>
-        <video
-          style={{
-            height: '10rem',
-            borderStyle: 'solid',
-            borderRadius: '25%',
-          }}
-          ref={videoRef}
-          autoPlay={shouldWePlay}
-          muted={isLocal}
-        />
-        <audio ref={audioRef} autoPlay={shouldWePlay} muted={!isLocal} />
-      </canvas>
+    <div id="cr">
+      <canvas
+        id="localCanvas"
+        width="400"
+        height="400"
+        ref={canvasRef}
+      ></canvas>
+      <video
+        style={{
+          height: '10rem',
+          borderStyle: 'solid',
+          borderRadius: '25%',
+        }}
+        ref={videoRef}
+        autoPlay={shouldWePlay}
+        muted={isLocal}
+        onPlaying={(e) => handlePlaying(e)}
+        // onPlay={() => handlePlaying(e)}
+        // onWaiting={() => handlePlaying(e)}
+        // onError={() => handlePlaying(e)}
+        // onClick= {handlePlaying}
+      />
+      <audio ref={audioRef} autoPlay={shouldWePlay} muted={!isLocal} />
     </div>
   )
 }

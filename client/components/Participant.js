@@ -255,7 +255,7 @@ const Participant = ({
   if (shouldWePlay) {
     return (
       <div
-        className="individualPlayer"
+        className="individualPlayer123"
         style={{
           display: 'flex',
           flexDirection: 'column',
