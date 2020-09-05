@@ -253,14 +253,36 @@ const Room = ({roomName, token, handleLogout}) => {
     let prevVote = ''
     if (participantVotes[localIdx] !== '') {
       prevVote = participantVotes[localIdx]
-      let votesVillagersIdx = votesVillagers.indexOf(prevVote)
+      console.log('what is my previous vote', prevVote)
+      // let lookupObj = {
+      //   prevVote: localIdx
+      // }
+      let lookupObj = {}
+      lookupObj.prevVote = localIdx
+      let votesVillagersIdx = -1
+      let counter = 0
+
+      for (let element of votesVillagers) {
+        let key = Object.keys(element)[0]
+        console.log('what is element', element)
+        console.log('what is key', key)
+        if (key === prevVote && element[key] === localIdx) {
+          votesVillagersIdx = counter
+        }
+        counter += 1
+      }
+      console.log(
+        'what is index in votesVillagers of my prev vote',
+        votesVillagersIdx
+      )
       votesVillagers.splice(votesVillagersIdx, 1)
 
       let voteColorIdx = votesVillagersColors.indexOf(localColor)
       votesVillagersColors.splice(voteColorIdx, 1)
     }
-
-    votesVillagers.push(participantIdentity)
+    let newObj = {}
+    newObj[participantIdentity] = localIdx
+    votesVillagers.push(newObj)
     participantVotes[localIdx] = participantIdentity
 
     votesVillagersColors.push(localColor)
