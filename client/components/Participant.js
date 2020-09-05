@@ -99,7 +99,6 @@ const Participant = ({
             <div>{werewolfChoice} was killed during the night</div>
           )}
         </div>
-        {/* <div className="seerInfoBox">{didSeerHit} is a werewolf!</div> */}
       </div>
     )
     lower = (
