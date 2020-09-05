@@ -99,9 +99,7 @@ const Participant = ({
             <div>{werewolfChoice} was killed during the night</div>
           )}
         </div>
-        <div style={{color: 'red', fontWeight: 'bold'}}>
-          {didSeerHit} is a werewolf
-        </div>
+        <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
       </div>
     )
     lower = (
@@ -251,7 +249,9 @@ const Participant = ({
       >
         <div>
           {info}
-          {localRole === 'seer' ? <h3>{didSeerHit} test seer</h3> : null}
+          {localRole === 'seer' && didSeerHit ? (
+            <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
+          ) : null}
         </div>
         {/* <video ref={videoRef} autoPlay={shouldWePlay} muted={true} />
         <audio ref={audioRef} autoPlay={shouldWePlay} muted={true} /> */}
