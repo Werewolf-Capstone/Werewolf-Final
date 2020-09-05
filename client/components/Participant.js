@@ -195,8 +195,9 @@ const Participant = ({
           ) : null}
         </div>
         <div id={participant.identity}>
-          {votesVill.map((playerId, idx) => {
-            if (playerId === participant.identity) {
+          {votesVill.map((playerObj, idx) => {
+            console.log('mapping over votesVIll, what is pobj', playerObj)
+            if (Object.keys(playerObj)[0] === participant.identity) {
               return (
                 <img
                   className="playerIcon"
@@ -216,7 +217,6 @@ const Participant = ({
             isLocal={isLocal}
           />
         </div>
-
         {lower}
       </div>
     )

@@ -255,14 +255,36 @@ const Room = ({roomName, token, handleLogout}) => {
     let prevVote = ''
     if (participantVotes[localIdx] !== '') {
       prevVote = participantVotes[localIdx]
-      let votesVillagersIdx = votesVillagers.indexOf(prevVote)
+      console.log('what is my previous vote', prevVote)
+      // let lookupObj = {
+      //   prevVote: localIdx
+      // }
+      let lookupObj = {}
+      lookupObj.prevVote = localIdx
+      let votesVillagersIdx = -1
+      let counter = 0
+
+      for (let element of votesVillagers) {
+        let key = Object.keys(element)[0]
+        console.log('what is element', element)
+        console.log('what is key', key)
+        if (key === prevVote && element[key] === localIdx) {
+          votesVillagersIdx = counter
+        }
+        counter += 1
+      }
+      console.log(
+        'what is index in votesVillagers of my prev vote',
+        votesVillagersIdx
+      )
       votesVillagers.splice(votesVillagersIdx, 1)
 
       let voteColorIdx = votesVillagersColors.indexOf(localColor)
       votesVillagersColors.splice(voteColorIdx, 1)
     }
-
-    votesVillagers.push(participantIdentity)
+    let temp = {}
+    temp[participantIdentity] = localIdx
+    votesVillagers.push(temp)
     participantVotes[localIdx] = participantIdentity
 
     votesVillagersColors.push(localColor)
@@ -479,13 +501,12 @@ const Room = ({roomName, token, handleLogout}) => {
       let newParticipantz = [...participantsRef.current]
       newParticipantz = newParticipantz.filter((p) => p !== participant)
 
-      setParticipants(newParticipantz)
-
       let playerIdentitys = newParticipantz.map(
         (participant) => participant.identity
       )
 
       db.collection('rooms').doc(roomName).update({players: playerIdentitys})
+      setParticipants(newParticipantz)
     }
 
     Video.connect(token, {
@@ -526,16 +547,16 @@ const Room = ({roomName, token, handleLogout}) => {
 
           setColors(colors)
 
-          let newParticipants = gameState.players.filter(
-            (player) => !gameState.dead.includes(player)
-          )
+          // let newParticipants = gameState.players.filter(
+          //   (player) => !gameState.dead.includes(player)
+          // )
 
-          let temp = [...participantsRef.current]
-          newParticipants = temp.filter((p) =>
-            newParticipants.includes(p.identity)
-          )
+          // let temp = [...participantsRef.current]
+          // newParticipants = temp.filter((p) =>
+          //   newParticipants.includes(p.identity)
+          // )
 
-          setParticipants(newParticipants)
+          // setParticipants(newParticipants)
 
           if (!gameState.gameStarted) return
 
