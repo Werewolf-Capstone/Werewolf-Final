@@ -82,10 +82,8 @@ const MessageHeader = ({
   } else if (night && !checkWerewolf && localRole === 'werewolf') {
     return (
       <div className="messageHeader">
-        {/* Sleep well, everyone.
-        <br /> Hope you survive the night. */}
         <div style={{color: 'red'}}>
-          Werewolves, kill one of these filthy villagers <br />
+          Werewolves, kill one of these filthy villagers. <br />
           They're growing too bold.
         </div>
       </div>
@@ -93,8 +91,6 @@ const MessageHeader = ({
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
     return (
       <div className="messageHeader">
-        {/* Sleep well, everyone.
-        <br /> Hope you survive the night. */}
         <div style={{color: '#a84ca8'}}>
           Seer, choose someone to see their true identity. <br /> The answer
           will be revealed at daybreak.
@@ -112,7 +108,7 @@ const MessageHeader = ({
       <div className="messageHeader">
         {/* Sleep well, everyone.
         <br /> Hope you survive the night. */}
-        <div style={{color: '#4d4df1', textDecoration: 'underline'}}>
+        <div style={{color: '#4d4df1'}}>
           Medic, the werewolves have attacked! <br /> Choose someone to save!
         </div>
       </div>
