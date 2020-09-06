@@ -22,6 +22,7 @@ const Room = ({roomName, token}) => {
   const [localRole, setLocalRole] = useState('')
   const [localColor, setLocalColor] = useState('')
   const [gameOver, setGameOver] = useState(false)
+  const [winner, setWinner] = useState('')
   const [gameStarted, setGameStarted] = useState(false)
   const [checkWerewolf, setCheckWerewolf] = useState(false)
   const [checkSeer, setCheckSeer] = useState(false)
@@ -33,7 +34,6 @@ const Room = ({roomName, token}) => {
   const [votesWere, setVotesWere] = useState([])
   const [votesWereColors, setVotesWereColors] = useState([])
   const [colors, setColors] = useState([])
-  const [winner, setWinner] = useState('')
   const [dead, setDead] = useState([])
   const [majorityReached, setMajorityReached] = useState(false)
 
@@ -109,6 +109,7 @@ const Room = ({roomName, token}) => {
     setGameStarted(val)
   }
   const handleGameOver = (winner) => {
+    //console.log('about to set gameOver to true')
     setGameOver(true)
     setWinner(winner)
     db.collection('rooms').doc(roomName).update({gameOver: true, winner})
@@ -235,6 +236,8 @@ const Room = ({roomName, token}) => {
 
     for (let player of votesVillagers) {
       player = Object.keys(player)[0]
+      //console.log('what is player in handleMajority')
+      // need to add rooms and users tables to state
       if (Object.keys(votingObject).includes(player)) {
         votingObject[player] += 1
       } else {
@@ -250,11 +253,17 @@ const Room = ({roomName, token}) => {
         let nextPlayers = players.data().players
 
         let numParticipants = nextPlayers.length
+        //console.log('what is numP', numParticipants)
 
         let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
         for (let i = 0; i < numParticipants; i++) {
           partVoteArray.push('')
         }
+
+        //console.log(
+        // 'what is our new partVote array after handling Majority',
+        // partVoteArray
+        // )
 
         db.collection('rooms').doc(roomName).update({
           villagersChoice: player,
@@ -288,6 +297,7 @@ const Room = ({roomName, token}) => {
     let prevVote = ''
     if (participantVotes[localIdx] !== '') {
       prevVote = participantVotes[localIdx]
+      //console.log('what is my previous vote', prevVote)
       // let lookupObj = {
       //   prevVote: localIdx
       // }
@@ -298,12 +308,17 @@ const Room = ({roomName, token}) => {
 
       for (let element of votesVillagers) {
         let key = Object.keys(element)[0]
+        //console.log('what is element', element)
+        //console.log('what is key', key)
         if (key === prevVote && element[key] === localIdx) {
           votesVillagersIdx = counter
         }
         counter += 1
       }
-
+      //console.log(
+      // 'what is index in votesVillagers of my prev vote',
+      // votesVillagersIdx
+      // )
       votesVillagers.splice(votesVillagersIdx, 1)
 
       let voteColorIdx = votesVillagersColors.indexOf(localColor)
@@ -455,11 +470,13 @@ const Room = ({roomName, token}) => {
     let villagers = []
 
     let numParticipants = players.length
+    //console.log('what is numP', numParticipants)
 
     let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
     for (let i = 0; i < numParticipants; i++) {
       partVoteArray.push('')
     }
+    //console.log('what is partVote', partVoteArray)
 
     //shuffle users array in order to assign random roles
     // for (let i = users.length - 1; i > 0; i--) {
@@ -578,6 +595,8 @@ const Room = ({roomName, token}) => {
           setVotesVillColors(gameState.votesVillagersColors)
           setParticipantIdentities(gameState.players)
           setDead(gameState.dead)
+          // setGameOver(gameState.gameOver)
+          setWinner(gameState.winner)
 
           let colors = gameState.colors
 
@@ -616,10 +635,11 @@ const Room = ({roomName, token}) => {
             // If both arrays are empty, keep going.
             // This check was put in place to avoid calling Game Over before roles are assigned.
           } else if (
-            gameState.villagers.length === gameState.werewolves.length ||
-            gameState.werewolves.length === 0
+            gameState.villagers.length === gameState.werewolves.length
           ) {
             handleGameOver('werewolves')
+          } else if (gameState.werewolves.length === 0) {
+            handleGameOver('villagers')
           }
         })
     })
@@ -694,6 +714,8 @@ const Room = ({roomName, token}) => {
   let playerColor = colors[idx]
   let fileName = pngMapObj[playerColor]
 
+  //console.log('what is our dead array', dead)
+
   return (
     <div>
       <MessageHeader
@@ -705,6 +727,8 @@ const Room = ({roomName, token}) => {
         checkWerewolf={checkWerewolf}
         checkSeer={checkSeer}
         checkMedic={checkMedic}
+        gameOver={gameOver}
+        winner={winner}
       />
       {gameStarted ? (
         <Phase
