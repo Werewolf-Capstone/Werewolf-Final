@@ -145,11 +145,24 @@ const Room = ({roomName, token, handleLogout}) => {
         game.villagers = game.villagers.filter((villager) => {
           return villager !== game.werewolvesChoice
         })
+        game.werewolves = game.werewolves.filter((werewolf) => {
+          return werewolf !== game.werewolvesChoice
+        })
         if (game.werewolvesChoice !== '') {
           game.dead.push(game.werewolvesChoice)
-          game.players = game.players.filter(
-            (player) => player !== game.werewolvesChoice
-          )
+          let removedIdx = -1
+          for (let i = 0; i < game.players.length; i++) {
+            if (game.players[i] === game.werewolvesChoice) {
+              removedIdx = i
+            }
+          } // end of this loop we know which index to remove from participants
+
+          game.players.splice(removedIdx, 1)
+          game.participantVotes.splice(removedIdx, 1)
+          game.colors.splice(removedIdx, 1)
+          // game.players = game.players.filter((player,idx ) => {
+          //   return player !== game.werewolvesChoice
+          // }
         }
       }
     } else {
