@@ -203,7 +203,8 @@ const Participant = ({
           </div>
           <img
             style={{
-              height: '10rem',
+              // height: '10rem',
+              width: '200px',
               borderStyle: 'solid',
               borderRadius: '25%',
             }}
