@@ -21,12 +21,13 @@ export default function Phase() {
     <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
       <Container>
         <Box display="flex" justifyContent="center" className="fadeIn animated">
-          <img
+          {/* <img
             src="/werewolvesVoting.png"
             alt="Werewolves are voting"
             width="50%"
             height="50%"
-          />
+          /> */}
+
           {/* {() => {
             switch (step) {
               case 'werewolves':

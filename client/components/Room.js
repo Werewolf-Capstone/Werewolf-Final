@@ -728,6 +728,13 @@ const Room = ({roomName, token, handleLogout}) => {
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
         className="room"
       >
+        <Phase
+          night={night}
+          localRole={localRole}
+          checkWerewolf={checkWerewolf}
+          checkMedic={checkMedic}
+          checkSeer={checkSeer}
+        />
         {gameOver ? <GameOver winner={winner} /> : <Day night={night} />}
         <div
           style={{display: 'flex', justifyContent: 'center'}}
