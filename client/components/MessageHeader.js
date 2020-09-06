@@ -6,6 +6,9 @@ const MessageHeader = ({
   gameStarted,
   localRole,
   didSeerHit,
+  checkMedic,
+  checkSeer,
+  checkWerewolf,
 }) => {
   if (!night && localRole === 'seer' && didSeerHit) {
     return (
