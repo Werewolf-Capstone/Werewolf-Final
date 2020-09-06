@@ -9,8 +9,11 @@ const MessageHeader = ({
   checkMedic,
   checkSeer,
   checkWerewolf,
+  winner,
 }) => {
-  if (!night && localRole === 'seer' && didSeerHit) {
+  if (winner !== '') {
+    return null
+  } else if (!night && localRole === 'seer' && didSeerHit) {
     return (
       <div className="messageHeader">
         {werewolfChoice === '' ? (

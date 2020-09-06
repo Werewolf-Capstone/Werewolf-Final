@@ -723,6 +723,7 @@ const Room = ({roomName, token, handleLogout}) => {
         checkWerewolf={checkWerewolf}
         checkSeer={checkSeer}
         checkMedic={checkMedic}
+        winner={winner}
       />
 
       <div
