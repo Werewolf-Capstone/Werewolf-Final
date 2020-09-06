@@ -14,13 +14,6 @@ const MessageHeader = ({
 }) => {
   if (gameOver || !gameStarted) {
     return <div className="messageHeader"></div>
-  } else if (night && gameStarted) {
-    return (
-      <div className="messageHeader">
-        Sleep well, everyone. Daybreak isn't far away.
-        <br /> Hope you survive the night.
-      </div>
-    )
   } else if (gameOver && winner === 'werewolves') {
     return (
       <div>
@@ -31,6 +24,13 @@ const MessageHeader = ({
     return (
       <div>
         <img src="/villagersWin.png" />
+      </div>
+    )
+  } else if (night && gameStarted) {
+    return (
+      <div className="messageHeader">
+        Sleep well, everyone. Daybreak isn't far away.
+        <br /> Hope you survive the night.
       </div>
     )
   } else if (!night && localRole === 'seer' && didSeerHit) {
