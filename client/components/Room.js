@@ -37,6 +37,9 @@ const Room = ({roomName, token, handleLogout}) => {
   const [colors, setColors] = useState([])
   const [dead, setDead] = useState([])
   const [participantsRoles, setParticipantsRoles] = useState([])
+  const [werewolves, setWerewolves] = useState([])
+  const [seer, setSeer] = useState('')
+  const [medic, setMedic] = useState('')
 
   const participantsRef = useRef(participants)
 
@@ -606,6 +609,9 @@ const Room = ({roomName, token, handleLogout}) => {
           setVotesVillColors(gameState.votesVillagersColors)
           setParticipantIdentities(gameState.players)
           setDead(gameState.dead)
+          setSeer(gameState.seer)
+          setMedic(gameState.medic)
+          setWerewolves(gameState.werewolves)
           // setGameOver(gameState.gameOver)
           setWinner(gameState.winner)
 
@@ -723,10 +729,10 @@ const Room = ({roomName, token, handleLogout}) => {
       let playerColor = colors[correctIdx]
       let fileName = pngMapObj[playerColor]
 
-      let remoteRole
-      if (idx === 0 || idx === 1) remoteRole = 'werewolf'
-      else if (idx === 2) remoteRole = 'seer'
-      else if (idx === 3) remoteRole = 'medic'
+      let remoteRole = ''
+      if (werewolves.includes(participant.identity)) remoteRole = 'werewolf'
+      else if (participant.identity === 'seer') remoteRole = 'seer'
+      else if (participant.identity === 'medic') remoteRole = 'medic'
       else remoteRole = 'villager'
 
       return (
