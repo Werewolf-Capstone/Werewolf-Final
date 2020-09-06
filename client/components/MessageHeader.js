@@ -18,7 +18,7 @@ const MessageHeader = ({
             Luckily, no one was killed last night.
             <br />
             Now kill the werewolves before they can attack again!
-            <div style={{color: 'red', textDecoration: 'underline'}}>
+            <div style={{color: '#a84ca8', textDecoration: 'underline'}}>
               And, Seer, guess what...{didSeerHit} IS a werewolf!
             </div>
           </div>
@@ -28,7 +28,9 @@ const MessageHeader = ({
             {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
-            And, Seer, guess what...{didSeerHit} IS a werewolf!
+            <div style={{color: '#a84ca8', textDecoration: 'underline'}}>
+              And, Seer, guess what...{didSeerHit} IS a werewolf!
+            </div>
           </div>
         )}
       </div>
@@ -41,7 +43,7 @@ const MessageHeader = ({
             Luckily, no one was killed last night.
             <br />
             Now kill the werewolves before they can attack again!
-            <div style={{color: 'red', textDecoration: 'underline'}}>
+            <div style={{color: '#a84ca8'}}>
               And, Seer, you guessed wrong. Better luck next time...
             </div>
           </div>
@@ -51,7 +53,9 @@ const MessageHeader = ({
             {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
-            And, Seer, you guessed wrong. Better luck next time...
+            <div style={{color: '#a84ca8'}}>
+              And, Seer, you guessed wrong. Better luck next time...
+            </div>
           </div>
         )}
       </div>
@@ -80,8 +84,8 @@ const MessageHeader = ({
       <div className="messageHeader">
         {/* Sleep well, everyone.
         <br /> Hope you survive the night. */}
-        <div style={{color: 'red', textDecoration: 'underline'}}>
-          Werewolves, kill one of these filty villagers <br />
+        <div style={{color: 'red'}}>
+          Werewolves, kill one of these filthy villagers <br />
           They're growing too bold.
         </div>
       </div>
@@ -91,7 +95,7 @@ const MessageHeader = ({
       <div className="messageHeader">
         {/* Sleep well, everyone.
         <br /> Hope you survive the night. */}
-        <div style={{color: '#a84ca8', textDecoration: 'underline'}}>
+        <div style={{color: '#a84ca8'}}>
           Seer, choose someone to see their true identity. <br /> The answer
           will be revealed at daybreak.
         </div>
@@ -109,7 +113,7 @@ const MessageHeader = ({
         {/* Sleep well, everyone.
         <br /> Hope you survive the night. */}
         <div style={{color: '#4d4df1', textDecoration: 'underline'}}>
-          Medic, the werewolves have attacked! Choose someone to save!
+          Medic, the werewolves have attacked! <br /> Choose someone to save!
         </div>
       </div>
     )
