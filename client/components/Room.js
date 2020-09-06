@@ -22,6 +22,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [localRole, setLocalRole] = useState('')
   const [localColor, setLocalColor] = useState('')
   const [gameOver, setGameOver] = useState(false)
+  const [winner, setWinner] = useState('')
   const [gameStarted, setGameStarted] = useState(false)
   const [checkWerewolf, setCheckWerewolf] = useState(false)
   const [checkSeer, setCheckSeer] = useState(false)
@@ -33,7 +34,6 @@ const Room = ({roomName, token, handleLogout}) => {
   const [votesWere, setVotesWere] = useState([])
   const [votesWereColors, setVotesWereColors] = useState([])
   const [colors, setColors] = useState([])
-  const [winner, setWinner] = useState('')
   const [dead, setDead] = useState([])
 
   const participantsRef = useRef(participants)
@@ -108,7 +108,7 @@ const Room = ({roomName, token, handleLogout}) => {
     setGameStarted(val)
   }
   const handleGameOver = (winner) => {
-    console.log('about to set gameOver to true')
+    //console.log('about to set gameOver to true')
     setGameOver(true)
     setWinner(winner)
     db.collection('rooms').doc(roomName).update({gameOver: true, winner})
@@ -234,7 +234,7 @@ const Room = ({roomName, token, handleLogout}) => {
 
     for (let player of votesVillagers) {
       player = Object.keys(player)[0]
-      console.log('what is player in handleMajority')
+      //console.log('what is player in handleMajority')
       // need to add rooms and users tables to state
       if (Object.keys(votingObject).includes(player)) {
         votingObject[player] += 1
@@ -251,17 +251,17 @@ const Room = ({roomName, token, handleLogout}) => {
         let nextPlayers = players.data().players
 
         let numParticipants = nextPlayers.length
-        console.log('what is numP', numParticipants)
+        //console.log('what is numP', numParticipants)
 
         let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
         for (let i = 0; i < numParticipants; i++) {
           partVoteArray.push('')
         }
 
-        console.log(
-          'what is our new partVote array after handling Majority',
-          partVoteArray
-        )
+        //console.log(
+        // 'what is our new partVote array after handling Majority',
+        // partVoteArray
+        // )
 
         db.collection('rooms').doc(roomName).update({
           villagersChoice: player,
@@ -294,7 +294,7 @@ const Room = ({roomName, token, handleLogout}) => {
     let prevVote = ''
     if (participantVotes[localIdx] !== '') {
       prevVote = participantVotes[localIdx]
-      console.log('what is my previous vote', prevVote)
+      //console.log('what is my previous vote', prevVote)
       // let lookupObj = {
       //   prevVote: localIdx
       // }
@@ -305,17 +305,17 @@ const Room = ({roomName, token, handleLogout}) => {
 
       for (let element of votesVillagers) {
         let key = Object.keys(element)[0]
-        console.log('what is element', element)
-        console.log('what is key', key)
+        //console.log('what is element', element)
+        //console.log('what is key', key)
         if (key === prevVote && element[key] === localIdx) {
           votesVillagersIdx = counter
         }
         counter += 1
       }
-      console.log(
-        'what is index in votesVillagers of my prev vote',
-        votesVillagersIdx
-      )
+      //console.log(
+      // 'what is index in votesVillagers of my prev vote',
+      // votesVillagersIdx
+      // )
       votesVillagers.splice(votesVillagersIdx, 1)
 
       let voteColorIdx = votesVillagersColors.indexOf(localColor)
@@ -467,13 +467,13 @@ const Room = ({roomName, token, handleLogout}) => {
     let villagers = []
 
     let numParticipants = players.length
-    console.log('what is numP', numParticipants)
+    //console.log('what is numP', numParticipants)
 
     let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
     for (let i = 0; i < numParticipants; i++) {
       partVoteArray.push('')
     }
-    console.log('what is partVote', partVoteArray)
+    //console.log('what is partVote', partVoteArray)
 
     //shuffle users array in order to assign random roles
     // for (let i = users.length - 1; i > 0; i--) {
@@ -595,6 +595,8 @@ const Room = ({roomName, token, handleLogout}) => {
           setVotesVillColors(gameState.votesVillagersColors)
           setParticipantIdentities(gameState.players)
           setDead(gameState.dead)
+          // setGameOver(gameState.gameOver)
+          setWinner(gameState.winner)
 
           let colors = gameState.colors
 
@@ -712,7 +714,7 @@ const Room = ({roomName, token, handleLogout}) => {
   let playerColor = colors[idx]
   let fileName = pngMapObj[playerColor]
 
-  console.log('what is our dead array', dead)
+  //console.log('what is our dead array', dead)
 
   return (
     <div>
