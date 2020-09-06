@@ -714,6 +714,8 @@ const Room = ({roomName, token}) => {
           checkMedic={checkMedic}
           checkSeer={checkSeer}
           majorityReached={majorityReached}
+          gameOver={gameOver}
+          winner={winner}
         />
       ) : null}
 
@@ -721,7 +723,8 @@ const Room = ({roomName, token}) => {
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
         className="room"
       >
-        {gameOver ? <GameOver winner={winner} /> : <Day night={night} />}
+        <Day night={night} />
+        {/* {gameOver ? <GameOver winner={winner} /> : <Day night={night} />} */}
 
         <div
           style={{display: 'flex', justifyContent: 'center'}}
