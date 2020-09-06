@@ -25,7 +25,6 @@ html {
 .night {
   background: url(https://i.ibb.co/5W86tN5/Village-Night.png);
   background-size: 100%;
-  /* filter: brightness(30%); */
   -webkit-animation: forest-night 5s;
   animation: forest-night 5s;
 }
