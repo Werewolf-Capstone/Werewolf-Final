@@ -50,7 +50,7 @@ code {
 .messageHeader {
   height: 150px;
   color: rgb(244, 232, 232);
-  font-size: 40px;
+  font-size: 35px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   text-shadow: 2px 2px 5px black;
   font-weight: bold;
@@ -87,16 +87,16 @@ code {
 }
 
 .playerIcon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 25%;
   border-style: solid;
   position: absolute;
 }
 
 .playerVotingIcon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 25%;
   border-style: solid;
 }
@@ -106,7 +106,7 @@ code {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  height: 315px;
+  height: 275px;
   width: 225px;
   margin: 5px;
 }
