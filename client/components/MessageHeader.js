@@ -16,16 +16,16 @@ const MessageHeader = ({
             <br />
             Now kill the werewolves before they can attack again!
             <div style={{color: 'red', textDecoration: 'underline'}}>
-              And guess what...{didSeerHit} IS a werewolf!
+              And, Seer, guess what...{didSeerHit} IS a werewolf!
             </div>
           </div>
         ) : (
           <div>
-            {werewolfChoice} was killed during the night. <br />
-            Avenge {werewolfChoice}'s death!
+            {werewolfChoice} was killed during the night. Avenge{' '}
+            {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
-            And guess what...{didSeerHit} IS a werewolf!
+            And, Seer, guess what...{didSeerHit} IS a werewolf!
           </div>
         )}
       </div>
@@ -44,8 +44,8 @@ const MessageHeader = ({
           </div>
         ) : (
           <div>
-            {werewolfChoice} was killed during the night. <br />
-            Avenge {werewolfChoice}'s death!
+            {werewolfChoice} was killed during the night. Avenge{' '}
+            {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
             And, Seer, you guessed wrong. Better luck next time...
@@ -64,12 +64,50 @@ const MessageHeader = ({
           </div>
         ) : (
           <div>
-            {werewolfChoice} was killed during the night. <br />
-            Avenge {werewolfChoice}'s death!
+            {werewolfChoice} was killed during the night. Avenge{' '}
+            {werewolfChoice}'s death!
             <br />
             Kill all the werewolves!
           </div>
         )}
+      </div>
+    )
+  } else if (night && !checkWerewolf && localRole === 'werewolf') {
+    return (
+      <div className="messageHeader">
+        {/* Sleep well, everyone.
+        <br /> Hope you survive the night. */}
+        <div style={{color: 'red', textDecoration: 'underline'}}>
+          Werewolves, kill one of these filty villagers <br />
+          They're growing too bold.
+        </div>
+      </div>
+    )
+  } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
+    return (
+      <div className="messageHeader">
+        {/* Sleep well, everyone.
+        <br /> Hope you survive the night. */}
+        <div style={{color: '#a84ca8', textDecoration: 'underline'}}>
+          Seer, choose someone to see their true identity. <br /> The answer
+          will be revealed at daybreak.
+        </div>
+      </div>
+    )
+  } else if (
+    night &&
+    checkWerewolf &&
+    checkSeer &&
+    !checkMedic &&
+    localRole === 'medic'
+  ) {
+    return (
+      <div className="messageHeader">
+        {/* Sleep well, everyone.
+        <br /> Hope you survive the night. */}
+        <div style={{color: '#4d4df1', textDecoration: 'underline'}}>
+          Medic, the werewolves have attacked! Choose someone to save!
+        </div>
       </div>
     )
   } else if (night && gameStarted) {
