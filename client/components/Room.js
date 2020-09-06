@@ -678,14 +678,6 @@ const Room = ({roomName, token, handleLogout}) => {
         className="room"
       >
         {gameOver ? <GameOver winner={winner} /> : <Day />}
-        <Button
-          size="small"
-          variant="contained"
-          color="secondary"
-          onClick={handleLogout}
-        >
-          Log out
-        </Button>
         <div
           style={{display: 'flex', justifyContent: 'center'}}
           className="local-participant"
