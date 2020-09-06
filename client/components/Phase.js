@@ -10,13 +10,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Phase(
+export default function Phase({
   night,
   localRole,
   checkWerewolf,
   checkMedic,
-  checkSeer
-) {
+  checkSeer,
+}) {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
   const handleClose = () => {
