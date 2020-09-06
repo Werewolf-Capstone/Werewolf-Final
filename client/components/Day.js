@@ -6,7 +6,7 @@ export default function Day() {
     <Container>
       {document.getElementById('background').classList.add('day')}
       {document.getElementById('background').classList.remove('lobby')}
-      <Box
+      {/* <Box
         display="flex"
         justifyContent="center"
         marginTop="7%"
@@ -14,7 +14,7 @@ export default function Day() {
         className="fadeIn animated"
       >
         <img src="/dayTime.png" alt="Werewolf" width="30%" height="30%" />
-      </Box>
+      </Box> */}
     </Container>
   )
 }
