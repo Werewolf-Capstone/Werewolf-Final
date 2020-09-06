@@ -39,9 +39,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/*Styling for MessageHeader component*/
+.messageHeader {
+  height: 150px;
+  color: rgb(244, 232, 232);
+  font-size: 40px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px black;
+  font-weight: bold;
+  text-align: center;
+}
+
+/*Styling for video container that holds all individual video feeds*/
+.videoContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
 /*Styling for messages that render above and below the individual video components*/
 .lowerInfoBox {
+  height: 75px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,30 +75,8 @@ code {
 }
 
 .infoBox {
-  color: rgb(244, 232, 232);
-  font-size: 20px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  text-shadow: 2px 2px 5px black;
-  font-weight: bold;
-  text-align: center;
-}
-
-.seerInfoBox {
-  color: rgb(243, 96, 96);
-  font-size: 25px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  text-shadow: 2px 2px 5px rgb(70, 69, 69);
-  font-weight: bold;
-  text-align: center;
-}
-
-.sleepingBox {
-  color: rgb(244, 232, 232);
-  font-size: 17px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  text-shadow: 2px 2px 5px black;
-  font-weight: bold;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .playerIcon {
@@ -91,15 +87,23 @@ code {
   position: absolute;
 }
 
+.playerVotingIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 25%;
+  border-style: solid;
+}
+
 .individualPlayer {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-end;
   align-items: center;
-  width: 15rem;
+  height: 315px;
+  width: 225px;
   margin: 5px;
 }
-
+/* 15rem */
 #werewolf-title {
   font-family: werewolf_moonregular;
   font-size: 50px;
