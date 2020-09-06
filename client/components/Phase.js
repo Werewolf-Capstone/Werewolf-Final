@@ -10,7 +10,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Phase() {
+export default function Phase(
+  night,
+  localRole,
+  checkWerewolf,
+  checkMedic,
+  checkSeer
+) {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
   const handleClose = () => {
@@ -21,6 +27,21 @@ export default function Phase() {
     <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
       <Container>
         <Box display="flex" justifyContent="center" className="fadeIn animated">
+          {night ? (
+            !checkWerewolf && localRole !== 'werewolf' ? (
+              <img
+                src="/werewolvesVoting.png"
+                alt="Werewolves are voting"
+                width="50%"
+                height="50%"
+              />
+            ) : (
+              ''
+            )
+          ) : (
+            ''
+          )}
+
           {/* <img
             src="/werewolvesVoting.png"
             alt="Werewolves are voting"
