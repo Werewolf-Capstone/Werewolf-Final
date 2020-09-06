@@ -8,3 +8,5 @@ yarn-error.log
 .env
 client/components/config.js
 server/config.js
+public/firebaseConfig.js
+public/config.js
