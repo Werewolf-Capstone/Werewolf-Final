@@ -30,27 +30,33 @@ export default function Phase({
       <Container>
         <Box display="flex" justifyContent="center" className="fadeIn animated">
           {night ? (
-            !checkWerewolf && localRole !== 'werewolf' ? (
-              <img
-                src="/werewolvesVoting.png"
-                alt="Werewolves are voting"
-                width="50%"
-                height="50%"
-              />
-            ) : !checkSeer && localRole !== 'seer' ? (
-              <img
-                src="/Seer.png"
-                alt="Seer is now seeing"
-                width="50%"
-                height="50%"
-              />
-            ) : !checkMedic && localRole !== 'medic' ? (
-              <img
-                src="/medic.png"
-                alt="Medic is now healing"
-                width="50%"
-                height="50%"
-              />
+            !checkWerewolf ? (
+              localRole !== 'werewolf' ? (
+                <img
+                  src="/werewolvesVoting.png"
+                  alt="Werewolves are voting"
+                  width="50%"
+                  height="50%"
+                />
+              ) : null
+            ) : !checkSeer ? (
+              localRole !== 'seer' ? (
+                <img
+                  src="/Seer.png"
+                  alt="Seer is now seeing"
+                  width="50%"
+                  height="50%"
+                />
+              ) : null
+            ) : !checkMedic ? (
+              localRole !== 'medic' ? (
+                <img
+                  src="/medic.png"
+                  alt="Medic is now healing"
+                  width="50%"
+                  height="50%"
+                />
+              ) : null
             ) : null
           ) : majorityReached ? (
             <img
