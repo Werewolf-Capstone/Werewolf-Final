@@ -9,9 +9,9 @@ const MessageHeader = ({
   checkMedic,
   checkSeer,
   checkWerewolf,
-  winner,
+  gameOver,
 }) => {
-  if (winner !== '') {
+  if (gameOver || !gameStarted) {
     return <div className="messageHeader"></div>
   } else if (!night && localRole === 'seer' && didSeerHit) {
     return (

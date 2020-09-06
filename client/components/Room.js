@@ -110,6 +110,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const handleGameOver = (winner) => {
     console.log('about to set gameOver to true')
     setGameOver(true)
+    setWinner(winner)
     db.collection('rooms').doc(roomName).update({gameOver: true, winner})
   }
   const handleCheckWerewolf = (val) => {
@@ -632,10 +633,11 @@ const Room = ({roomName, token, handleLogout}) => {
             // If both arrays are empty, keep going.
             // This check was put in place to avoid calling Game Over before roles are assigned.
           } else if (
-            gameState.villagers.length === gameState.werewolves.length ||
-            gameState.werewolves.length === 0
+            gameState.villagers.length === gameState.werewolves.length
           ) {
             handleGameOver('werewolves')
+          } else if (gameState.werewolves.length === 0) {
+            handleGameOver('villagers')
           }
         })
     })
@@ -723,7 +725,7 @@ const Room = ({roomName, token, handleLogout}) => {
         checkWerewolf={checkWerewolf}
         checkSeer={checkSeer}
         checkMedic={checkMedic}
-        winner={winner}
+        gameOver={gameOver}
       />
 
       <div
