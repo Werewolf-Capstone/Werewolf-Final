@@ -34,6 +34,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [votesWereColors, setVotesWereColors] = useState([])
   const [colors, setColors] = useState([])
   const [winner, setWinner] = useState('')
+  const [dead, setDead] = useState([])
 
   const participantsRef = useRef(participants)
 
@@ -246,9 +247,9 @@ const Room = ({roomName, token, handleLogout}) => {
         let newDead = players.data().dead
         newDead.push(player)
 
-        let players = players.data().players
+        let nextPlayers = players.data().players
 
-        let numParticipants = players.length
+        let numParticipants = nextPlayers.length
         console.log('what is numP', numParticipants)
 
         let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
@@ -592,6 +593,7 @@ const Room = ({roomName, token, handleLogout}) => {
           setVotesWereColors(gameState.votesWerewolvesColors)
           setVotesVillColors(gameState.votesVillagersColors)
           setParticipantIdentities(gameState.players)
+          setDead(gameState.dead)
 
           let colors = gameState.colors
 
@@ -708,6 +710,8 @@ const Room = ({roomName, token, handleLogout}) => {
   let playerColor = colors[idx]
   let fileName = pngMapObj[playerColor]
 
+  console.log('what is our dead array', dead)
+
   return (
     <div>
       <MessageHeader
@@ -729,30 +733,33 @@ const Room = ({roomName, token, handleLogout}) => {
         >
           {stateRoom ? (
             <div className="videoContainer">
-              <Participant
-                key={stateRoom.localParticipant.sid}
-                participant={stateRoom.localParticipant}
-                handleVillagerVoteButton={handleVillagerVoteButton}
-                handleSeerCheckButton={handleSeerCheckButton}
-                handleMedicSaveButton={handleMedicSaveButton}
-                handleWerewolfVoteButton={handleWerewolfVoteButton}
-                night={night}
-                localRole={localRole}
-                localColor={localColor}
-                checkWerewolf={checkWerewolf}
-                checkSeer={checkSeer}
-                checkMedic={checkMedic}
-                werewolfChoice={werewolfChoice}
-                didSeerHit={didSeerHit}
-                gameStarted={gameStarted}
-                votesVill={votesVill}
-                votesVillColors={votesVillColors}
-                votesWere={votesWere}
-                votesWereColors={votesWereColors}
-                roomName={stateRoom}
-                imageSrc={fileName}
-                isLocal={true}
-              />
+              {!dead.includes(stateRoom.localParticipant.identity) ? (
+                <Participant
+                  key={stateRoom.localParticipant.sid}
+                  participant={stateRoom.localParticipant}
+                  handleVillagerVoteButton={handleVillagerVoteButton}
+                  handleSeerCheckButton={handleSeerCheckButton}
+                  handleMedicSaveButton={handleMedicSaveButton}
+                  handleWerewolfVoteButton={handleWerewolfVoteButton}
+                  night={night}
+                  localRole={localRole}
+                  localColor={localColor}
+                  checkWerewolf={checkWerewolf}
+                  checkSeer={checkSeer}
+                  checkMedic={checkMedic}
+                  werewolfChoice={werewolfChoice}
+                  didSeerHit={didSeerHit}
+                  gameStarted={gameStarted}
+                  votesVill={votesVill}
+                  votesVillColors={votesVillColors}
+                  votesWere={votesWere}
+                  votesWereColors={votesWereColors}
+                  roomName={stateRoom}
+                  imageSrc={fileName}
+                  isLocal={true}
+                />
+              ) : null}
+
               {remoteParticipants}
             </div>
           ) : (
