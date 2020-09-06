@@ -8,6 +8,7 @@ import {Button} from '@material-ui/core'
 import Day from './Day'
 import GameOver from './GameOver'
 import Night from './Night'
+import Phase from './Phase'
 
 const Room = ({roomName, token, handleLogout}) => {
   /**

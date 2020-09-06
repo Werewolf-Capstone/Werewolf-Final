@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Phase(step) {
+export default function Phase() {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
   const handleClose = () => {
@@ -21,7 +21,13 @@ export default function Phase(step) {
     <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
       <Container>
         <Box display="flex" justifyContent="center" className="fadeIn animated">
-          {() => {
+          <img
+            src="/werewolvesVoting.png"
+            alt="Werewolves are voting"
+            width="50%"
+            height="50%"
+          />
+          {/* {() => {
             switch (step) {
               case 'werewolves':
                 return (
@@ -62,7 +68,7 @@ export default function Phase(step) {
               default:
                 return null
             }
-          }}
+          }} */}
         </Box>
       </Container>
     </Backdrop>

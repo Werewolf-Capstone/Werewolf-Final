@@ -6,6 +6,7 @@ export default function GameOver() {
     <Container>
       {document.getElementById('background').classList.add('day')}
       {document.getElementById('background').classList.remove('lobby')}
+      {document.getElementById('background').classList.remove('night')}
       <Box
         display="flex"
         justifyContent="center"
