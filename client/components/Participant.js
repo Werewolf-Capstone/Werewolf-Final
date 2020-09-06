@@ -90,12 +90,7 @@ const Participant = ({
             if (playerId === participant.identity) {
               return (
                 <img
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '25%',
-                    borderStyle: 'solid',
-                  }}
+                  className="playerVotingIcon"
                   src={pngMapObj[votesWereColors[idx]]}
                 ></img>
               )
