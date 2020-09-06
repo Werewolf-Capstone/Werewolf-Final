@@ -726,6 +726,7 @@ const Room = ({roomName, token, handleLogout}) => {
         checkSeer={checkSeer}
         checkMedic={checkMedic}
         gameOver={gameOver}
+        winner={winner}
       />
 
       <div

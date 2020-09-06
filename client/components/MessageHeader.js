@@ -10,9 +10,29 @@ const MessageHeader = ({
   checkSeer,
   checkWerewolf,
   gameOver,
+  winner,
 }) => {
   if (gameOver || !gameStarted) {
     return <div className="messageHeader"></div>
+  } else if (night && gameStarted) {
+    return (
+      <div className="messageHeader">
+        Sleep well, everyone. Daybreak isn't far away.
+        <br /> Hope you survive the night.
+      </div>
+    )
+  } else if (gameOver && winner === 'werewolves') {
+    return (
+      <div>
+        <img src="/werewolvesWin.png" />
+      </div>
+    )
+  } else if (gameOver && winner === 'villagers') {
+    return (
+      <div>
+        <img src="/villagersWin.png" />
+      </div>
+    )
   } else if (!night && localRole === 'seer' && didSeerHit) {
     return (
       <div className="messageHeader">
@@ -116,14 +136,6 @@ const MessageHeader = ({
         </div>
       </div>
     )
-  } else if (night && gameStarted) {
-    return (
-      <div className="messageHeader">
-        Sleep well, everyone. Daybreak isn't far away.
-        <br /> Hope you survive the night.
-      </div>
-    )
-  } else return <div className="messageHeader"></div>
+  } else return null
 }
-
 export default MessageHeader
