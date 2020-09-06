@@ -74,56 +74,6 @@ export default function Phase({
               height="50%"
             />
           ) : null}
-
-          {/* <img
-            src="/werewolvesVoting.png"
-            alt="Werewolves are voting"
-            width="50%"
-            height="50%"
-          /> */}
-
-          {/* {() => {
-            switch (step) {
-              case 'werewolves':
-                return (
-                  <img
-                    src="/werewolvesVoting.png"
-                    alt="Werewolves are voting"
-                    width="50%"
-                    height="50%"
-                  />
-                )
-              case 'seer':
-                return (
-                  <img
-                    src="/Seer.png"
-                    alt="Seer is now seeing"
-                    width="50%"
-                    height="50%"
-                  />
-                )
-              case 'medic':
-                return (
-                  <img
-                    src="/medic.png"
-                    alt="Seer is now seeing"
-                    width="50%"
-                    height="50%"
-                  />
-                )
-              case 'majorityReached':
-                return (
-                  <img
-                    src="/majorityReached.png"
-                    alt="Seer is now seeing"
-                    width="50%"
-                    height="50%"
-                  />
-                )
-              default:
-                return null
-            }
-          }} */}
         </Box>
       </Container>
     </Backdrop>

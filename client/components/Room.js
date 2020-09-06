@@ -502,7 +502,6 @@ const Room = ({roomName, token}) => {
       villagers: villagers,
       participantVotes: partVoteArray,
     })
-    // await db.collection('rooms').doc(roomName).update({villagers: villagers})
 
     db.collection('rooms').doc(roomName).update({gameStarted: true})
 
@@ -557,8 +556,6 @@ const Room = ({roomName, token}) => {
 
       let prevPlayers = gameState.data().players
       prevPlayers.push(room.localParticipant.identity)
-
-      //let participantsColors = gameState.data().participantsColors
 
       db.collection('rooms').doc(roomName).update({players: prevPlayers})
 
@@ -709,22 +706,21 @@ const Room = ({roomName, token}) => {
         checkSeer={checkSeer}
         checkMedic={checkMedic}
       />
+      {gameStarted ? (
+        <Phase
+          night={night}
+          localRole={localRole}
+          checkWerewolf={checkWerewolf}
+          checkMedic={checkMedic}
+          checkSeer={checkSeer}
+          majorityReached={majorityReached}
+        />
+      ) : null}
 
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
         className="room"
       >
-        {gameStarted ? (
-          <Phase
-            night={night}
-            localRole={localRole}
-            checkWerewolf={checkWerewolf}
-            checkMedic={checkMedic}
-            checkSeer={checkSeer}
-            majorityReached={majorityReached}
-          />
-        ) : null}
-
         {gameOver ? <GameOver winner={winner} /> : <Day night={night} />}
 
         <div
