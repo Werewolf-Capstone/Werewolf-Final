@@ -48,6 +48,12 @@ code {
   text-shadow: 2px 2px 5px black;
   font-weight: bold;
   text-align: center;
+  margin-top: 10px;
+}
+
+.winngerGraphic {
+  display: flex;
+  justify-content: center;
 }
 
 /*Styling for video container that holds all individual video feeds*/
