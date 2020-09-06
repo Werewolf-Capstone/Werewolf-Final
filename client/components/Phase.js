@@ -38,7 +38,9 @@ export default function Phase({
                   width="50%"
                   height="50%"
                 />
-              ) : null
+              ) : (
+                ''
+              )
             ) : !checkSeer ? (
               localRole !== 'seer' ? (
                 <img
@@ -47,7 +49,9 @@ export default function Phase({
                   width="50%"
                   height="50%"
                 />
-              ) : null
+              ) : (
+                ''
+              )
             ) : !checkMedic ? (
               localRole !== 'medic' ? (
                 <img
@@ -56,8 +60,12 @@ export default function Phase({
                   width="50%"
                   height="50%"
                 />
-              ) : null
-            ) : null
+              ) : (
+                ''
+              )
+            ) : (
+              ''
+            )
           ) : majorityReached ? (
             <img
               src="/majorityReached.png"
