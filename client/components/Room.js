@@ -245,14 +245,28 @@ const Room = ({roomName, token, handleLogout}) => {
       if (votingObject[player] > Math.floor(totalPlayers / 2)) {
         let newDead = players.data().dead
         newDead.push(player)
-        db.collection('rooms')
-          .doc(roomName)
-          .update({
-            villagersChoice: player,
-            majorityReached: true,
-            dead: newDead,
-            participantVotes: ['', '', '', '', '', '', '', ''],
-          })
+
+        let players = players.data().players
+
+        let numParticipants = players.length
+        console.log('what is numP', numParticipants)
+
+        let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
+        for (let i = 0; i < numParticipants; i++) {
+          partVoteArray.push('')
+        }
+
+        console.log(
+          'what is our new partVote array after handling Majority',
+          partVoteArray
+        )
+
+        db.collection('rooms').doc(roomName).update({
+          villagersChoice: player,
+          majorityReached: true,
+          dead: newDead,
+          participantVotes: partVoteArray,
+        })
       }
     }
   }
@@ -450,7 +464,7 @@ const Room = ({roomName, token, handleLogout}) => {
     let werewolves = []
     let villagers = []
 
-    let numParticipants = gameState.players.length
+    let numParticipants = players.length
     console.log('what is numP', numParticipants)
 
     let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
@@ -495,14 +509,11 @@ const Room = ({roomName, token, handleLogout}) => {
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
     setLocalColor(colors[localIndex])
 
-    await db
-      .collection('rooms')
-      .doc(roomName)
-      .update({
-        werewolves: werewolves,
-        villagers: villlagers,
-        participantVotes: partVoteArray,
-      })
+    await db.collection('rooms').doc(roomName).update({
+      werewolves: werewolves,
+      villagers: villagers,
+      participantVotes: partVoteArray,
+    })
     // await db.collection('rooms').doc(roomName).update({villagers: villagers})
 
     db.collection('rooms').doc(roomName).update({gameStarted: true})
