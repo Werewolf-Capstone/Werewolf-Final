@@ -19,7 +19,6 @@ const Room = ({roomName, token, handleLogout}) => {
   const [stateRoom, setStateRoom] = useState(null)
   const [participants, _setParticipants] = useState([])
   const [participantIdentities, setParticipantIdentities] = useState([])
-  //const [participantsColors, setParticipantsColors] = useState([])
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
   const [localColor, setLocalColor] = useState('')
@@ -731,7 +730,7 @@ const Room = ({roomName, token, handleLogout}) => {
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
         className="room"
       >
-        {gameStarted ? (
+        {gameStarted && localRole ? (
           <Phase
             night={night}
             localRole={localRole}
@@ -740,7 +739,9 @@ const Room = ({roomName, token, handleLogout}) => {
             checkSeer={checkSeer}
           />
         ) : null}
+
         {gameOver ? <GameOver winner={winner} /> : <Day night={night} />}
+
         <div
           style={{display: 'flex', justifyContent: 'center'}}
           className="local-participant"
