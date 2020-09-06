@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
 /* eslint-disable complexity */
+
 import React, {useState, useEffect, useRef} from 'react'
 import Video from 'twilio-video'
 import Participant from './Participant'
@@ -186,6 +187,9 @@ const Room = ({roomName, token, handleLogout}) => {
           return werewolf !== game.villagersChoice
         })
       }
+      game.players = game.players.filter((player) => {
+        return player !== game.villagersChoice
+      })
       if (!game.dead.includes(game.villagersChoice)) {
         game.dead.push(game.villagersChoice)
       }
