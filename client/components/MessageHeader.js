@@ -120,7 +120,7 @@ const MessageHeader = ({
   } else if (night && gameStarted) {
     return (
       <div className="messageHeader">
-        Sleep well, everyone.
+        Sleep well, everyone. Daybreak isn't far away.
         <br /> Hope you survive the night.
       </div>
     )
