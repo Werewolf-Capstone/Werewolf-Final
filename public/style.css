@@ -106,12 +106,13 @@ code {
 .individualPlayer {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-end;
   align-items: center;
-  width: 15rem;
+  height: 315px;
+  width: 225px;
   margin: 5px;
 }
-
+/* 15rem */
 #werewolf-title {
   font-family: werewolf_moonregular;
   font-size: 50px;
