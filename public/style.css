@@ -41,7 +41,7 @@ code {
 }
 /*Styling for MessageHeader component*/
 .messageHeader {
-  height: 175px;
+  height: 150px;
   color: rgb(244, 232, 232);
   font-size: 40px;
   font-family: Georgia, 'Times New Roman', Times, serif;

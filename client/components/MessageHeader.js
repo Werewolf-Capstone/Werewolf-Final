@@ -21,11 +21,34 @@ const MessageHeader = ({
           </div>
         ) : (
           <div>
-            {werewolfChoice} was killed during the night. Avenge{' '}
-            {werewolfChoice}'s death!
+            {werewolfChoice} was killed during the night. <br />
+            Avenge {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
             And guess what...{didSeerHit} IS a werewolf!
+          </div>
+        )}
+      </div>
+    )
+  } else if (!night && localRole === 'seer' && !didSeerHit) {
+    return (
+      <div className="messageHeader">
+        {werewolfChoice === '' ? (
+          <div>
+            Luckily, no one was killed last night.
+            <br />
+            Now kill the werewolves before they can attack again!
+            <div style={{color: 'red', textDecoration: 'underline'}}>
+              And, Seer, you guessed wrong. Better luck next time...
+            </div>
+          </div>
+        ) : (
+          <div>
+            {werewolfChoice} was killed during the night. <br />
+            Avenge {werewolfChoice}'s death!
+            <br />
+            Kill all the werewolves! <br />
+            And, Seer, you guessed wrong. Better luck next time...
           </div>
         )}
       </div>
@@ -41,8 +64,8 @@ const MessageHeader = ({
           </div>
         ) : (
           <div>
-            {werewolfChoice} was killed during the night. Avenge{' '}
-            {werewolfChoice}'s death!
+            {werewolfChoice} was killed during the night. <br />
+            Avenge {werewolfChoice}'s death!
             <br />
             Kill all the werewolves!
           </div>
