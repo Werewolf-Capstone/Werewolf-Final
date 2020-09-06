@@ -8,11 +8,10 @@ import {db} from './firebase'
 import {Button} from '@material-ui/core'
 import Day from './Day'
 import GameOver from './GameOver'
-import Night from './Night'
 import Phase from './Phase'
 import MessageHeader from './MessageHeader'
 
-const Room = ({roomName, token, handleLogout}) => {
+const Room = ({roomName, token}) => {
   /**
    * Functional state and respective setter functions
    */
@@ -36,6 +35,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [colors, setColors] = useState([])
   const [winner, setWinner] = useState('')
   const [dead, setDead] = useState([])
+  const [majorityReached, setMajorityReached] = useState(false)
 
   const participantsRef = useRef(participants)
 
@@ -110,6 +110,7 @@ const Room = ({roomName, token, handleLogout}) => {
   }
   const handleGameOver = (winner) => {
     setGameOver(true)
+    setWinner(winner)
     db.collection('rooms').doc(roomName).update({gameOver: true, winner})
   }
   const handleCheckWerewolf = (val) => {
@@ -211,6 +212,7 @@ const Room = ({roomName, token, handleLogout}) => {
     } else {
       return
     }
+    setMajorityReached(false)
     game.Night = true
     game.wereWolvesChoice = ''
     game.majorityReached = false
@@ -233,7 +235,6 @@ const Room = ({roomName, token, handleLogout}) => {
 
     for (let player of votesVillagers) {
       player = Object.keys(player)[0]
-      // need to add rooms and users tables to state
       if (Object.keys(votingObject).includes(player)) {
         votingObject[player] += 1
       } else {
@@ -261,6 +262,7 @@ const Room = ({roomName, token, handleLogout}) => {
           dead: newDead,
           participantVotes: partVoteArray,
         })
+        setMajorityReached(true)
       }
     }
   }
