@@ -70,7 +70,7 @@ const Room = ({roomName, token, handleLogout}) => {
       medic: '',
       medicChoice: '',
       players: [],
-      participantVotes: ['', '', '', '', '', '', '', ''],
+      participantVotes: [],
       seer: '',
       seerChoice: '',
       villagers: [],
@@ -91,6 +91,7 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   const handleStartGame = () => {
     setGameStarted(true)
+
     db.collection('rooms').doc(roomName).update({gameStarted: true})
   }
   const handleNight = (val) => {
@@ -449,6 +450,15 @@ const Room = ({roomName, token, handleLogout}) => {
     let werewolves = []
     let villagers = []
 
+    let numParticipants = gameState.players.length
+    console.log('what is numP', numParticipants)
+
+    let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
+    for (let i = 0; i < numParticipants; i++) {
+      partVoteArray.push('')
+    }
+    console.log('what is partVote', partVoteArray)
+
     //shuffle users array in order to assign random roles
     // for (let i = users.length - 1; i > 0; i--) {
     //   let j = Math.floor(Math.random() * (i + 1));
@@ -485,8 +495,15 @@ const Room = ({roomName, token, handleLogout}) => {
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
     setLocalColor(colors[localIndex])
 
-    await db.collection('rooms').doc(roomName).update({werewolves: werewolves})
-    await db.collection('rooms').doc(roomName).update({villagers: villagers})
+    await db
+      .collection('rooms')
+      .doc(roomName)
+      .update({
+        werewolves: werewolves,
+        villagers: villlagers,
+        participantVotes: partVoteArray,
+      })
+    // await db.collection('rooms').doc(roomName).update({villagers: villagers})
 
     db.collection('rooms').doc(roomName).update({gameStarted: true})
 
