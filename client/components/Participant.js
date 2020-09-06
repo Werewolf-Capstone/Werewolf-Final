@@ -190,7 +190,9 @@ const Participant = ({
             isLocal={isLocal}
           />
         </div>
+        {/* <div className='lowerBox'> */}
         {lower}
+        {/* </div> */}
       </div>
     )
   } else {
@@ -211,7 +213,9 @@ const Participant = ({
             src="/sleeping.png"
           ></img>
         </div>
+        {/* <div className='lowerBox'> */}
         {lower}
+        {/* </div> */}
       </div>
     )
   }

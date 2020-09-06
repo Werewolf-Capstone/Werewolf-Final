@@ -691,16 +691,7 @@ const Room = ({roomName, token, handleLogout}) => {
           className="local-participant"
         >
           {stateRoom ? (
-            <div
-              className="videoContainer"
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-                padding: 5,
-                margin: 20,
-              }}
-            >
+            <div className="videoContainer">
               <Participant
                 key={stateRoom.localParticipant.sid}
                 participant={stateRoom.localParticipant}

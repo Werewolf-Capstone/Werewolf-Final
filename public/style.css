@@ -39,7 +39,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-/*Style for MessageHeader component*/
+/*Styling for MessageHeader component*/
 .messageHeader {
   color: rgb(244, 232, 232);
   font-size: 40px;
@@ -49,8 +49,16 @@ code {
   text-align: center;
 }
 
+/*Styling for video container that holds all individual video feeds*/
+.videoContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /*Styling for messages that render above and below the individual video components*/
 .lowerInfoBox {
+  height: 75px;
   display: flex;
   flex-direction: column;
   align-items: center;
