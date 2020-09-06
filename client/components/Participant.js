@@ -46,18 +46,18 @@ const Participant = ({
 
   if (!night) {
     info = (
-      <div>
-        <div className="infoBox">
-          {werewolfChoice === '' ? (
-            <div>
-              No one was killed...
-              <br />
-              Now get those werewolves!
-            </div>
-          ) : (
-            <div>{werewolfChoice} was killed during the night</div>
-          )}
-        </div>
+      <div id={participant.identity}>
+        {votesVill.map((playerObj, idx) => {
+          console.log('mapping over votesVIll, what is pobj', playerObj)
+          if (Object.keys(playerObj)[0] === participant.identity) {
+            return (
+              <img
+                className="playerVotingIcon"
+                src={pngMapObj[votesVillColors[idx]]}
+              ></img>
+            )
+          }
+        })}
       </div>
     )
     lower = (
@@ -75,37 +75,6 @@ const Participant = ({
                 localColor
               )
             }
-          >
-            Kill
-          </Button>
-        </div>
-      </div>
-    )
-  } else if (!night && localRole === 'seer') {
-    info = (
-      <div>
-        <div className="infoBox">
-          {werewolfChoice === '' ? (
-            <div>
-              No one was killed...
-              <br />
-              Now get those werewolves!
-            </div>
-          ) : (
-            <div>{werewolfChoice} was killed during the night</div>
-          )}
-        </div>
-      </div>
-    )
-    lower = (
-      <div className="lowerInfoBox">
-        <div className="participantIdentity"> {participant.identity} </div>
-        <div>
-          <Button
-            size="small"
-            variant="contained"
-            color="secondary"
-            onClick={() => handleVillagerVoteButton(participant.identity)}
           >
             Kill
           </Button>
@@ -154,7 +123,7 @@ const Participant = ({
     )
   } else if (night && checkWerewolf && !checkSeer && localRole === 'seer') {
     shouldWePlay = true
-    info = <div></div>
+    info = null
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
@@ -176,7 +145,7 @@ const Participant = ({
     localRole === 'medic'
   ) {
     shouldWePlay = true
-    info = <div></div>
+    info = null
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity"> {participant.identity} </div>
@@ -192,7 +161,7 @@ const Participant = ({
     )
   } else if (!gameStarted) {
     shouldWePlay = true
-    info = <div></div>
+    info = null
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity">{participant.identity}</div>
@@ -200,11 +169,7 @@ const Participant = ({
     )
   } else {
     shouldWePlay = false
-    info = (
-      <div className="sleepingBox">
-        Sleep well, {participant.identity}.<br /> Hope you survive the night.
-      </div>
-    )
+    info = null
     lower = (
       <div className="lowerInfoBox">
         <div className="participantIdentity">{participant.identity}</div>
@@ -214,25 +179,7 @@ const Participant = ({
   if (shouldWePlay) {
     return (
       <div className="individualPlayer">
-        <div>
-          {info}
-          {localRole === 'seer' && didSeerHit ? (
-            <div className="seerInfoBox">{didSeerHit} is a werewolf!</div>
-          ) : null}
-        </div>
-        <div id={participant.identity}>
-          {votesVill.map((playerObj, idx) => {
-            console.log('mapping over votesVIll, what is pobj', playerObj)
-            if (Object.keys(playerObj)[0] === participant.identity) {
-              return (
-                <img
-                  className="playerIcon"
-                  src={pngMapObj[votesVillColors[idx]]}
-                ></img>
-              )
-            }
-          })}
-        </div>
+        <div className="infoBox">{info}</div>
         <div>
           <div>
             <img className="playerIcon" src={imageSrc}></img>
@@ -243,27 +190,32 @@ const Participant = ({
             isLocal={isLocal}
           />
         </div>
+        {/* <div className='lowerBox'> */}
         {lower}
+        {/* </div> */}
       </div>
     )
   } else {
     return (
       <div className="individualPlayer">
-        <div>{info}</div>
+        <div className="infoBox">{info}</div>
         <div>
           <div>
             <img className="playerIcon" src={imageSrc}></img>
           </div>
           <img
             style={{
-              height: '10rem',
+              // height: '10rem',
+              width: '200px',
               borderStyle: 'solid',
               borderRadius: '25%',
             }}
             src="/sleeping.png"
           ></img>
         </div>
+        {/* <div className='lowerBox'> */}
         {lower}
+        {/* </div> */}
       </div>
     )
   }

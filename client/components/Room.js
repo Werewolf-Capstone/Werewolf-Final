@@ -7,6 +7,7 @@ import {db} from './firebase'
 import {Button} from '@material-ui/core'
 import Day from './Day'
 import GameOver from './GameOver'
+import MessageHeader from './MessageHeader'
 
 const Room = ({roomName, token, handleLogout}) => {
   /**
@@ -198,6 +199,7 @@ const Room = ({roomName, token, handleLogout}) => {
     db.collection('rooms').doc(roomName).update(game)
 
     handleNight(true)
+    handleDidSeerHit(false)
   }
 
   /**
@@ -662,94 +664,86 @@ const Room = ({roomName, token, handleLogout}) => {
   let fileName = pngMapObj[playerColor]
 
   return (
-    <div
-      style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-      className="room"
-    >
-      {gameOver ? <GameOver winner={winner} /> : <Day />}
-      <Button
-        size="small"
-        variant="contained"
-        color="secondary"
-        onClick={handleLogout}
-      >
-        Log out
-      </Button>
+    <div>
+      <MessageHeader
+        werewolfChoice={werewolfChoice}
+        night={night}
+        gameStarted={gameStarted}
+        localRole={localRole}
+        didSeerHit={didSeerHit}
+      />
+
       <div
-        style={{display: 'flex', justifyContent: 'center'}}
-        className="local-participant"
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+        className="room"
       >
-        {stateRoom ? (
-          <div
-            className="videoContainer"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              // backgroundColor: 'grey',
-              padding: 5,
-              margin: 20,
-            }}
-          >
-            <Participant
-              key={stateRoom.localParticipant.sid}
-              participant={stateRoom.localParticipant}
-              handleVillagerVoteButton={handleVillagerVoteButton}
-              handleSeerCheckButton={handleSeerCheckButton}
-              handleMedicSaveButton={handleMedicSaveButton}
-              handleWerewolfVoteButton={handleWerewolfVoteButton}
-              night={night}
-              localRole={localRole}
-              localColor={localColor}
-              checkWerewolf={checkWerewolf}
-              checkSeer={checkSeer}
-              checkMedic={checkMedic}
-              werewolfChoice={werewolfChoice}
-              didSeerHit={didSeerHit}
-              gameStarted={gameStarted}
-              votesVill={votesVill}
-              votesVillColors={votesVillColors}
-              votesWere={votesWere}
-              votesWereColors={votesWereColors}
-              roomName={stateRoom}
-              imageSrc={fileName}
-              isLocal={true}
-            />
-            {remoteParticipants}
+        {gameOver ? <GameOver winner={winner} /> : <Day />}
+        <div
+          style={{display: 'flex', justifyContent: 'center'}}
+          className="local-participant"
+        >
+          {stateRoom ? (
+            <div className="videoContainer">
+              <Participant
+                key={stateRoom.localParticipant.sid}
+                participant={stateRoom.localParticipant}
+                handleVillagerVoteButton={handleVillagerVoteButton}
+                handleSeerCheckButton={handleSeerCheckButton}
+                handleMedicSaveButton={handleMedicSaveButton}
+                handleWerewolfVoteButton={handleWerewolfVoteButton}
+                night={night}
+                localRole={localRole}
+                localColor={localColor}
+                checkWerewolf={checkWerewolf}
+                checkSeer={checkSeer}
+                checkMedic={checkMedic}
+                werewolfChoice={werewolfChoice}
+                didSeerHit={didSeerHit}
+                gameStarted={gameStarted}
+                votesVill={votesVill}
+                votesVillColors={votesVillColors}
+                votesWere={votesWere}
+                votesWereColors={votesWereColors}
+                roomName={stateRoom}
+                imageSrc={fileName}
+                isLocal={true}
+              />
+              {remoteParticipants}
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+
+        {!gameStarted ? (
+          <div>
+            <Button
+              size="small"
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                handleStartGame()
+              }}
+            >
+              Start Game
+            </Button>
           </div>
         ) : (
           ''
         )}
+
+        <Button
+          size="small"
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            testingReset()
+          }}
+        >
+          {/* {' '} */}
+          Reset game
+        </Button>
       </div>
-
-      {!gameStarted ? (
-        <div>
-          <Button
-            size="small"
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              handleStartGame()
-            }}
-          >
-            Start Game
-          </Button>
-        </div>
-      ) : (
-        ''
-      )}
-
-      <Button
-        size="small"
-        variant="contained"
-        color="secondary"
-        onClick={() => {
-          testingReset()
-        }}
-      >
-        {/* {' '} */}
-        Reset game
-      </Button>
     </div>
   )
 }
