@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import Backdrop from '@material-ui/core/Backdrop'
 import {makeStyles} from '@material-ui/core/styles'
@@ -16,6 +17,7 @@ export default function Phase({
   checkWerewolf,
   checkMedic,
   checkSeer,
+  majorityReached,
 }) {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
@@ -35,12 +37,29 @@ export default function Phase({
                 width="50%"
                 height="50%"
               />
-            ) : (
-              ''
-            )
-          ) : (
-            ''
-          )}
+            ) : !checkSeer && localRole !== 'seer' ? (
+              <img
+                src="/Seer.png"
+                alt="Seer is now seeing"
+                width="50%"
+                height="50%"
+              />
+            ) : !checkMedic && localRole !== 'medic' ? (
+              <img
+                src="/medic.png"
+                alt="Medic is now healing"
+                width="50%"
+                height="50%"
+              />
+            ) : null
+          ) : majorityReached ? (
+            <img
+              src="/majorityReached.png"
+              alt="A majority has been reached"
+              width="50%"
+              height="50%"
+            />
+          ) : null}
 
           {/* <img
             src="/werewolvesVoting.png"

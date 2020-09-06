@@ -719,6 +719,7 @@ const Room = ({roomName, token, handleLogout}) => {
             checkWerewolf={checkWerewolf}
             checkMedic={checkMedic}
             checkSeer={checkSeer}
+            majorityReached={majorityReached}
           />
         ) : null}
 
