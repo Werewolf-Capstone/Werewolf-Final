@@ -34,6 +34,7 @@ const Room = ({roomName, token, handleLogout}) => {
   const [votesWereColors, setVotesWereColors] = useState([])
   const [colors, setColors] = useState([])
   const [winner, setWinner] = useState('')
+  const [dead, setDead] = useState([])
 
   const participantsRef = useRef(participants)
 
@@ -70,7 +71,7 @@ const Room = ({roomName, token, handleLogout}) => {
       medic: '',
       medicChoice: '',
       players: [],
-      participantVotes: ['', '', '', '', '', '', '', ''],
+      participantVotes: [],
       seer: '',
       seerChoice: '',
       villagers: [],
@@ -91,6 +92,7 @@ const Room = ({roomName, token, handleLogout}) => {
    */
   const handleStartGame = () => {
     setGameStarted(true)
+
     db.collection('rooms').doc(roomName).update({gameStarted: true})
   }
   const handleNight = (val) => {
@@ -145,11 +147,24 @@ const Room = ({roomName, token, handleLogout}) => {
         game.villagers = game.villagers.filter((villager) => {
           return villager !== game.werewolvesChoice
         })
+        game.werewolves = game.werewolves.filter((werewolf) => {
+          return werewolf !== game.werewolvesChoice
+        })
         if (game.werewolvesChoice !== '') {
           game.dead.push(game.werewolvesChoice)
-          game.players = game.players.filter(
-            (player) => player !== game.werewolvesChoice
-          )
+          let removedIdx = -1
+          for (let i = 0; i < game.players.length; i++) {
+            if (game.players[i] === game.werewolvesChoice) {
+              removedIdx = i
+            }
+          } // end of this loop we know which index to remove from participants
+
+          game.players.splice(removedIdx, 1)
+          game.participantVotes.splice(removedIdx, 1)
+          game.colors.splice(removedIdx, 1)
+          // game.players = game.players.filter((player,idx ) => {
+          //   return player !== game.werewolvesChoice
+          // }
         }
       }
     } else {
@@ -231,14 +246,28 @@ const Room = ({roomName, token, handleLogout}) => {
       if (votingObject[player] > Math.floor(totalPlayers / 2)) {
         let newDead = players.data().dead
         newDead.push(player)
-        db.collection('rooms')
-          .doc(roomName)
-          .update({
-            villagersChoice: player,
-            majorityReached: true,
-            dead: newDead,
-            participantVotes: ['', '', '', '', '', '', '', ''],
-          })
+
+        let nextPlayers = players.data().players
+
+        let numParticipants = nextPlayers.length
+        console.log('what is numP', numParticipants)
+
+        let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
+        for (let i = 0; i < numParticipants; i++) {
+          partVoteArray.push('')
+        }
+
+        console.log(
+          'what is our new partVote array after handling Majority',
+          partVoteArray
+        )
+
+        db.collection('rooms').doc(roomName).update({
+          villagersChoice: player,
+          majorityReached: true,
+          dead: newDead,
+          participantVotes: partVoteArray,
+        })
       }
     }
   }
@@ -436,6 +465,15 @@ const Room = ({roomName, token, handleLogout}) => {
     let werewolves = []
     let villagers = []
 
+    let numParticipants = players.length
+    console.log('what is numP', numParticipants)
+
+    let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
+    for (let i = 0; i < numParticipants; i++) {
+      partVoteArray.push('')
+    }
+    console.log('what is partVote', partVoteArray)
+
     //shuffle users array in order to assign random roles
     // for (let i = users.length - 1; i > 0; i--) {
     //   let j = Math.floor(Math.random() * (i + 1));
@@ -472,8 +510,12 @@ const Room = ({roomName, token, handleLogout}) => {
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
     setLocalColor(colors[localIndex])
 
-    await db.collection('rooms').doc(roomName).update({werewolves: werewolves})
-    await db.collection('rooms').doc(roomName).update({villagers: villagers})
+    await db.collection('rooms').doc(roomName).update({
+      werewolves: werewolves,
+      villagers: villagers,
+      participantVotes: partVoteArray,
+    })
+    // await db.collection('rooms').doc(roomName).update({villagers: villagers})
 
     db.collection('rooms').doc(roomName).update({gameStarted: true})
 
@@ -551,6 +593,7 @@ const Room = ({roomName, token, handleLogout}) => {
           setVotesWereColors(gameState.votesWerewolvesColors)
           setVotesVillColors(gameState.votesVillagersColors)
           setParticipantIdentities(gameState.players)
+          setDead(gameState.dead)
 
           let colors = gameState.colors
 
@@ -667,6 +710,8 @@ const Room = ({roomName, token, handleLogout}) => {
   let playerColor = colors[idx]
   let fileName = pngMapObj[playerColor]
 
+  console.log('what is our dead array', dead)
+
   return (
     <div>
       <MessageHeader
@@ -691,30 +736,33 @@ const Room = ({roomName, token, handleLogout}) => {
         >
           {stateRoom ? (
             <div className="videoContainer">
-              <Participant
-                key={stateRoom.localParticipant.sid}
-                participant={stateRoom.localParticipant}
-                handleVillagerVoteButton={handleVillagerVoteButton}
-                handleSeerCheckButton={handleSeerCheckButton}
-                handleMedicSaveButton={handleMedicSaveButton}
-                handleWerewolfVoteButton={handleWerewolfVoteButton}
-                night={night}
-                localRole={localRole}
-                localColor={localColor}
-                checkWerewolf={checkWerewolf}
-                checkSeer={checkSeer}
-                checkMedic={checkMedic}
-                werewolfChoice={werewolfChoice}
-                didSeerHit={didSeerHit}
-                gameStarted={gameStarted}
-                votesVill={votesVill}
-                votesVillColors={votesVillColors}
-                votesWere={votesWere}
-                votesWereColors={votesWereColors}
-                roomName={stateRoom}
-                imageSrc={fileName}
-                isLocal={true}
-              />
+              {!dead.includes(stateRoom.localParticipant.identity) ? (
+                <Participant
+                  key={stateRoom.localParticipant.sid}
+                  participant={stateRoom.localParticipant}
+                  handleVillagerVoteButton={handleVillagerVoteButton}
+                  handleSeerCheckButton={handleSeerCheckButton}
+                  handleMedicSaveButton={handleMedicSaveButton}
+                  handleWerewolfVoteButton={handleWerewolfVoteButton}
+                  night={night}
+                  localRole={localRole}
+                  localColor={localColor}
+                  checkWerewolf={checkWerewolf}
+                  checkSeer={checkSeer}
+                  checkMedic={checkMedic}
+                  werewolfChoice={werewolfChoice}
+                  didSeerHit={didSeerHit}
+                  gameStarted={gameStarted}
+                  votesVill={votesVill}
+                  votesVillColors={votesVillColors}
+                  votesWere={votesWere}
+                  votesWereColors={votesWereColors}
+                  roomName={stateRoom}
+                  imageSrc={fileName}
+                  isLocal={true}
+                />
+              ) : null}
+
               {remoteParticipants}
             </div>
           ) : (
