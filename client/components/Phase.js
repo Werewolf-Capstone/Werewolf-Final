@@ -19,7 +19,6 @@ export default function Phase({
   checkSeer,
   majorityReached,
   gameOver,
-  winner,
 }) {
   // const classes = useStyles()
   // const [open, setOpen] = React.useState(true)
@@ -31,23 +30,7 @@ export default function Phase({
     <Container>
       <Box display="flex" justifyContent="center" className="fadeIn animated">
         {gameOver ? (
-          winner === 'villagers' ? (
-            <img
-              src="/villagersWin.png"
-              alt="Villagers Win!"
-              width="50%"
-              height="50%"
-            />
-          ) : winner === 'werewolves' ? (
-            <img
-              src="/werewolvesWin.png"
-              alt="Villagers Win!"
-              width="50%"
-              height="50%"
-            />
-          ) : (
-            ''
-          )
+          ''
         ) : night ? (
           !checkWerewolf ? (
             localRole !== 'werewolf' ? (
