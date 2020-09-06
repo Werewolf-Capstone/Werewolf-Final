@@ -30,7 +30,7 @@ const VideoChat = () => {
     majorityReached: false,
     medic: '',
     medicChoice: '',
-    participantVotes: ['', '', '', '', '', '', '', ''],
+    participantVotes: [],
     players: [],
     seer: '',
     seerChoice: '',
