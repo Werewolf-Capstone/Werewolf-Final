@@ -18,13 +18,17 @@ const MessageHeader = ({
   } else if (gameOver && winner === 'werewolves') {
     return (
       <div className="winnerGraphic">
-        <img src="/werewolvesWin.png" />
+        <div>
+          <img src="/werewolvesWin.png" />
+        </div>
       </div>
     )
   } else if (gameOver && winner === 'villagers') {
     return (
       <div className="winnerGraphic">
-        <img src="/villagersWin.png" />
+        <div>
+          <img src="/villagersWin.png" />
+        </div>
       </div>
     )
   } else if (night && gameStarted) {
