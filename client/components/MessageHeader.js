@@ -12,7 +12,7 @@ const MessageHeader = ({
   winner,
 }) => {
   if (winner !== '') {
-    return null
+    return <div className="messageHeader"></div>
   } else if (!night && localRole === 'seer' && didSeerHit) {
     return (
       <div className="messageHeader">
