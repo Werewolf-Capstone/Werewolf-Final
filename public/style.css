@@ -108,6 +108,7 @@ code {
   font-weight: bold;
 }
 
+/*Styling for container that holds everything rendered in the Participant component*/
 .individualPlayer {
   display: flex;
   flex-direction: column;
