@@ -1,5 +1,5 @@
 const path = require('path')
-const config = require('./config')
+const config = require('../public/config')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
