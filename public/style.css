@@ -100,6 +100,14 @@ code {
   border-style: solid;
 }
 
+.roleReveal {
+  color: red;
+  font-size: 35px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px whitesmoke;
+  font-weight: bold;
+}
+
 .individualPlayer {
   display: flex;
   flex-direction: column;

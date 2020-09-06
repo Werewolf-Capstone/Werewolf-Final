@@ -44,7 +44,15 @@ const Participant = ({
 
   if (!participant) return
 
-  if (!night) {
+  if (gameOver) {
+    info = null
+    lower = (
+      <div className="lowerInfoBox">
+        <div className="participantIdentity">{participant.identity}</div>
+        <div className="roleReveal">{localRole}</div>
+      </div>
+    )
+  } else if (!night) {
     info = (
       <div id={participant.identity}>
         {votesVill.map((playerObj, idx) => {
@@ -200,7 +208,6 @@ const Participant = ({
           </div>
           <img
             style={{
-              // height: '10rem',
               width: '200px',
               borderStyle: 'solid',
               borderRadius: '25%',
