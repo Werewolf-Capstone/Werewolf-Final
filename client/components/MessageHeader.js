@@ -16,21 +16,18 @@ const MessageHeader = ({
     return <div className="messageHeader"></div>
   } else if (gameOver && winner === 'werewolves') {
     return (
-      <div>
-        <img src="/werewolvesWin.png" />
+      <div className="winnerGraphic">
+        <div>
+          <img src="/werewolvesWin.png" />
+        </div>
       </div>
     )
   } else if (gameOver && winner === 'villagers') {
     return (
-      <div>
-        <img src="/villagersWin.png" />
-      </div>
-    )
-  } else if (night && gameStarted) {
-    return (
-      <div className="messageHeader">
-        Sleep well, everyone. Daybreak isn't far away.
-        <br /> Hope you survive the night.
+      <div className="winnerGraphic">
+        <div>
+          <img src="/villagersWin.png" />
+        </div>
       </div>
     )
   } else if (!night && localRole === 'seer' && didSeerHit) {
@@ -41,7 +38,13 @@ const MessageHeader = ({
             Luckily, no one was killed last night.
             <br />
             Now kill the werewolves before they can attack again!
-            <div style={{color: '#a84ca8', textDecoration: 'underline'}}>
+            <div
+              style={{
+                color: '#a84ca8',
+                textDecoration: 'underline',
+                fontStyle: 'italic',
+              }}
+            >
               And, Seer, guess what...{didSeerHit} IS a werewolf!
             </div>
           </div>
@@ -51,7 +54,13 @@ const MessageHeader = ({
             {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
-            <div style={{color: '#a84ca8', textDecoration: 'underline'}}>
+            <div
+              style={{
+                color: '#a84ca8',
+                textDecoration: 'underline',
+                fontStyle: 'italic',
+              }}
+            >
               And, Seer, guess what...{didSeerHit} IS a werewolf!
             </div>
           </div>
@@ -66,7 +75,7 @@ const MessageHeader = ({
             Luckily, no one was killed last night.
             <br />
             Now kill the werewolves before they can attack again!
-            <div style={{color: '#a84ca8'}}>
+            <div style={{color: '#a84ca8', fontStyle: 'italic'}}>
               And, Seer, you guessed wrong. Better luck next time...
             </div>
           </div>
@@ -76,7 +85,7 @@ const MessageHeader = ({
             {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
-            <div style={{color: '#a84ca8'}}>
+            <div style={{color: '#a84ca8', fontStyle: 'italic'}}>
               And, Seer, you guessed wrong. Better luck next time...
             </div>
           </div>
@@ -129,11 +138,16 @@ const MessageHeader = ({
   ) {
     return (
       <div className="messageHeader">
-        {/* Sleep well, everyone.
-        <br /> Hope you survive the night. */}
         <div style={{color: '#4d4df1'}}>
           Medic, the werewolves have attacked! <br /> Choose someone to save!
         </div>
+      </div>
+    )
+  } else if (night && gameStarted) {
+    return (
+      <div className="messageHeader">
+        Sleep well, everyone. Daybreak isn't far away.
+        <br /> Hope you survive the night.
       </div>
     )
   } else return null
