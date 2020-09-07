@@ -12,7 +12,6 @@ const MessageHeader = ({
   gameOver,
   winner,
 }) => {
-  console.log('what is gameOver', gameOver)
   if (!gameStarted) {
     return <div className="messageHeader"></div>
   } else if (gameOver && winner === 'werewolves') {
