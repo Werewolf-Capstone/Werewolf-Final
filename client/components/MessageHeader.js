@@ -39,7 +39,13 @@ const MessageHeader = ({
             Luckily, no one was killed last night.
             <br />
             Now kill the werewolves before they can attack again!
-            <div style={{color: '#a84ca8', textDecoration: 'underline'}}>
+            <div
+              style={{
+                color: '#a84ca8',
+                textDecoration: 'underline',
+                fontStyle: 'italic',
+              }}
+            >
               And, Seer, guess what...{didSeerHit} IS a werewolf!
             </div>
           </div>
@@ -49,7 +55,13 @@ const MessageHeader = ({
             {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
-            <div style={{color: '#a84ca8', textDecoration: 'underline'}}>
+            <div
+              style={{
+                color: '#a84ca8',
+                textDecoration: 'underline',
+                fontStyle: 'italic',
+              }}
+            >
               And, Seer, guess what...{didSeerHit} IS a werewolf!
             </div>
           </div>
@@ -64,7 +76,7 @@ const MessageHeader = ({
             Luckily, no one was killed last night.
             <br />
             Now kill the werewolves before they can attack again!
-            <div style={{color: '#a84ca8'}}>
+            <div style={{color: '#a84ca8', fontStyle: 'italic'}}>
               And, Seer, you guessed wrong. Better luck next time...
             </div>
           </div>
@@ -74,7 +86,7 @@ const MessageHeader = ({
             {werewolfChoice}'s death!
             <br />
             Kill all the werewolves! <br />
-            <div style={{color: '#a84ca8'}}>
+            <div style={{color: '#a84ca8', fontStyle: 'italic'}}>
               And, Seer, you guessed wrong. Better luck next time...
             </div>
           </div>
