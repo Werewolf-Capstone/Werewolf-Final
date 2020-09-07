@@ -1,20 +1,22 @@
 import React from 'react'
-import {Container, Box} from '@material-ui/core'
+import {Container} from '@material-ui/core'
 
-export default function Day() {
+export default function Day({night}) {
   return (
     <Container>
-      {document.getElementById('background').classList.add('day')}
-      {document.getElementById('background').classList.remove('lobby')}
-      {/* <Box
-        display="flex"
-        justifyContent="center"
-        marginTop="7%"
-        marginBottom="5%"
-        className="fadeIn animated"
-      >
-        <img src="/dayTime.png" alt="Werewolf" width="30%" height="30%" />
-      </Box> */}
+      {night ? (
+        <div>
+          {document.getElementById('background').classList.add('night')}
+          {document.getElementById('background').classList.remove('lobby')}
+          {document.getElementById('background').classList.remove('day')}
+        </div>
+      ) : (
+        <div>
+          {document.getElementById('background').classList.add('day')}
+          {document.getElementById('background').classList.remove('lobby')}
+          {document.getElementById('background').classList.remove('night')}
+        </div>
+      )}
     </Container>
   )
 }
