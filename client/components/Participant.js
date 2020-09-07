@@ -43,8 +43,14 @@ const Participant = ({
   }
 
   if (!participant) return
-
-  if (!night) {
+  if (gameOver) {
+    info = null
+    lower = (
+      <div className="lowerInfoBox">
+        <div className="roleReveal">{remoteRole ? remoteRole : localRole}</div>
+      </div>
+    )
+  } else if (!night) {
     info = (
       <div id={participant.identity}>
         {votesVill.map((playerObj, idx) => {
@@ -173,31 +179,37 @@ const Participant = ({
   }
   if (shouldWePlay) {
     if (gameOver) {
-      lower = (
-        <div className="lowerInfoBox">
-          <div className="roleReveal">
-            {remoteRole ? remoteRole : localRole}
+      return (
+        <div className="individualPlayer">
+          <div className="infoBox">{info}</div>
+          <div>
+            <VideoAudio
+              participant={participant}
+              localColor={localColor}
+              isLocal={isLocal}
+            />
           </div>
+          <div className="lowerInfoBox">{lower}</div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="individualPlayer">
+          <div className="infoBox">{info}</div>
+          <div>
+            <div>
+              <img className="playerIcon" src={imageSrc}></img>
+            </div>
+            <VideoAudio
+              participant={participant}
+              localColor={localColor}
+              isLocal={isLocal}
+            />
+          </div>
+          <div className="lowerInfoBox">{lower}</div>
         </div>
       )
     }
-
-    return (
-      <div className="individualPlayer">
-        <div className="infoBox">{info}</div>
-        <div>
-          <div>
-            <img className="playerIcon" src={imageSrc}></img>
-          </div>
-          <VideoAudio
-            participant={participant}
-            localColor={localColor}
-            isLocal={isLocal}
-          />
-        </div>
-        <div className="lowerInfoBox">{lower}</div>
-      </div>
-    )
   } else {
     return (
       <div className="individualPlayer">
