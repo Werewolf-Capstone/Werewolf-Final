@@ -75,7 +75,7 @@ const Lobby = ({
               color="secondary"
               size="large"
             >
-              Submit
+              ENTER
             </Button>
           </Box>
         </form>

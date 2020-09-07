@@ -1,4 +1,5 @@
 import React from 'react'
+import Rules from './Rules'
 
 const MessageHeader = ({
   werewolfChoice,
@@ -13,7 +14,11 @@ const MessageHeader = ({
   winner,
 }) => {
   if (!gameStarted) {
-    return <div className="messageHeader"></div>
+    return (
+      <div className="rules">
+        <Rules />
+      </div>
+    )
   } else if (gameOver && winner === 'werewolves') {
     return (
       <div className="winnerGraphic">
