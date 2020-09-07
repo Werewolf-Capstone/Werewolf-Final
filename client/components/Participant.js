@@ -223,7 +223,7 @@ const Participant = ({
               borderStyle: 'solid',
               borderRadius: '25%',
             }}
-            src="/sleeping.png"
+            src="/VillageNight.png"
           ></img>
         </div>
         <div className="lowerInfoBox">{lower}</div>
