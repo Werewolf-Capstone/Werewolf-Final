@@ -690,6 +690,7 @@ const Room = ({roomName, token, handleLogout}) => {
         checkMedic={checkMedic}
         werewolfChoice={werewolfChoice}
         didSeerHit={didSeerHit}
+        gameOver={gameOver}
         gameStarted={gameStarted}
         localColor={localColor}
         votesVill={votesVill}
@@ -758,6 +759,7 @@ const Room = ({roomName, token, handleLogout}) => {
                   checkMedic={checkMedic}
                   werewolfChoice={werewolfChoice}
                   didSeerHit={didSeerHit}
+                  gameOver={gameOver}
                   gameStarted={gameStarted}
                   votesVill={votesVill}
                   votesVillColors={votesVillColors}
