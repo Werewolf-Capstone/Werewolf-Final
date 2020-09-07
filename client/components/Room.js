@@ -471,7 +471,8 @@ const Room = ({roomName, token, handleLogout}) => {
     let werewolves = []
     let villagers = []
 
-    setOriginalParticipants(participants)
+    console.log('what are participants in assignROles', participantsRef.current)
+    setOriginalParticipants(participantsRef.current)
 
     let numParticipants = players.length
     //console.log('what is numP', numParticipants)
@@ -722,6 +723,7 @@ const Room = ({roomName, token, handleLogout}) => {
       )
     })
   } else {
+    console.log('what are my originalParticipants', originalParticipants)
     remoteParticipants = originalParticipants.map((participant, idx) => {
       if (idx === 0) return
 
