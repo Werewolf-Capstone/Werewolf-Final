@@ -24,14 +24,19 @@ export default function Phase({
 }) {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
+
   const handleClose = () => {
     setOpen(false)
+  }
+  const handleOpen = () => {
+    console.log('do we make it here??????????????????')
+    setOpen(true)
   }
 
   useEffect(() => {
     setOpen(true)
     console.log('setting open back to true in use effect')
-  }, [night])
+  }, [night, checkWerewolf, checkSeer])
 
   return (
     <Container>
@@ -42,7 +47,7 @@ export default function Phase({
           ) : night ? (
             !checkWerewolf ? (
               localRole !== 'werewolf' ? (
-                <Zoom in={true} style={{transitionDelay: '4000ms'}}>
+                <Zoom in={true} style={{transitionDuration: '2000ms'}}>
                   <img
                     src="/werewolvesVoting.png"
                     alt="Werewolves are voting"
@@ -55,23 +60,27 @@ export default function Phase({
               )
             ) : !checkSeer ? (
               localRole !== 'seer' ? (
-                <img
-                  src="/Seer.png"
-                  alt="Seer is now seeing"
-                  width="50%"
-                  height="50%"
-                />
+                <Zoom in={true} style={{transitionDuration: '2000ms'}}>
+                  <img
+                    src="/Seer.png"
+                    alt="Seer is now seeing"
+                    width="50%"
+                    height="50%"
+                  />
+                </Zoom>
               ) : (
                 ''
               )
             ) : !checkMedic ? (
               localRole !== 'medic' ? (
-                <img
-                  src="/medic.png"
-                  alt="Medic is now healing"
-                  width="50%"
-                  height="50%"
-                />
+                <Zoom in={true} style={{transitionDuration: '2000ms'}}>
+                  <img
+                    src="/medic.png"
+                    alt="Medic is now healing"
+                    width="50%"
+                    height="50%"
+                  />
+                </Zoom>
               ) : (
                 ''
               )
@@ -79,12 +88,14 @@ export default function Phase({
               ''
             )
           ) : majorityReached ? (
-            <img
-              src="/majorityReached.png"
-              alt="A majority has been reached"
-              width="50%"
-              height="50%"
-            />
+            <Zoom in={true} style={{transitionDuration: '2000ms'}}>
+              <img
+                src="/majorityReached.png"
+                alt="A majority has been reached"
+                width="50%"
+                height="50%"
+              />
+            </Zoom>
           ) : null}
         </Box>
       </Backdrop>
