@@ -54,7 +54,6 @@ const Participant = ({
     info = (
       <div id={participant.identity}>
         {votesVill.map((playerObj, idx) => {
-          console.log('mapping over votesVIll, what is pobj', playerObj)
           if (Object.keys(playerObj)[0] === participant.identity) {
             return (
               <img
