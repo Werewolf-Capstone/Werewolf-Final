@@ -7,7 +7,7 @@ const session = require('express-session')
 const passport = require('passport')
 
 const db = require('./db')
-
+const dotenv = require('dotenv').config()
 const {videoToken} = require('./tokens')
 const PORT = process.env.PORT || 8080
 const app = express()
