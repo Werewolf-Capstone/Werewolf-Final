@@ -1,8 +1,6 @@
 // import {config} from '../../public/firestoreConfig.js'
 import firebase from 'firebase'
 
-console.log(process.env.firebaseApiKey)
-
 const firebaseConfig = {
   apiKey: 'AIzaSyDRRUvacIROPbqJN-lYP9m2ZrSgM_AkHzM',
   authDomain: 'werewolf-capstone.firebaseapp.com',
