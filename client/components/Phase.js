@@ -69,7 +69,7 @@ export default function Phase({
               localRole !== 'seer' ? (
                 <Zoom
                   in={true}
-                  style={{transitionDuration: '2000ms'}}
+                  style={{transitionDuration: '3000ms'}}
                   onEntered={() => {
                     handleClose(3000)
                   }}
@@ -88,7 +88,7 @@ export default function Phase({
               localRole !== 'medic' ? (
                 <Zoom
                   in={true}
-                  style={{transitionDuration: '2000ms'}}
+                  style={{transitionDuration: '3000ms'}}
                   onEntered={() => {
                     handleClose(3000)
                   }}
