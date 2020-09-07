@@ -8,3 +8,5 @@ export const config = {
   appId: '1:74673561059:web:b44d84cc74d54e784594d6',
   measurementId: 'G-M6N194G87D',
 }
+
+apiKey: atob(process.env.apiKey)
