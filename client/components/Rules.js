@@ -22,7 +22,7 @@ export default function Rules() {
   return (
     <React.Fragment>
       <Button
-        variant="contained"
+        variant="outlined"
         color="secondary"
         size="large"
         onClick={handleClickOpen}
