@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import React from 'react'
+import React, {useEffect} from 'react'
 import Backdrop from '@material-ui/core/Backdrop'
 import {makeStyles} from '@material-ui/core/styles'
 import {Container, Box} from '@material-ui/core'
@@ -20,11 +20,16 @@ export default function Phase({
   majorityReached,
   gameOver,
 }) {
-  // const classes = useStyles()
-  // const [open, setOpen] = React.useState(true)
-  // const handleClose = () => {
-  //   setOpen(false)
-  // }
+  const classes = useStyles()
+  const [open, setOpen] = React.useState(true)
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  useEffect(() => {
+    setOpen(true)
+    console.log('setting open back to true in use effect')
+  }, [night])
 
   return (
     <Container>
@@ -77,9 +82,11 @@ export default function Phase({
           />
         ) : null}
       </Box>
+      <Backdrop
+        className={classes.backdrop}
+        open={open}
+        onClick={handleClose}
+      ></Backdrop>
     </Container>
-
-    // <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-    //       </Backdrop>
   )
 }
