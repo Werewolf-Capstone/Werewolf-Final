@@ -1,7 +1,7 @@
 // import {config} from '../../public/firestoreConfig.js'
 import firebase from 'firebase'
 
-console.log(atob(process.env.firebaseApiKey))
+console.log(process.env.firebaseApiKey)
 
 const firebaseConfig = {
   apiKey: atob(process.env.firebaseApiKey),
