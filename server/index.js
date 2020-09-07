@@ -27,9 +27,11 @@ module.exports = app
  */
 
 const herokuConfig = {
-  accountSid: process.env.accountSid,
-  apiKey: process.env.apiKey,
-  apiSecret: process.env.apiSecret,
+  twilio: {
+    accountSid: 'ACf064e7b2d669ffabeb793d10627c3927',
+    apiKey: 'SKc8b63188ff92e13a98e15fb0b45c9b92',
+    apiSecret: 'B8yDAgd0PDO3sYkpSK5NDiOmpAII4MGR',
+  },
 }
 
 console.log('herokuConfig', herokuConfig)

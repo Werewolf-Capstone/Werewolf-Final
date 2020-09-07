@@ -4,14 +4,14 @@ import firebase from 'firebase'
 console.log(process.env.firebaseApiKey)
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASEAPIKEY,
-  authDomain: process.env.REACT_APP_AUTHDOMAIN,
-  databaseURL: process.env.REACT_APP_databaseURL,
-  projectId: process.env.REACT_APP_projectId,
-  storageBucket: process.env.REACT_APP_storageBucket,
-  messagingSenderId: process.env.REACT_APP_messagingSenderId,
-  appId: process.env.REACT_APP_appId,
-  measurementId: process.env.REACT_APP_measurementId,
+  apiKey: 'AIzaSyDRRUvacIROPbqJN-lYP9m2ZrSgM_AkHzM',
+  authDomain: 'werewolf-capstone.firebaseapp.com',
+  databaseURL: 'https://werewolf-capstone.firebaseio.com',
+  projectId: 'werewolf-capstone',
+  storageBucket: 'werewolf-capstone.appspot.com',
+  messagingSenderId: '74673561059',
+  appId: '1:74673561059:web:b44d84cc74d54e784594d6',
+  measurementId: 'G-M6N194G87D',
 }
 
 console.log('firebaseConfig', firebaseConfig)
