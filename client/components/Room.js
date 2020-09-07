@@ -209,8 +209,13 @@ const Room = ({roomName, token}) => {
           return werewolf !== game.villagersChoice
         })
       }
-      game.players = game.players.filter((player) => {
+      let removedIdx = -1
+      game.players = game.players.filter((player, idx) => {
+        if (player === game.villagersChoice) removedIdx = idx
         return player !== game.villagersChoice
+      })
+      game.colors = game.colors.filter((color, idx) => {
+        return idx !== removedIdx
       })
       if (!game.dead.includes(game.villagersChoice)) {
         game.dead.push(game.villagersChoice)
@@ -299,7 +304,7 @@ const Room = ({roomName, token}) => {
 
     // if we have a person we voted for already, we need to replace them and remove them from votesVillagers
     // before adding a new vote to votesVillgers
-    let localIdx = players.indexOf(localIdentity)
+    let localIdx = await players.indexOf(localIdentity)
     let prevVote = ''
     if (participantVotes[localIdx] !== '') {
       prevVote = participantVotes[localIdx]
@@ -852,6 +857,7 @@ const Room = ({roomName, token}) => {
                   imageSrc={fileName}
                   isLocal={true}
                   gameOver={gameOver}
+                  localIdentity={stateRoom.localParticipant.identity}
                 />
               ) : null}
 
