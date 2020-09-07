@@ -41,7 +41,7 @@ const Participant = ({
     blue: '/villagerIconBlue.png',
     yellow: '/villagerIconYellow.png',
   }
-  console.log('what is game over', gameOver)
+
   if (!participant) return
 
   if (gameOver) {
