@@ -237,7 +237,7 @@ const Room = ({roomName, token}) => {
     const totalPlayers = game.villagers.length + game.werewolves.length
     let votingObject = {} //key will be a user, value is how many votes for that user
     let players = await db.collection('rooms').doc(roomName).get()
-    let votesVillagers = players.data().votesVillagers
+    let votesVillagers = await players.data().votesVillagers
 
     for (let player of votesVillagers) {
       player = Object.keys(player)[0]
@@ -356,7 +356,7 @@ const Room = ({roomName, token}) => {
   async function handleWerewolfVoteButton(participantIdentity, localColor) {
     let gameState = await db.collection('rooms').doc(roomName).get()
 
-    let votesWerewolves = gameState.data().votesWerewolves
+    let votesWerewolves = await gameState.data().votesWerewolves
     votesWerewolves.push(participantIdentity)
 
     await db
@@ -364,7 +364,7 @@ const Room = ({roomName, token}) => {
       .doc(roomName)
       .update({votesWerewolves: votesWerewolves})
 
-    let votesWerewolvesColors = gameState.data().votesWerewolvesColors
+    let votesWerewolvesColors = await gameState.data().votesWerewolvesColors
     votesWerewolvesColors.push(localColor)
 
     await db
@@ -414,7 +414,7 @@ const Room = ({roomName, token}) => {
     const totalPlayers = roomObj.werewolves.length
 
     let votesWerewolves = await db.collection('rooms').doc(roomName).get()
-    votesWerewolves = votesWerewolves.data().votesWerewolves
+    votesWerewolves = await votesWerewolves.data().votesWerewolves
 
     let votingObject = {}
 
@@ -443,7 +443,7 @@ const Room = ({roomName, token}) => {
    */
   async function handleSeer(roomName) {
     const player = await db.collection('rooms').doc(roomName).get()
-    const seerChoice = player.data().seerChoice
+    const seerChoice = await player.data().seerChoice
 
     if (seerChoice === '') return
     else {
@@ -458,7 +458,7 @@ const Room = ({roomName, token}) => {
   async function handleMedic(roomName) {
     const player = await db.collection('rooms').doc(roomName).get()
 
-    const medicChoice = player.data().medicChoice
+    const medicChoice = await player.data().medicChoice
 
     if (medicChoice === '') return
     else {
@@ -475,8 +475,8 @@ const Room = ({roomName, token}) => {
    */
   async function assignRolesAndStartGame(game, roomName, localUserId) {
     let gameState = await db.collection('rooms').doc(roomName).get()
-    let players = gameState.data().players
-    let playerColors = gameState.data().colors
+    let players = await gameState.data().players
+    let playerColors = await gameState.data().colors
     let werewolves = []
     let villagers = []
 
@@ -544,10 +544,10 @@ const Room = ({roomName, token}) => {
     db.collection('rooms').doc(roomName).update({gameStarted: true})
 
     //search for localUsersRole
-    villagers = gameState.data().villagers
-    werewolves = gameState.data().werewolves
-    let seer = gameState.data().seer
-    let medic = gameState.data().medic
+    villagers = await gameState.data().villagers
+    werewolves = await gameState.data().werewolves
+    let seer = await gameState.data().seer
+    let medic = await gameState.data().medic
 
     if (villagers.includes(localUserId)) {
       handleLocalRole('villager')
@@ -592,7 +592,7 @@ const Room = ({roomName, token}) => {
 
       const gameState = await db.collection('rooms').doc(roomName).get()
 
-      let prevPlayers = gameState.data().players
+      let prevPlayers = await gameState.data().players
       prevPlayers.push(room.localParticipant.identity)
 
       db.collection('rooms').doc(roomName).update({players: prevPlayers})
@@ -604,7 +604,7 @@ const Room = ({roomName, token}) => {
       db.collection('rooms')
         .doc(roomName)
         .onSnapshot(async (snapshot) => {
-          let gameState = snapshot.data()
+          let gameState = await snapshot.data()
 
           setGameStarted(gameState.gameStarted)
           setCheckSeer(gameState.checkSeer)
