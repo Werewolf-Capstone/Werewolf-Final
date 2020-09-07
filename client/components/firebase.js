@@ -1,4 +1,4 @@
-import {config} from '../../public/firestoreConfig.js'
+// import {config} from '../../public/firestoreConfig.js'
 import firebase from 'firebase'
 
 const firebaseConfig = {
@@ -12,7 +12,7 @@ const firebaseConfig = {
   measurementId: process.env.measurementId,
 }
 
-firebase.initializeApp(firebaseConfig || config)
+firebase.initializeApp(firebaseConfig)
 
 export const auth = firebase.auth()
 
