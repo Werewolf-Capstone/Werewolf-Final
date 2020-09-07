@@ -744,9 +744,10 @@ const Room = ({roomName, token}) => {
       let fileName = pngMapObj[playerColor]
 
       let remoteRole = ''
+      console.log('WHAT ARE ORIGINAL PARTICIPANTS', originalParticipants)
       if (werewolves.includes(participant.identity)) remoteRole = 'werewolf'
-      else if (participant.identity === 'seer') remoteRole = 'seer'
-      else if (participant.identity === 'medic') remoteRole = 'medic'
+      else if (participant.identity === seer) remoteRole = 'seer'
+      else if (participant.identity === medic) remoteRole = 'medic'
       else remoteRole = 'villager'
 
       return (
