@@ -255,7 +255,7 @@ const Room = ({roomName, token}) => {
         let newDead = players.data().dead
         newDead.push(player)
 
-        let nextPlayers = players.data().players
+        let nextPlayers = await players.data().players
 
         let numParticipants = nextPlayers.length
         //console.log('what is numP', numParticipants)
