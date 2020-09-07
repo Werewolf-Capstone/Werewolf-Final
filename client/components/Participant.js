@@ -44,15 +44,7 @@ const Participant = ({
 
   if (!participant) return
 
-  if (gameOver) {
-    info = null
-    lower = (
-      <div className="lowerInfoBox">
-        <div className="participantIdentity">{participant.identity}</div>
-        <div className="roleReveal">{localRole}</div>
-      </div>
-    )
-  } else if (!night) {
+  if (!night) {
     info = (
       <div id={participant.identity}>
         {votesVill.map((playerObj, idx) => {
