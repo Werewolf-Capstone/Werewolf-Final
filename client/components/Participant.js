@@ -26,6 +26,8 @@ const Participant = ({
   imageSrc,
   localIdentity,
   isLocal,
+  gameOver,
+  remoteRole,
 }) => {
   let info
   let lower
@@ -41,7 +43,7 @@ const Participant = ({
     blue: '/villagerIconBlue.png',
     yellow: '/villagerIconYellow.png',
   }
-
+  console.log('what is game over', gameOver)
   if (!participant) return
 
   if (!night) {
@@ -172,6 +174,16 @@ const Participant = ({
     )
   }
   if (shouldWePlay) {
+    if (gameOver) {
+      lower = (
+        <div className="lowerInfoBox">
+          <div className="participantIdentity">
+            {remoteRole ? remoteRole : localRole}
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className="individualPlayer">
         <div className="infoBox">{info}</div>

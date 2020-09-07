@@ -17,6 +17,7 @@ const Room = ({roomName, token}) => {
    */
   const [stateRoom, setStateRoom] = useState(null)
   const [participants, _setParticipants] = useState([])
+  const [originalParticipants, setOriginalParticipants] = useState([])
   const [participantIdentities, setParticipantIdentities] = useState([])
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
@@ -35,7 +36,12 @@ const Room = ({roomName, token}) => {
   const [votesWereColors, setVotesWereColors] = useState([])
   const [colors, setColors] = useState([])
   const [dead, setDead] = useState([])
+  const [participantsRoles, setParticipantsRoles] = useState([])
+  const [werewolves, setWerewolves] = useState([])
+  const [seer, setSeer] = useState('')
+  const [medic, setMedic] = useState('')
   const [majorityReached, setMajorityReached] = useState(false)
+
 
   const participantsRef = useRef(participants)
 
@@ -469,6 +475,9 @@ const Room = ({roomName, token}) => {
     let werewolves = []
     let villagers = []
 
+    console.log('what are participants in assignROles', participantsRef.current)
+    setOriginalParticipants(participantsRef.current)
+
     let numParticipants = players.length
     //console.log('what is numP', numParticipants)
 
@@ -495,21 +504,28 @@ const Room = ({roomName, token}) => {
     ]
     let colorPlayer = []
 
+    let participantRoleArray = []
+
     players.forEach((playerName, i) => {
       colorPlayer.push(playerName)
       playerColors.push(colors[i])
       if (i < 2) {
         werewolves.push(playerName)
+        participantRoleArray.push('werewolf')
       } else if (i === 2) {
         db.collection('rooms').doc(roomName).update({seer: playerName})
         villagers.push(playerName)
+        participantRoleArray.push('seer')
       } else if (i === 3) {
         db.collection('rooms').doc(roomName).update({medic: playerName})
         villagers.push(playerName)
+        participantRoleArray.push('seer')
       } else {
         villagers.push(playerName)
+        participantRoleArray.push('villager')
       }
     })
+    setParticipantsRoles(participantRoleArray)
 
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
     setLocalColor(colors[localIndex])
@@ -595,6 +611,9 @@ const Room = ({roomName, token}) => {
           setVotesVillColors(gameState.votesVillagersColors)
           setParticipantIdentities(gameState.players)
           setDead(gameState.dead)
+          setSeer(gameState.seer)
+          setMedic(gameState.medic)
+          setWerewolves(gameState.werewolves)
           // setGameOver(gameState.gameOver)
           setWinner(gameState.winner)
 
@@ -668,40 +687,88 @@ const Room = ({roomName, token}) => {
   /**
    * Rendering all remote participants
    */
-  const remoteParticipants = participants.map((participant, idx) => {
-    if (idx === 0) return
+  let remoteParticipants = []
+  if (!gameOver) {
+    remoteParticipants = participants.map((participant, idx) => {
+      if (idx === 0) return
 
-    let correctIdx = participantIdentities.indexOf(participant.identity)
-    let playerColor = colors[correctIdx]
-    let fileName = pngMapObj[playerColor]
+      let correctIdx = participantIdentities.indexOf(participant.identity)
+      let playerColor = colors[correctIdx]
+      let fileName = pngMapObj[playerColor]
 
-    return (
-      <Participant
-        key={participant.sid}
-        participant={participant}
-        handleVillagerVoteButton={handleVillagerVoteButton}
-        handleSeerCheckButton={handleSeerCheckButton}
-        handleMedicSaveButton={handleMedicSaveButton}
-        handleWerewolfVoteButton={handleWerewolfVoteButton}
-        night={night}
-        localRole={localRole}
-        checkWerewolf={checkWerewolf}
-        checkSeer={checkSeer}
-        checkMedic={checkMedic}
-        werewolfChoice={werewolfChoice}
-        didSeerHit={didSeerHit}
-        gameStarted={gameStarted}
-        localColor={localColor}
-        votesVill={votesVill}
-        votesVillColors={votesVillColors}
-        votesWere={votesWere}
-        votesWereColors={votesWereColors}
-        imageSrc={fileName}
-        localIdentity={stateRoom.localParticipant.identity}
-        isLocal={false}
-      />
-    )
-  })
+      return (
+        <Participant
+          key={participant.sid}
+          participant={participant}
+          handleVillagerVoteButton={handleVillagerVoteButton}
+          handleSeerCheckButton={handleSeerCheckButton}
+          handleMedicSaveButton={handleMedicSaveButton}
+          handleWerewolfVoteButton={handleWerewolfVoteButton}
+          night={night}
+          localRole={localRole}
+          checkWerewolf={checkWerewolf}
+          checkSeer={checkSeer}
+          checkMedic={checkMedic}
+          werewolfChoice={werewolfChoice}
+          didSeerHit={didSeerHit}
+          gameStarted={gameStarted}
+          localColor={localColor}
+          votesVill={votesVill}
+          votesVillColors={votesVillColors}
+          votesWere={votesWere}
+          votesWereColors={votesWereColors}
+          imageSrc={fileName}
+          localIdentity={stateRoom.localParticipant.identity}
+          isLocal={false}
+          gameOver={gameOver}
+        />
+      )
+    })
+  } else {
+    console.log('what are my originalParticipants', originalParticipants)
+    remoteParticipants = originalParticipants.map((participant, idx) => {
+      if (idx === 0) return
+
+      let correctIdx = participantIdentities.indexOf(participant.identity)
+      let playerColor = colors[correctIdx]
+      let fileName = pngMapObj[playerColor]
+
+      let remoteRole = ''
+      if (werewolves.includes(participant.identity)) remoteRole = 'werewolf'
+      else if (participant.identity === 'seer') remoteRole = 'seer'
+      else if (participant.identity === 'medic') remoteRole = 'medic'
+      else remoteRole = 'villager'
+
+      return (
+        <Participant
+          key={participant.sid}
+          participant={participant}
+          handleVillagerVoteButton={handleVillagerVoteButton}
+          handleSeerCheckButton={handleSeerCheckButton}
+          handleMedicSaveButton={handleMedicSaveButton}
+          handleWerewolfVoteButton={handleWerewolfVoteButton}
+          night={night}
+          localRole={localRole}
+          checkWerewolf={checkWerewolf}
+          checkSeer={checkSeer}
+          checkMedic={checkMedic}
+          werewolfChoice={werewolfChoice}
+          didSeerHit={didSeerHit}
+          gameStarted={gameStarted}
+          localColor={localColor}
+          votesVill={votesVill}
+          votesVillColors={votesVillColors}
+          votesWere={votesWere}
+          votesWereColors={votesWereColors}
+          imageSrc={fileName}
+          localIdentity={stateRoom.localParticipant.identity}
+          isLocal={false}
+          remoteRole={remoteRole}
+          gameOver={gameOver}
+        />
+      )
+    })
+  }
 
   /**
    * Render local participant
@@ -778,6 +845,7 @@ const Room = ({roomName, token}) => {
                   roomName={stateRoom}
                   imageSrc={fileName}
                   isLocal={true}
+                  gameOver={gameOver}
                 />
               ) : null}
 
