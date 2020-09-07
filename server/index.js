@@ -32,6 +32,8 @@ const herokuConfig = {
   apiSecret: process.env.apiSecret,
 }
 
+console.log('herokuConfig', herokuConfig)
+
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id))
 
