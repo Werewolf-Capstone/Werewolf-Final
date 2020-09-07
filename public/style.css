@@ -22,6 +22,13 @@ html {
   background-size: 100%;
 }
 
+.night {
+  background: url(https://i.ibb.co/5W86tN5/Village-Night.png);
+  background-size: 100%;
+  -webkit-animation: forest-night 5s;
+  animation: forest-night 5s;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -257,4 +264,54 @@ a {
 .fadeOut {
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
+}
+
+/* figure {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  -webkit-animation:forest-night 10s infinite;
+  animation:forest-night 10s infinite;
+} */
+/* Night Fade */
+@-webkit-keyframes forest-night {
+  0% {
+    filter: hue-rotate(0deg) brightness(0%);
+  }
+  10% {
+    filter: hue-rotate(0deg) brightness(50%);
+  }
+  20% {
+    filter: hue-rotate(0deg) brightness(100%);
+  }
+  50% {
+    filter: hue-rotate(0deg) brightness(2);
+  }
+  70% {
+    filter: hue-rotate(220deg) brightness(50%);
+  }
+  100% {
+    filter: hue-rotate(0deg) brightness(0%);
+  }
+}
+@keyframes forest-night {
+  0% {
+    filter: hue-rotate(0deg) brightness(0%);
+  }
+  10% {
+    filter: hue-rotate(0deg) brightness(50%);
+  }
+  20% {
+    filter: hue-rotate(0deg) brightness(100%);
+  }
+  50% {
+    filter: hue-rotate(0deg) brightness(2);
+  }
+  70% {
+    filter: hue-rotate(220deg) brightness(50%);
+  }
+  100% {
+    filter: hue-rotate(0deg) brightness(0%);
+  }
 }
