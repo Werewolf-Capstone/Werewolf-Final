@@ -261,9 +261,10 @@ const Room = ({roomName, token}) => {
         //console.log('what is numP', numParticipants)
 
         let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
-        for (let i = 0; i < numParticipants; i++) {
+        for (let i = 0; i < numParticipants - 1; i++) {
           partVoteArray.push('')
         }
+        console.log('what is partVoteArray', partVoteArray)
 
         //console.log(
         // 'what is our new partVote array after handling Majority',
@@ -310,6 +311,11 @@ const Room = ({roomName, token}) => {
       lookupObj.prevVote = localIdx
       let votesVillagersIdx = -1
       let counter = 0
+      if (localIdx === -1) {
+        console.log('what is local Identity', localIdentity)
+        console.log('localidx is -1')
+        localIdx = players.indexOf(localIdentity)
+      }
 
       for (let element of votesVillagers) {
         let key = Object.keys(element)[0]
