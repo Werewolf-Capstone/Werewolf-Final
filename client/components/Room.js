@@ -865,7 +865,7 @@ const Room = ({roomName, token}) => {
         {!gameStarted ? (
           <div>
             <Button
-              size="large"
+              size="small"
               variant="contained"
               color="secondary"
               onClick={() => {
