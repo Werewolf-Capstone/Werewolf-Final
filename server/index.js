@@ -1,5 +1,5 @@
 const path = require('path')
-const config = herokuConfig || require('../public/config')
+const config = require('../public/config')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
@@ -95,13 +95,13 @@ const createApp = () => {
   app.get('/video/token', (req, res) => {
     const identity = req.query.identity
     const room = req.query.room
-    const token = videoToken(identity, room, config)
+    const token = videoToken(identity, room, herokuConfig || config)
     sendTokenResponse(token, res)
   })
   app.post('/video/token', (req, res) => {
     const identity = req.body.identity
     const room = req.body.room
-    const token = videoToken(identity, room, config)
+    const token = videoToken(identity, room, herokuConfig || config)
     sendTokenResponse(token, res)
   })
 
