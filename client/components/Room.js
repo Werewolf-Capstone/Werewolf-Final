@@ -228,6 +228,7 @@ const Room = ({roomName, token}) => {
     game.wereWolvesChoice = ''
     game.majorityReached = false
     game.votesVillagers = []
+    game.votesVillagersColors = []
     db.collection('rooms').doc(roomName).update(game)
 
     handleNight(true)
