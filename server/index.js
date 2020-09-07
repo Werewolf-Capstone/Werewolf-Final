@@ -1,5 +1,5 @@
 const path = require('path')
-const config = require('../public/config')
+const config = herokuConfig || require('../public/config')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
@@ -25,6 +25,12 @@ module.exports = app
  * keys as environment variables, so that they can still be read by the
  * Node process on process.env
  */
+
+const herokuConfig = {
+  accountSid: process.env.accountSid,
+  apiKey: process.env.apiKey,
+  apiSecret: process.env.apiSecret,
+}
 
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id))
