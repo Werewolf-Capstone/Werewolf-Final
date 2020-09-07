@@ -209,8 +209,13 @@ const Room = ({roomName, token}) => {
           return werewolf !== game.villagersChoice
         })
       }
-      game.players = game.players.filter((player) => {
+      let removedIdx = -1
+      game.players = game.players.filter((player, idx) => {
+        if (player === game.villagersChoice) removedIdx = idx
         return player !== game.villagersChoice
+      })
+      game.colors = game.colors.filter((color, idx) => {
+        return idx !== removedIdx
       })
       if (!game.dead.includes(game.villagersChoice)) {
         game.dead.push(game.villagersChoice)
