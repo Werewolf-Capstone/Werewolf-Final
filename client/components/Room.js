@@ -62,7 +62,7 @@ const Room = ({roomName, token}) => {
   }
 
   /**
-   * Reset button (for testing purposes only)
+   * Reset button (for testing purposes only)grg
    */
   const testingReset = () => {
     const newGame = {
