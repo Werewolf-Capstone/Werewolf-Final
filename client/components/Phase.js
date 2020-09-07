@@ -25,18 +25,19 @@ export default function Phase({
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
 
-  const handleClose = () => {
-    setOpen(false)
-  }
-  const handleOpen = () => {
-    console.log('do we make it here??????????????????')
-    setOpen(true)
+  const handleClose = (timer) => {
+    console.log('did I get into here')
+
+    setTimeout(() => {
+      setOpen(false)
+    }, timer)
   }
 
   useEffect(() => {
+    // setOpen(false)
     setOpen(true)
     console.log('setting open back to true in use effect')
-  }, [night, checkWerewolf, checkSeer])
+  }, [night, checkWerewolf, checkSeer, checkMedic, majorityReached])
 
   return (
     <Container>
@@ -47,7 +48,13 @@ export default function Phase({
           ) : night ? (
             !checkWerewolf ? (
               localRole !== 'werewolf' ? (
-                <Zoom in={true} style={{transitionDuration: '2000ms'}}>
+                <Zoom
+                  in={true}
+                  style={{transitionDuration: '3000ms'}}
+                  onEntered={() => {
+                    handleClose(3000)
+                  }}
+                >
                   <img
                     src="/werewolvesVoting.png"
                     alt="Werewolves are voting"
@@ -60,7 +67,13 @@ export default function Phase({
               )
             ) : !checkSeer ? (
               localRole !== 'seer' ? (
-                <Zoom in={true} style={{transitionDuration: '2000ms'}}>
+                <Zoom
+                  in={true}
+                  style={{transitionDuration: '2000ms'}}
+                  onEntered={() => {
+                    handleClose(3000)
+                  }}
+                >
                   <img
                     src="/Seer.png"
                     alt="Seer is now seeing"
@@ -73,7 +86,13 @@ export default function Phase({
               )
             ) : !checkMedic ? (
               localRole !== 'medic' ? (
-                <Zoom in={true} style={{transitionDuration: '2000ms'}}>
+                <Zoom
+                  in={true}
+                  style={{transitionDuration: '2000ms'}}
+                  onEntered={() => {
+                    handleClose(3000)
+                  }}
+                >
                   <img
                     src="/medic.png"
                     alt="Medic is now healing"
