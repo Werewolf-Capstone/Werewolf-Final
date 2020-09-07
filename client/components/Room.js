@@ -304,7 +304,7 @@ const Room = ({roomName, token}) => {
 
     // if we have a person we voted for already, we need to replace them and remove them from votesVillagers
     // before adding a new vote to votesVillgers
-    let localIdx = players.indexOf(localIdentity)
+    let localIdx = await players.indexOf(localIdentity)
     let prevVote = ''
     if (participantVotes[localIdx] !== '') {
       prevVote = participantVotes[localIdx]
@@ -857,6 +857,7 @@ const Room = ({roomName, token}) => {
                   imageSrc={fileName}
                   isLocal={true}
                   gameOver={gameOver}
+                  localIdentity={stateRoom.localParticipant.identity}
                 />
               ) : null}
 
