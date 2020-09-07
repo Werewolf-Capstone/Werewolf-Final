@@ -1,8 +1,10 @@
 /* eslint-disable complexity */
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect} from 'react'
 import Backdrop from '@material-ui/core/Backdrop'
 import {makeStyles} from '@material-ui/core/styles'
-import {Container, Box} from '@material-ui/core'
+import {Container, Box, Fade} from '@material-ui/core'
+import ImageCom from './ImageCom'
+import Zoom from '@material-ui/core/Zoom'
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -20,7 +22,6 @@ export default function Phase({
   majorityReached,
   gameOver,
 }) {
-  const boxRef = useRef()
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
   const handleClose = () => {
@@ -30,25 +31,25 @@ export default function Phase({
   useEffect(() => {
     setOpen(true)
     console.log('setting open back to true in use effect')
-    boxRef.current.className = 'fadeIn animated'
   }, [night])
-  console.log('majority reached true?', majorityReached)
+
   return (
     <Container>
       <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-        <Box display="flex" justifyContent="center" className="fadeIn animated">
+        <Box display="flex" justifyContent="center">
           {gameOver ? (
             ''
           ) : night ? (
             !checkWerewolf ? (
               localRole !== 'werewolf' ? (
-                <img
-                  src="/werewolvesVoting.png"
-                  alt="Werewolves are voting"
-                  width="50%"
-                  height="50%"
-                  ref={boxRef}
-                />
+                <Zoom in={true} style={{transitionDelay: '4000ms'}}>
+                  <img
+                    src="/werewolvesVoting.png"
+                    alt="Werewolves are voting"
+                    width="50%"
+                    height="50%"
+                  />
+                </Zoom>
               ) : (
                 ''
               )
