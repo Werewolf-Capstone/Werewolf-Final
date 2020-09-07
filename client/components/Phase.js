@@ -41,10 +41,25 @@ export default function Phase({
 
   return (
     <Container>
-      <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+      <Backdrop
+        className={classes.backdrop}
+        open={open}
+        onClick={handleClose}
+        onEntered={() => {
+          handleClose(3000)
+        }}
+      >
         <Box display="flex" justifyContent="center">
           {gameOver ? (
-            ''
+            <Zoom
+              in={true}
+              style={{transitionDuration: '3000ms'}}
+              onEntered={() => {
+                handleClose(500)
+              }}
+            >
+              <div></div>
+            </Zoom>
           ) : night ? (
             !checkWerewolf ? (
               localRole !== 'werewolf' ? (
@@ -63,13 +78,21 @@ export default function Phase({
                   />
                 </Zoom>
               ) : (
-                ''
+                <Zoom
+                  in={true}
+                  style={{transitionDuration: '3000ms'}}
+                  onEntered={() => {
+                    handleClose(500)
+                  }}
+                >
+                  <div></div>
+                </Zoom>
               )
             ) : !checkSeer ? (
               localRole !== 'seer' ? (
                 <Zoom
                   in={true}
-                  style={{transitionDuration: '2000ms'}}
+                  style={{transitionDuration: '3000ms'}}
                   onEntered={() => {
                     handleClose(3000)
                   }}
@@ -82,13 +105,21 @@ export default function Phase({
                   />
                 </Zoom>
               ) : (
-                ''
+                <Zoom
+                  in={true}
+                  style={{transitionDuration: '3000ms'}}
+                  onEntered={() => {
+                    handleClose(500)
+                  }}
+                >
+                  <div></div>
+                </Zoom>
               )
             ) : !checkMedic ? (
               localRole !== 'medic' ? (
                 <Zoom
                   in={true}
-                  style={{transitionDuration: '2000ms'}}
+                  style={{transitionDuration: '3000ms'}}
                   onEntered={() => {
                     handleClose(3000)
                   }}
@@ -101,13 +132,35 @@ export default function Phase({
                   />
                 </Zoom>
               ) : (
-                ''
+                <Zoom
+                  in={true}
+                  style={{transitionDuration: '3000ms'}}
+                  onEntered={() => {
+                    handleClose(500)
+                  }}
+                >
+                  <div></div>
+                </Zoom>
               )
             ) : (
-              ''
+              <Zoom
+                in={true}
+                style={{transitionDuration: '3000ms'}}
+                onEntered={() => {
+                  handleClose(500)
+                }}
+              >
+                <div></div>
+              </Zoom>
             )
           ) : majorityReached ? (
-            <Zoom in={true} style={{transitionDuration: '2000ms'}}>
+            <Zoom
+              in={true}
+              style={{transitionDuration: '3000ms'}}
+              onEntered={() => {
+                handleClose(500)
+              }}
+            >
               <img
                 src="/majorityReached.png"
                 alt="A majority has been reached"
@@ -115,7 +168,17 @@ export default function Phase({
                 height="50%"
               />
             </Zoom>
-          ) : null}
+          ) : (
+            <Zoom
+              in={true}
+              style={{transitionDuration: '3000ms'}}
+              onEntered={() => {
+                handleClose(500)
+              }}
+            >
+              <div></div>
+            </Zoom>
+          )}
         </Box>
       </Backdrop>
     </Container>
