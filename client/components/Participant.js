@@ -15,8 +15,6 @@ const Participant = ({
   checkSeer,
   checkMedic,
   localRole,
-  werewolfChoice,
-  didSeerHit,
   gameStarted,
   localColor,
   votesVill,
@@ -185,7 +183,7 @@ const Participant = ({
     if (gameOver) {
       lower = (
         <div className="lowerInfoBox">
-          <div className="participantIdentity">
+          <div className="roleReveal">
             {remoteRole ? remoteRole : localRole}
           </div>
         </div>
