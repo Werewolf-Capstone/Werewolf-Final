@@ -719,6 +719,7 @@ const Room = ({roomName, token, handleLogout}) => {
           imageSrc={fileName}
           localIdentity={stateRoom.localParticipant.identity}
           isLocal={false}
+          gameOver={gameOver}
         />
       )
     })
@@ -831,6 +832,7 @@ const Room = ({roomName, token, handleLogout}) => {
                   roomName={stateRoom}
                   imageSrc={fileName}
                   isLocal={true}
+                  gameOver={gameOver}
                 />
               ) : null}
 
