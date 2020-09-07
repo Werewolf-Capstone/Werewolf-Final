@@ -42,7 +42,6 @@ const Room = ({roomName, token}) => {
   const [medic, setMedic] = useState('')
   const [majorityReached, setMajorityReached] = useState(false)
 
-
   const participantsRef = useRef(participants)
 
   const setParticipants = (data) => {
@@ -837,6 +836,7 @@ const Room = ({roomName, token}) => {
                   checkMedic={checkMedic}
                   werewolfChoice={werewolfChoice}
                   didSeerHit={didSeerHit}
+                  gameOver={gameOver}
                   gameStarted={gameStarted}
                   votesVill={votesVill}
                   votesVillColors={votesVillColors}

@@ -48,13 +48,19 @@ code {
 }
 /*Styling for MessageHeader component*/
 .messageHeader {
-  height: 150px;
+  height: 125px;
   color: rgb(244, 232, 232);
   font-size: 35px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   text-shadow: 2px 2px 5px black;
   font-weight: bold;
   text-align: center;
+  margin-top: 10px;
+}
+
+.winnerGraphic {
+  display: flex;
+  justify-content: center;
 }
 
 /*Styling for video container that holds all individual video feeds*/
@@ -66,7 +72,7 @@ code {
 
 /*Styling for messages that render above and below the individual video components*/
 .lowerInfoBox {
-  height: 75px;
+  height: 65px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,12 +107,21 @@ code {
   border-style: solid;
 }
 
+.roleReveal {
+  color: red;
+  font-size: 35px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 2px 5px whitesmoke;
+  font-weight: bold;
+}
+
+/*Styling for container that holds everything rendered in the Participant component*/
 .individualPlayer {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  height: 275px;
+  height: 260px;
   width: 225px;
   margin: 5px;
 }
