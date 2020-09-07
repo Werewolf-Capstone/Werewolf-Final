@@ -48,7 +48,7 @@ code {
 }
 /*Styling for MessageHeader component*/
 .messageHeader {
-  height: 150px;
+  height: 125px;
   color: rgb(244, 232, 232);
   font-size: 35px;
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -121,7 +121,7 @@ code {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  height: 250px;
+  height: 260px;
   width: 225px;
   margin: 5px;
 }

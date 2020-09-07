@@ -31,13 +31,6 @@ const MessageHeader = ({
         </div>
       </div>
     )
-  } else if (night && gameStarted) {
-    return (
-      <div className="messageHeader">
-        Sleep well, everyone. Daybreak isn't far away.
-        <br /> Hope you survive the night.
-      </div>
-    )
   } else if (!night && localRole === 'seer' && didSeerHit) {
     return (
       <div className="messageHeader">
@@ -134,11 +127,16 @@ const MessageHeader = ({
   ) {
     return (
       <div className="messageHeader">
-        {/* Sleep well, everyone.
-        <br /> Hope you survive the night. */}
         <div style={{color: '#4d4df1'}}>
           Medic, the werewolves have attacked! <br /> Choose someone to save!
         </div>
+      </div>
+    )
+  } else if (night && gameStarted) {
+    return (
+      <div className="messageHeader">
+        Sleep well, everyone. Daybreak isn't far away.
+        <br /> Hope you survive the night.
       </div>
     )
   } else return null
