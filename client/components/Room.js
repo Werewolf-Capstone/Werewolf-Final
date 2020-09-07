@@ -8,9 +8,10 @@ import {db} from './firebase'
 import {Button} from '@material-ui/core'
 import Day from './Day'
 import GameOver from './GameOver'
+import Phase from './Phase'
 import MessageHeader from './MessageHeader'
 
-const Room = ({roomName, token, handleLogout}) => {
+const Room = ({roomName, token}) => {
   /**
    * Functional state and respective setter functions
    */
@@ -18,7 +19,6 @@ const Room = ({roomName, token, handleLogout}) => {
   const [participants, _setParticipants] = useState([])
   const [originalParticipants, setOriginalParticipants] = useState([])
   const [participantIdentities, setParticipantIdentities] = useState([])
-  //const [participantsColors, setParticipantsColors] = useState([])
   const [night, setNight] = useState(true)
   const [localRole, setLocalRole] = useState('')
   const [localColor, setLocalColor] = useState('')
@@ -40,6 +40,8 @@ const Room = ({roomName, token, handleLogout}) => {
   const [werewolves, setWerewolves] = useState([])
   const [seer, setSeer] = useState('')
   const [medic, setMedic] = useState('')
+  const [majorityReached, setMajorityReached] = useState(false)
+
 
   const participantsRef = useRef(participants)
 
@@ -217,6 +219,7 @@ const Room = ({roomName, token, handleLogout}) => {
     } else {
       return
     }
+    setMajorityReached(false)
     game.Night = true
     game.wereWolvesChoice = ''
     game.majorityReached = false
@@ -274,6 +277,7 @@ const Room = ({roomName, token, handleLogout}) => {
           dead: newDead,
           participantVotes: partVoteArray,
         })
+        setMajorityReached(true)
       }
     }
   }
@@ -531,7 +535,6 @@ const Room = ({roomName, token, handleLogout}) => {
       villagers: villagers,
       participantVotes: partVoteArray,
     })
-    // await db.collection('rooms').doc(roomName).update({villagers: villagers})
 
     db.collection('rooms').doc(roomName).update({gameStarted: true})
 
@@ -586,8 +589,6 @@ const Room = ({roomName, token, handleLogout}) => {
 
       let prevPlayers = gameState.data().players
       prevPlayers.push(room.localParticipant.identity)
-
-      //let participantsColors = gameState.data().participantsColors
 
       db.collection('rooms').doc(roomName).update({players: prevPlayers})
 
@@ -796,12 +797,24 @@ const Room = ({roomName, token, handleLogout}) => {
         gameOver={gameOver}
         winner={winner}
       />
+      {gameStarted ? (
+        <Phase
+          night={night}
+          localRole={localRole}
+          checkWerewolf={checkWerewolf}
+          checkMedic={checkMedic}
+          checkSeer={checkSeer}
+          majorityReached={majorityReached}
+          gameOver={gameOver}
+        />
+      ) : null}
 
       <div
         style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
         className="room"
       >
-        {gameOver ? <GameOver winner={winner} /> : <Day />}
+        <Day night={night} />
+
         <div
           style={{display: 'flex', justifyContent: 'center'}}
           className="local-participant"
