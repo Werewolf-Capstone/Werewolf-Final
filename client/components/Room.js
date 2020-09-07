@@ -312,8 +312,8 @@ const Room = ({roomName, token}) => {
       let votesVillagersIdx = -1
       let counter = 0
       if (localIdx === -1) {
-        console.log('what is local Identity', localIdentity)
-        console.log('localidx is -1')
+        // console.log('what is local Identity', localIdentity)
+        // console.log('localidx is -1')
         localIdx = players.indexOf(localIdentity)
       }
 
