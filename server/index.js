@@ -34,8 +34,6 @@ const herokuConfig = {
   },
 }
 
-console.log('herokuConfig', herokuConfig)
-
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id))
 

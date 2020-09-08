@@ -4,10 +4,6 @@
     <link rel="icon" href="/wolf.jpg" />
 
     <script src="/bundle.js" defer></script>
-    <script defer>
-      let audio = document.getElementById('homepageaudio')
-      audio.volume = 0.1
-    </script>
 
     <!--Animation connection-->
     <link rel="stylesheet" href="https://anijs.github.io/lib/anicollection/anicollection.css">
@@ -18,16 +14,6 @@
     <title>Werewolf</title>
   </head>
   <body>
-    <iframe
-      src="./background.mp3"
-      allow="autoplay"
-      style="display: none"
-      id="iframeAudio"
-    ></iframe>
-    <audio id="homepageaudio" loop="true" autoplay="true">
-      <source src="./background.mp3" type="audio/mpeg" />
-    </audio>
-
     <!-- Animation Library -->
     <div id="root"></div>
   </body>
