@@ -1,6 +1,9 @@
 import React from 'react'
 import {TextField, Container, Button, Box} from '@material-ui/core'
 
+/**
+ * @summary Loads the lobby (landing page) prompting you to input a room name
+ */
 const Lobby = ({
   username,
   handleUsernameChange,

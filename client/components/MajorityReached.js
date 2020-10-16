@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+/**
+ * @summary Transition message showing that a majority vote has been reached
+ */
 export default function MajorityReached() {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
