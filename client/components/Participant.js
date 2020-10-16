@@ -4,6 +4,12 @@ import React from 'react'
 import VideoAudio from './VideoAudio'
 import {Button} from '@material-ui/core'
 
+/**
+ * A participant component to display the individual player's video, username, and voting icon,
+ * all of which are loaded conditionally depending on the status of the game
+ * (e.g. night vs. day time, whether or not it is their turn to vote, etc.)
+ * @param {*} param0
+ */
 const Participant = ({
   participant,
   handleVillagerVoteButton,

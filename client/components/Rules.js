@@ -6,6 +6,9 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
+/**
+ * @summary A component dedicated to showing a pop up of the game rules within the Room
+ */
 export default function Rules() {
   const [open, setOpen] = React.useState(false)
   const [fullWidth] = React.useState(true)

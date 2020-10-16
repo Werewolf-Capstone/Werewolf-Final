@@ -66,7 +66,6 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
     <div>
       <video
         style={{
-          // height: '10rem',
           width: '200px',
           borderStyle: 'solid',
           borderRadius: '25%',
