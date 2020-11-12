@@ -1,6 +1,9 @@
 import React from 'react'
 import {Container, Box} from '@material-ui/core'
 
+/**
+ * @summary Loaded once the game is over by displaying day-time image in the main container
+ */
 export default function GameOver() {
   return (
     <Container>

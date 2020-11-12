@@ -1,6 +1,12 @@
+/* eslint-disable complexity */
 import React from 'react'
 import Rules from './Rules'
 
+/**
+ * @summary Conditional loading of status messages and images including:
+ * Who won, whether someone was killed, whose turn it is to vote, whether the seer guessed correctly,
+ * who was killed, and instructions for the medic
+ */
 const MessageHeader = ({
   werewolfChoice,
   night,

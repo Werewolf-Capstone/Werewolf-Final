@@ -26,17 +26,13 @@ export default function Phase({
   const [open, setOpen] = React.useState(true)
 
   const handleClose = (timer) => {
-    console.log('did I get into here')
-
     setTimeout(() => {
       setOpen(false)
     }, timer)
   }
 
   useEffect(() => {
-    // setOpen(false)
     setOpen(true)
-    console.log('setting open back to true in use effect')
   }, [night, checkWerewolf, checkSeer, checkMedic, majorityReached])
 
   return (

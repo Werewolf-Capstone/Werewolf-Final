@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+/**
+ * @summary Component to display animation and image of villagers winning
+ */
 export default function VillagersWin() {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)

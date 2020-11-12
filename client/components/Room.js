@@ -7,7 +7,6 @@ import Participant from './Participant'
 import {db} from './firebase'
 import {Button} from '@material-ui/core'
 import Day from './Day'
-import GameOver from './GameOver'
 import Phase from './Phase'
 import MessageHeader from './MessageHeader'
 
@@ -115,7 +114,6 @@ const Room = ({roomName, token}) => {
     setGameStarted(val)
   }
   const handleGameOver = (winner) => {
-    //console.log('about to set gameOver to true')
     setGameOver(true)
     setWinner(winner)
     db.collection('rooms').doc(roomName).update({gameOver: true, winner})
@@ -248,7 +246,6 @@ const Room = ({roomName, token}) => {
 
     for (let player of votesVillagers) {
       player = Object.keys(player)[0]
-      //console.log('what is player in handleMajority')
       // need to add rooms and users tables to state
       if (Object.keys(votingObject).includes(player)) {
         votingObject[player] += 1
@@ -265,18 +262,11 @@ const Room = ({roomName, token}) => {
         let nextPlayers = await players.data().players
 
         let numParticipants = nextPlayers.length
-        //console.log('what is numP', numParticipants)
 
         let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
         for (let i = 0; i < numParticipants - 1; i++) {
           partVoteArray.push('')
         }
-        console.log('what is partVoteArray', partVoteArray)
-
-        //console.log(
-        // 'what is our new partVote array after handling Majority',
-        // partVoteArray
-        // )
 
         db.collection('rooms').doc(roomName).update({
           villagersChoice: player,
@@ -310,33 +300,23 @@ const Room = ({roomName, token}) => {
     let prevVote = ''
     if (participantVotes[localIdx] !== '') {
       prevVote = participantVotes[localIdx]
-      //console.log('what is my previous vote', prevVote)
-      // let lookupObj = {
-      //   prevVote: localIdx
-      // }
+
       let lookupObj = {}
       lookupObj.prevVote = localIdx
       let votesVillagersIdx = -1
       let counter = 0
       if (localIdx === -1) {
-        // console.log('what is local Identity', localIdentity)
-        // console.log('localidx is -1')
         localIdx = players.indexOf(localIdentity)
       }
 
       for (let element of votesVillagers) {
         let key = Object.keys(element)[0]
-        //console.log('what is element', element)
-        //console.log('what is key', key)
         if (key === prevVote && element[key] === localIdx) {
           votesVillagersIdx = counter
         }
         counter += 1
       }
-      //console.log(
-      // 'what is index in votesVillagers of my prev vote',
-      // votesVillagersIdx
-      // )
+
       votesVillagers.splice(votesVillagersIdx, 1)
 
       let voteColorIdx = votesVillagersColors.indexOf(localColor)
@@ -487,17 +467,14 @@ const Room = ({roomName, token}) => {
     let werewolves = []
     let villagers = []
 
-    console.log('what are participants in assignROles', participantsRef.current)
     setOriginalParticipants(participantsRef.current)
 
     let numParticipants = players.length
-    //console.log('what is numP', numParticipants)
 
     let partVoteArray = [] // this will just be pushed so that our initial participantVotes in db has the right number of players
     for (let i = 0; i < numParticipants; i++) {
       partVoteArray.push('')
     }
-    //console.log('what is partVote', partVoteArray)
 
     //shuffle users array in order to assign random roles
     // for (let i = users.length - 1; i > 0; i--) {
@@ -739,7 +716,6 @@ const Room = ({roomName, token}) => {
       )
     })
   } else {
-    console.log('what are my originalParticipants', originalParticipants)
     remoteParticipants = originalParticipants.map((participant, idx) => {
       if (idx === 0) return
 
@@ -748,9 +724,9 @@ const Room = ({roomName, token}) => {
       let fileName = pngMapObj[playerColor]
 
       let remoteRole = ''
-      console.log('WHAT ARE ORIGINAL PARTICIPANTS', originalParticipants)
-      console.log('WHAT ARE ORIGINAL PARTICIPANTS', werewolvesCopy)
-      if (werewolvesCopy.includes(participant.identity)) remoteRole = 'werewolf'
+
+      if (werewolves.includes(participant.identity)) remoteRole = 'werewolf'
+
       else if (participant.identity === seer) remoteRole = 'seer'
       else if (participant.identity === medic) remoteRole = 'medic'
       else remoteRole = 'villager'
@@ -796,8 +772,6 @@ const Room = ({roomName, token}) => {
   let idx = players.indexOf(stateRoom.localParticipant.identity)
   let playerColor = colors[idx]
   let fileName = pngMapObj[playerColor]
-
-  //console.log('what is our dead array', dead)
 
   return (
     <div>

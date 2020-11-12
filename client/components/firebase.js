@@ -1,3 +1,7 @@
+/**
+ * Standard Firebase initialization code
+ */
+
 import {config} from '../../public/firestoreConfig.js'
 import firebase from 'firebase'
 

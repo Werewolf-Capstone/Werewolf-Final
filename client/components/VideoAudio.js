@@ -1,6 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react'
 
+/**
+ * @summary Using Twilio functions to initiate A/V capabilities and load them into a div
+ * Much of this code was made using the Twilio tutorial available on their blog.
+ */
 const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
+  //creating state refs and hooks
   const videoRef = useRef()
   const audioRef = useRef()
   const [videoTracks, setVideoTracks] = useState([])
@@ -42,6 +47,7 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
     }
   }, [participant])
 
+  // attach video stream to video ref (which points to the video tag)
   useEffect(() => {
     const videoTrack = videoTracks[0]
     if (videoTrack) {
@@ -52,6 +58,7 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
     }
   }, [videoTracks])
 
+  // attach audio stream to audio ref (which points to the audio tag)
   useEffect(() => {
     const audioTrack = audioTracks[0]
     if (audioTrack) {
@@ -66,7 +73,6 @@ const VideoAudio = ({participant, shouldWePlay, isLocal}) => {
     <div>
       <video
         style={{
-          // height: '10rem',
           width: '200px',
           borderStyle: 'solid',
           borderRadius: '25%',

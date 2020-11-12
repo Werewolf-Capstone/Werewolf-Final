@@ -4,6 +4,9 @@ import Lobby from './Lobby'
 import Room from './Room'
 import {db} from './firebase'
 
+/**
+ * @summary Component used to get Twilio token and add players into the correct game / create a new game
+ */
 const VideoChat = () => {
   /**
    * The default game state of a room object in the Firestore database
@@ -114,7 +117,7 @@ const VideoChat = () => {
     [roomName, username]
   )
 
-  const handleLogout = useCallback((event) => {
+  const handleLogout = useCallback(() => {
     setToken(null)
     document.getElementById('background').classList.add('lobby')
     document.getElementById('background').classList.remove('day')

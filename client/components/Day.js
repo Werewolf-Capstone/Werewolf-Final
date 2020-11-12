@@ -1,6 +1,10 @@
 import React from 'react'
 import {Container} from '@material-ui/core'
 
+/**
+ * @summary Loads either the day- or night-time background, depengin on game status
+ * @param {boolean} night True indicates it is night time, False indicates day time
+ */
 export default function Day({night}) {
   return (
     <Container>
