@@ -37,6 +37,7 @@ const Room = ({roomName, token}) => {
   const [dead, setDead] = useState([])
   const [participantsRoles, setParticipantsRoles] = useState([])
   const [werewolves, setWerewolves] = useState([])
+  const [werewolvesCopy, setWerewolvesCopy] = useState([])
   const [seer, setSeer] = useState('')
   const [medic, setMedic] = useState('')
   const [majorityReached, setMajorityReached] = useState(false)
@@ -491,7 +492,7 @@ const Room = ({roomName, token}) => {
       'yellow',
     ]
     let colorPlayer = []
-
+    let wwCopy = []
     let participantRoleArray = []
 
     players.forEach((playerName, i) => {
@@ -499,6 +500,7 @@ const Room = ({roomName, token}) => {
       playerColors.push(colors[i])
       if (i < 2) {
         werewolves.push(playerName)
+        wwCopy.push(playerName)
         participantRoleArray.push('werewolf')
       } else if (i === 2) {
         db.collection('rooms').doc(roomName).update({seer: playerName})
@@ -513,6 +515,7 @@ const Room = ({roomName, token}) => {
         participantRoleArray.push('villager')
       }
     })
+    setWerewolvesCopy(wwCopy)
     setParticipantsRoles(participantRoleArray)
 
     let localIndex = colorPlayer.findIndex((val) => val === localUserId)
@@ -721,7 +724,9 @@ const Room = ({roomName, token}) => {
       let fileName = pngMapObj[playerColor]
 
       let remoteRole = ''
+
       if (werewolves.includes(participant.identity)) remoteRole = 'werewolf'
+
       else if (participant.identity === seer) remoteRole = 'seer'
       else if (participant.identity === medic) remoteRole = 'medic'
       else remoteRole = 'villager'
